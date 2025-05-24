@@ -5,6 +5,6 @@ using namespace std;
 int main() {
 	GameManager GM = GameManager();
 	GM.play();
-	//asdk
+	//test123
 	return 0;
 }
