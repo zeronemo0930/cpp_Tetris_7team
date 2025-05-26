@@ -1,4 +1,6 @@
 #pragma once
+#include "Block.h"
+
 class Board
 {
 public:
@@ -7,10 +9,8 @@ public:
 	static const int height = 24;
 
 	Board();
-
-	void strike_check();
+	bool strike_check(Block b);
 	void merge_block(Block block);
 	void check_full_line();
-
 };
 
