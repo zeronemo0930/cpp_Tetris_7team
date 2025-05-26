@@ -17,6 +17,8 @@ GameManager::~GameManager()
 
 void GameManager::play()
 {
+	renderer.show_logo();
+	renderer.input_data();
 	renderer.drawBoard(board);
 	init();
 	int i = 0;

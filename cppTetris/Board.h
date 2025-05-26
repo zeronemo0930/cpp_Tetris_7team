@@ -1,4 +1,6 @@
 #pragma once
+#include "Block.h"
+
 class Board
 {
 public:
@@ -11,6 +13,5 @@ public:
 	void strike_check();
 	void merge_block(Block& block);
 	int check_full_line(Renderer& renderer);
-
 };
 
