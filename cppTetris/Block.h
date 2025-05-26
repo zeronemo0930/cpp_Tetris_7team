@@ -11,7 +11,6 @@ public:
 	~Block();
 
 	void setBlock(Tetromino t);
-
 	void rotate();
 	void move(int dx, int dy);
 	const shapeVec& getShape() const { return shape; };

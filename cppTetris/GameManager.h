@@ -26,6 +26,6 @@ public:
 	void init();
 	void input();
 	void update();
-	void make_new_block();
+
 };
 

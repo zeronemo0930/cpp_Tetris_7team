@@ -9,6 +9,8 @@ public:
 	Board();
 
 	void strike_check();
+	void merge_block(Block block);
+	void check_full_line();
 
 };
 
