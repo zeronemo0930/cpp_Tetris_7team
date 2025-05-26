@@ -26,11 +26,13 @@ class Renderer
 {
 public:
 	void show_logo();
-	void drawBlock(Block block);
-	void eraseBlock(Block block);
+	void drawBlock(Block& block);
+	void eraseBlock(Block& block);
 
 	void setBlockColor(Tetromino t);
-	void drawBoard(Board board);
+	void drawBoard(Board& board);
+
+	void eraseLine(Board& board);
 private:
 	Color color = Color::DARK_GRAY;
 };

@@ -40,7 +40,7 @@ void Renderer::show_logo()
 
 
 // 약간의 개선이 필요할듯
-void Renderer::drawBlock(Block block)
+void Renderer::drawBlock(Block& block)
 {
 	setBlockColor(block.getType());
 	SetColor(color);
@@ -63,7 +63,7 @@ void Renderer::drawBlock(Block block)
 	gotoxy(77, 23);
 }
 
-void Renderer::eraseBlock(Block block)
+void Renderer::eraseBlock(Block& block)
 {
 	short x = block.getX();
 	short y = block.getY();
@@ -110,7 +110,7 @@ void Renderer::setBlockColor(Tetromino t)
 
 }
 
-void Renderer::drawBoard(Board board)
+void Renderer::drawBoard(Board& board)
 {
 	SetColor(Color::DARK_GRAY);
 	for (size_t i = 0; i < Board::height; i++) {
@@ -125,4 +125,21 @@ void Renderer::drawBoard(Board board)
 
 	SetColor(Color::BLACK);
 	gotoxy(77, 23);
+}
+
+void Renderer::eraseLine(Board& board)
+{
+	SetColor(Color::BLUE);
+	gotoxy(1 * 2, i);
+	for (j = 1; j < width - 1; j++)
+	{
+		cout << "□";
+		Sleep(10);
+	}
+	gotoxy(1 * 2, i);
+	for (j = 1; j < 13; j++)
+	{
+		cout << "  ";
+		Sleep(10);
+	}
 }
