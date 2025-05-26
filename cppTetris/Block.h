@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-enum class Tetromino { I, O, T, J, L, S, Z };
+enum class Tetromino{ I, O, T, J, L, S, Z};
 using shapeVec = std::vector<std::vector<int>>;
 class Block
 {
@@ -18,10 +18,11 @@ public:
 	int getX() { return x; };
 	int getY() { return y; };
 	Tetromino getType() { return type; };
-
+	
 private:
 	shapeVec shape;
 	Tetromino type;
 
+	// int´ë½Å shortÀ» »ç¿ëÇÒ±î?
 	int x, y;
 };

@@ -5,7 +5,7 @@
 #include <conio.h>
 #include "Renderer.h"
 
-#define EXT_KEY			0xffffffe0	//È®ÀåÅ° ÀÎ½Ä°ª 
+#define EXT_KEY			0xffffffe0	//È®ï¿½ï¿½Å° ï¿½Î½Ä°ï¿½ 
 #define KEY_LEFT		0x4b
 #define KEY_RIGHT		0x4d
 #define KEY_UP			0x48
@@ -13,7 +13,7 @@
 
 using namespace std;
 
-GameManager::GameManager() :randType(Tetromino::I)
+GameManager::GameManager():randType(Tetromino::I)
 {
 	srand((unsigned int)time(NULL));
 }
@@ -25,6 +25,8 @@ GameManager::~GameManager()
 
 void GameManager::play()
 {
+	renderer.show_logo();
+	renderer.input_data();
 	renderer.drawBoard(board);
 	init();
 	int i = 0;
@@ -73,7 +75,7 @@ void GameManager::processInput()
 				keytemp = _getche();
 				switch (keytemp)
 				{
-				case KEY_UP:		//È¸ÀüÇÏ±â
+				case KEY_UP:		//È¸ï¿½ï¿½ï¿½Ï±ï¿½
 
 					if (!board.strike_check(current_block))
 					{
@@ -82,7 +84,7 @@ void GameManager::processInput()
 						renderer.drawBlock(current_block);
 					}
 					break;
-				case KEY_LEFT:		//¿ÞÂÊÀ¸·Î ÀÌµ¿
+				case KEY_LEFT:		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 					if (current_block.getX() > 1)
 					{
 						renderer.eraseBlock(current_block);
@@ -92,7 +94,7 @@ void GameManager::processInput()
 						renderer.drawBlock(current_block);
 					}
 					break;
-				case KEY_RIGHT:		//¿À¸¥ÂÊÀ¸·Î ÀÌµ¿
+				case KEY_RIGHT:		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 
 					if (current_block.getX() < 14)
 					{
@@ -103,14 +105,14 @@ void GameManager::processInput()
 						renderer.drawBlock(current_block);
 					}
 					break;
-				case KEY_DOWN:		//¾Æ·¡·Î ÀÌµ¿
+				case KEY_DOWN:		//ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 					renderer.eraseBlock(current_block);
 					isGameover = move_block(current_block);
 					renderer.drawBlock(current_block);
 					break;
 				}
 			}
-			if (keytemp == 32)	//½ºÆäÀÌ½º¹Ù¸¦ ´­·¶À»¶§
+			if (keytemp == 32)	//ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			{
 				while (isGameover == 0)
 				{
@@ -127,7 +129,7 @@ void GameManager::processInput()
 			renderer.drawBlock(current_block);
 		}
 
-		if (monster[level].getClearLine() == lines)	//Å¬¸®¾î ½ºÅ×ÀÌÁö
+		if (monster[level].getClearLine() == lines)	//Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		{
 			level++;
 			lines = 0;
@@ -143,4 +145,13 @@ void GameManager::processInput()
 		Sleep(15);
 		gotoxy(77, 23);
 	}
+	if (current_block.getY() + current_block.getShape().size() != Board::height - 1) {
+		renderer.eraseBlock(current_block);
+		current_block.move(0, 1);
+	}
+	
+	renderer.drawBlock(current_block);
+	/*randType = static_cast<Tetromino>(rand() % 7);
+	current_block = next_block;
+	next_block.setBlock(randType);*/
 }

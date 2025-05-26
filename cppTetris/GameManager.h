@@ -3,7 +3,6 @@
 #include "Renderer.h"
 #include "Board.h"
 
-
 class GameManager
 {
 private:
@@ -11,6 +10,7 @@ private:
 	int lines;
 	int level;
 	char keytemp;
+
 	Board board;
 
 	Block current_block;
@@ -29,5 +29,4 @@ public:
 	void update();
 	void make_new_block();
 	void processInput();
-
 };
