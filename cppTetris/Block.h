@@ -23,7 +23,6 @@ private:
 	shapeVec shape;
 	Tetromino type;
 
-	// int´ë½Å shortÀ» »ç¿ëÇÒ±î?
+	// intÂ´Ã«Â½Ã… shortÃ€Â» Â»Ã§Â¿Ã«Ã‡Ã’Â±Ã®?
 	int x, y;
 };
-

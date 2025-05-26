@@ -40,4 +40,3 @@ public:
 private:
 	Color color = Color::DARK_GRAY;
 };
-

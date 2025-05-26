@@ -3,19 +3,21 @@
 #include "Renderer.h"
 #include "Board.h"
 
-
-
 class GameManager
 {
 private:
+	int isGameover;
+	int lines;
+	int level;
+	char keytemp;
 
 	Board board;
 
 	Block current_block;
 	Block next_block;
 
-	static Renderer renderer;
-	
+	Renderer renderer;
+
 	Tetromino randType;
 public:
 	GameManager();
@@ -24,8 +26,7 @@ public:
 	void play();
 
 	void init();
-	void input();
 	void update();
-
+	void make_new_block();
+	void processInput();
 };
-

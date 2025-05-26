@@ -1,5 +1,7 @@
+
 #include "Board.h"
 #include "GameManager.h"
+
 
 Board::Board()
 {
@@ -31,6 +33,19 @@ bool Board::strike_check(Block b)
 	return false;
 }
 
+
+int Board::move_block(Block& b1, Block& b2)
+{
+	b1.setY(1);
+	if (strike_check(b1)) {
+		if (b1.getY() < 4) {
+			return 1;
+		}
+		merge_block(b1);
+		return 2;
+	}
+	return 0;
+=======
 void Board::merge_block(Block& block)
 {
 
@@ -46,9 +61,9 @@ int Board::check_full_line(Renderer& renderer)
 			if (total_block[i][j] == 0)
 				break;
 		}
-		if (j == 13) {	//ÇÑÁÙÀÌ ´Ù Ã¤¿öÁ³À½
+		if (j == 13) {	//í•œì¤„ì´ ë‹¤ ì±„ì›Œì¡ŒìŒ
 
-			// º¸µå¿¡¼­ ÁÙ Áö¿ì±â
+			// ë³´ë“œì—ì„œ ì¤„ ì§€ìš°ê¸°
 			for (k = i; k > 0; k--)
 				for (j = 1; j < 13; j++)
 					total_block[k][j] = total_block[k - 1][j];
@@ -56,7 +71,7 @@ int Board::check_full_line(Renderer& renderer)
 			for (j = 1; j < 13; j++)
 				total_block[0][j] = 0;
 
-			return i;	// Áö¿öÁø ÁÙ ¹ÝÈ¯
+			return i;	// ì§€ì›Œì§„ ì¤„ ë°˜í™˜
 		}
 	}
 	return -1;
