@@ -1,11 +1,14 @@
 #pragma once
 class Board
 {
-private:
+public:
+	int board[24][14];
 	static const int width = 14;
 	static const int height = 24;
-	int board[height][width];
-public:
+
 	Board();
+
+	void strike_check();
+
 };
 
