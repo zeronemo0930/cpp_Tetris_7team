@@ -17,7 +17,7 @@ void Board::merge_block(Block& block)
 
 }
 
-int Board::check_full_line(Board& board)
+int Board::check_full_line(Renderer& renderer)
 {
 	size_t i, j, k;
 	for (i = 3; i < height - 1; i++)
