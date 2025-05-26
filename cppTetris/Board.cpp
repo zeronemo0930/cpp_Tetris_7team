@@ -30,3 +30,12 @@ bool Board::strike_check(Block b)
 	}
 	return false;
 }
+
+void Board::merge_block(Block block)
+{
+
+}
+
+void Board::check_full_line()
+{
+}

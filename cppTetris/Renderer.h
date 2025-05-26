@@ -26,6 +26,8 @@ class Renderer
 {
 public:
 	void show_logo();
+	int show_cur_block(int shapeIndex, int x, int y);
+	int input_data();
 	void drawBlock(Block block);
 	void eraseBlock(Block block);
 

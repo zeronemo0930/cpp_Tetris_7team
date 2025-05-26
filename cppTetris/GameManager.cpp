@@ -17,6 +17,8 @@ GameManager::~GameManager()
 
 void GameManager::play()
 {
+	renderer.show_logo();
+	renderer.input_data();
 	renderer.drawBoard(board);
 	init();
 	int i = 0;
@@ -40,18 +42,13 @@ void GameManager::input()
 
 void GameManager::update()
 {
-	renderer.eraseBlock(current_block);
-	if(current_block.getY() + current_block.getShape().size() != Board::height-1)
+	if (current_block.getY() + current_block.getShape().size() != Board::height - 1) {
+		renderer.eraseBlock(current_block);
 		current_block.move(0, 1);
+	}
 	
 	renderer.drawBlock(current_block);
 	/*randType = static_cast<Tetromino>(rand() % 7);
 	current_block = next_block;
 	next_block.setBlock(randType);*/
-}
-
-void GameManager::make_new_block()
-{
-	
-	
 }

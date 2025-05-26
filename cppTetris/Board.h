@@ -10,5 +10,7 @@ public:
 
 	Board();
 	bool strike_check(Block b);
+	void merge_block(Block block);
+	void check_full_line();
 };
 
