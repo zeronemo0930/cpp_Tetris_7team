@@ -14,7 +14,7 @@ private:
 	Block current_block;
 	Block next_block;
 
-	Renderer renderer;
+	static Renderer renderer;
 	
 	Tetromino randType;
 public:

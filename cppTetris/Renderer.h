@@ -4,35 +4,39 @@
 #include "Block.h"
 #include "Board.h"
 enum class Color{ // Color enum
-	BLACK,      /*  0 : ±î¸Á */
-	DARK_BLUE,    /*  1 : ¾îµÎ¿î ÆÄ¶û */
-	DARK_GREEN,    /*  2 : ¾îµÎ¿î ÃÊ·Ï */
-	DARK_SKY_BLUE,  /*  3 : ¾îµÎ¿î ÇÏ´Ã */
-	DARK_RED,    /*  4 : ¾îµÎ¿î »¡°­ */
-	DARK_VOILET,  /*  5 : ¾îµÎ¿î º¸¶ó */
-	DARK_YELLOW,  /*  6 : ¾îµÎ¿î ³ë¶û */
-	GRAY,      /*  7 : È¸»ö */
-	DARK_GRAY,    /*  8 : ¾îµÎ¿î È¸»ö */
-	BLUE,      /*  9 : ÆÄ¶û */
-	GREEN,      /* 10 : ÃÊ·Ï */
-	SKY_BLUE,    /* 11 : ÇÏ´Ã */
-	RED,      /* 12 : »¡°­ */
-	VOILET,      /* 13 : º¸¶ó */
-	YELLOW,      /* 14 : ³ë¶û */
-	WHITE,      /* 15 : ÇÏ¾ç */
+	BLACK,      /*  0 : ê¹Œë§ */
+	DARK_BLUE,    /*  1 : ì–´ë‘ìš´ íŒŒë‘ */
+	DARK_GREEN,    /*  2 : ì–´ë‘ìš´ ì´ˆë¡ */
+	DARK_SKY_BLUE,  /*  3 : ì–´ë‘ìš´ í•˜ëŠ˜ */
+	DARK_RED,    /*  4 : ì–´ë‘ìš´ ë¹¨ê°• */
+	DARK_VOILET,  /*  5 : ì–´ë‘ìš´ ë³´ë¼ */
+	DARK_YELLOW,  /*  6 : ì–´ë‘ìš´ ë…¸ë‘ */
+	GRAY,      /*  7 : íšŒìƒ‰ */
+	DARK_GRAY,    /*  8 : ì–´ë‘ìš´ íšŒìƒ‰ */
+	BLUE,      /*  9 : íŒŒë‘ */
+	GREEN,      /* 10 : ì´ˆë¡ */
+	SKY_BLUE,    /* 11 : í•˜ëŠ˜ */
+	RED,      /* 12 : ë¹¨ê°• */
+	VOILET,      /* 13 : ë³´ë¼ */
+	YELLOW,      /* 14 : ë…¸ë‘ */
+	WHITE,      /* 15 : í•˜ì–‘ */
 };
 
 class Renderer
 {
 public:
 	void show_logo();
+
 	int show_cur_block(int shapeIndex, int x, int y);
 	int input_data();
-	void drawBlock(Block block);
-	void eraseBlock(Block block);
+	void drawBlock(Block& block);
+	void eraseBlock(Block& block);
+
 
 	void setBlockColor(Tetromino t);
-	void drawBoard(Board board);
+	void drawBoard(Board& board);
+
+	void eraseLine(Board& board);
 private:
 	Color color = Color::DARK_GRAY;
 };

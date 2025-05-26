@@ -9,8 +9,9 @@ public:
 	static const int height = 24;
 
 	Board();
-	bool strike_check(Block b);
-	void merge_block(Block block);
-	void check_full_line();
+
+	void strike_check();
+	void merge_block(Block& block);
+	int check_full_line(Renderer& renderer);
 };
 
