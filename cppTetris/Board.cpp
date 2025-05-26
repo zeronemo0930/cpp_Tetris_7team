@@ -11,3 +11,12 @@ Board::Board()
 		}
 	}
 }
+
+void Board::merge_block(Block block)
+{
+
+}
+
+void Board::check_full_line()
+{
+}
