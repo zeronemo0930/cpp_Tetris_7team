@@ -60,19 +60,18 @@ void GameManager::input()
 			switch (keytemp) 
 			{
 			case KEY_UP:	// 회전
-				//if()
 				renderer.eraseBlock(current_block);
-				current_block.rotate();
+				board.rotate_shift(current_block); // rotate할 때 strike_check 여부를 확인하고 rotate 가능한 좌표로 변환해주는 rotate_shift
+				//current_block.rotate();
 				renderer.drawBlock(current_block);
 				break;
 			case KEY_LEFT:	// 왼쪽으로 이동
-				//if (current_block.getX() <= 1) break;
+				//if (current_block.getX() < 1) break;
 				renderer.eraseBlock(current_block);
 				current_block.move(-1, 0);
 				if (board.strike_check(current_block)) 
 					current_block.move(1, 0);
 				renderer.drawBlock(current_block);
-				
 				break;
 			case KEY_RIGHT:	// 오른쪽으로 이동
 				if (current_block.getX() >= Board::width-1) break;

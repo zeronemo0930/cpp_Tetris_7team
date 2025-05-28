@@ -15,7 +15,7 @@ public:
 	bool check_full_line(size_t i);
 	int move_block(Block& block);
 	int eraseBoardLine(size_t i);
-	int rotateCheck(Block& block);
+	void rotate_shift(Block& b);
 private:
 
 };
