@@ -87,17 +87,16 @@ void GameManager::input()
 				renderer.eraseBlock(current_block);
 				isGameState = board.move_block(current_block);
 				renderer.drawBlock(current_block);
+				//renderer.drawBoard(board);
 				break;
 			}
 		}
 		if (keytemp == 32)	//스페이스바를 눌렀을때
 		{
 			renderer.eraseBlock(current_block);
-			while (isGameState == 0)
-			{
+			while (isGameState == 0) {
 				isGameState = board.move_block(current_block);
 			}
-			
 			renderer.drawBlock(current_block);
 			renderer.drawBoard(board);
 		}
@@ -106,7 +105,7 @@ void GameManager::input()
 
 void GameManager::update()
 {
-	//renderer.drawBoard(board);
+	renderer.drawBoard(board);
 	renderer.eraseBlock(current_block);
 	isGameState = board.move_block(current_block);
 	renderer.drawBlock(current_block);
@@ -124,4 +123,5 @@ void GameManager::checkState()
 	else if (isGameState == 1) {
 		exit(0);
 	}
+	isGameState = 0;
 }

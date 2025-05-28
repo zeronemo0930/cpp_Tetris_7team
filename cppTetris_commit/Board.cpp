@@ -94,7 +94,7 @@ int Board::move_block(Block& block)
 	block.move(0, 1);
 	if (strike_check(block)) {
 		block.move(0, -1);
-		if (block.getY() < 4)	return 1;	// GameOver
+		if (block.getY() < 3)	return 1;	// GameOver
 		merge_block(block);
 		return 2;	// create new block
 	}
