@@ -60,9 +60,9 @@ void GameManager::input()
 			switch (keytemp) 
 			{
 			case KEY_UP:	// 회전
-				//if()
 				renderer.eraseBlock(current_block);
-				current_block.rotate();
+				board.rotate_shift(current_block); // rotate할 때 strike_check 여부를 확인하고 rotate 가능한 좌표로 변환해주는 rotate_shift
+				//current_block.rotate();
 				renderer.drawBlock(current_block);
 				break;
 			case KEY_LEFT:	// 왼쪽으로 이동
