@@ -87,18 +87,19 @@ void GameManager::input()
 				renderer.eraseBlock(current_block);
 				isGameState = board.move_block(current_block);
 				renderer.drawBlock(current_block);
-				//renderer.drawBoard(board);
 				break;
 			}
 		}
 		if (keytemp == 32)	//스페이스바를 눌렀을때
 		{
 			renderer.eraseBlock(current_block);
-			while (isGameState == 0) {
+			while (isGameState == 0)
+			{
 				isGameState = board.move_block(current_block);
 			}
+			
 			renderer.drawBlock(current_block);
-			//renderer.drawBoard(board);
+			renderer.drawBoard(board);
 		}
 	}
 }
@@ -116,7 +117,6 @@ void GameManager::checkState()
 {
 	if (isGameState == 2) {
 		// create New Block
-		renderer.drawBoard(board);
 		current_block = next_block;
 		randType = static_cast<Tetromino>(rand() % 7);
 		next_block.setBlock(randType);
@@ -124,5 +124,4 @@ void GameManager::checkState()
 	else if (isGameState == 1) {
 		exit(0);
 	}
-	isGameState = 0;
 }
