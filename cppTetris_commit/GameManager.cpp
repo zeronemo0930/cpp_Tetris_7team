@@ -98,14 +98,14 @@ void GameManager::input()
 				isGameState = board.move_block(current_block);
 			}
 			renderer.drawBlock(current_block);
-			renderer.drawBoard(board);
+			//renderer.drawBoard(board);
 		}
 	}
 }
 
 void GameManager::update()
 {
-	renderer.drawBoard(board);
+	//renderer.drawBoard(board);
 	renderer.eraseBlock(current_block);
 	isGameState = board.move_block(current_block);
 	renderer.drawBlock(current_block);
@@ -116,6 +116,7 @@ void GameManager::checkState()
 {
 	if (isGameState == 2) {
 		// create New Block
+		renderer.drawBoard(board);
 		current_block = next_block;
 		randType = static_cast<Tetromino>(rand() % 7);
 		next_block.setBlock(randType);
