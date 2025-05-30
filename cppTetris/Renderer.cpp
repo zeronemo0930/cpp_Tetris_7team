@@ -16,6 +16,11 @@ void SetColor(Color color) {
 	SetConsoleTextAttribute(std_output_handle, static_cast<int>(color));
 }
 
+Renderer::Renderer()
+{
+	menu_string = { "Start", "Setting", "Exit" };
+}
+
 void Renderer::show_logo()
 {
 	srand(static_cast<unsigned int>(time(NULL))); // 랜덤 초기화
@@ -77,27 +82,14 @@ void Renderer::show_logo()
 void Renderer::show_menu(short menu)
 {
 	cout << endl;
-	SetColor(Color::WHITE);
-	gotoxy(13, 3);
-
-	SetColor(Color::WHITE);
-	gotoxy(28, 20);
-	if(menu == 0)
-		SetColor(Color::YELLOW);
-	cout << "▶ Start" << endl;
-
-	SetColor(Color::WHITE);
-	gotoxy(28, 21);
-	if (menu == 1)
-		SetColor(Color::YELLOW);
-	cout << "▶ Setting" << endl;
-
-	SetColor(Color::WHITE);
-	gotoxy(28, 22);
-	if (menu == 2)
-		SetColor(Color::YELLOW);
-	cout << "▶ Exit" << endl;
-
+	for (size_t i = 0; i < 3; i++) {
+		gotoxy(28, 20 + i);
+		if (menu == i) 
+			SetColor(Color::YELLOW);
+		else
+			SetColor(Color::WHITE);
+		cout << "▶" << menu_string[i] << endl;
+	}
 
 	SetColor(Color::WHITE);
 	gotoxy(77, 23);
@@ -213,3 +205,4 @@ void Renderer::eraseLine(size_t i)
 		Sleep(10);
 	}
 }
+
