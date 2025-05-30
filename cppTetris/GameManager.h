@@ -5,8 +5,10 @@
 class GameManager
 {
 private:
+	short menuSelector;
 	char keytemp;
 	int isGameState;
+
 	Board board;
 
 	Block current_block;
@@ -20,8 +22,9 @@ public:
 	~GameManager();
 
 
+	void start();
 	void play();
-
+	void menu();
 	void init();
 	void input();
 	void update();

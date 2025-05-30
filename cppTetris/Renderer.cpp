@@ -74,52 +74,39 @@ void Renderer::show_logo()
 	system("cls");
 }
 
-int Renderer::input_data()
+void Renderer::show_menu(short menu)
 {
-	int i = 0;
-	SetColor(Color::GRAY);
-	gotoxy(10, 7);
-	cout << ("┏━━━━━━━━━<GAME KEY>━━━━━━━━━┓");
-	Sleep(10);
-	gotoxy(10, 8);
-	cout << ("┃ UP   : Rotate Block        ┃");
-	Sleep(10);
-	gotoxy(10, 9);
-	cout << ("┃ DOWN : Move One-Step Down  ┃");
-	Sleep(10);
-	gotoxy(10, 10);
-	cout << ("┃ SPACE: Move Bottom Down    ┃");
-	Sleep(10);
-	gotoxy(10, 11);
-	cout << ("┃ LEFT : Move Left           ┃");
-	Sleep(10);
-	gotoxy(10, 12);
-	cout << ("┃ RIGHT: Move Right          ┃");
-	Sleep(10);
-	gotoxy(10, 13);
-	cout << ("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
+	cout << endl;
+	SetColor(Color::WHITE);
+	gotoxy(13, 3);
+
+	SetColor(Color::WHITE);
+	gotoxy(28, 20);
+	if(menu == 0)
+		SetColor(Color::YELLOW);
+	cout << "▶ Start" << endl;
+
+	SetColor(Color::WHITE);
+	gotoxy(28, 21);
+	if (menu == 1)
+		SetColor(Color::YELLOW);
+	cout << "▶ Setting" << endl;
+
+	SetColor(Color::WHITE);
+	gotoxy(28, 22);
+	if (menu == 2)
+		SetColor(Color::YELLOW);
+	cout << "▶ Exit" << endl;
 
 
-	//while (i < 1 || i>8)																	//레벨 변경하는 거
-	//{
-	//	gotoxy(10, 3);
-	//	printf("Select Start level[1-8]:       \b\b\b\b\b\b\b");
-	//	scanf_s("%d", &i);
-	//}
-
-
-	//level = i - 1;
-
-	gotoxy(10, 3);
-	cout << "Press any key" << endl;
-	_getch();
-	system("cls");
-	return 0;
+	SetColor(Color::WHITE);
+	gotoxy(77, 23);
 }
 
 // 약간의 개선이 필요할듯
 void Renderer::drawBlock(Block& block)
 {
+	cout << endl;
 	setBlockColor(block.getType());
 	SetColor(color);
 	short x = block.getX();
@@ -143,6 +130,7 @@ void Renderer::drawBlock(Block& block)
 
 void Renderer::eraseBlock(Block& block)
 {
+	cout << endl;
 	short x = block.getX();
 	short y = block.getY();
 	shapeVec shape = block.getShape();
@@ -190,14 +178,17 @@ void Renderer::setBlockColor(Tetromino t)
 
 void Renderer::drawBoard(Board& board)
 {
+	cout << endl;
 	SetColor(Color::DARK_GRAY);
 	for (size_t i = 0; i < Board::height; i++) {
 		for (size_t j = 0; j < Board::width; j++) {
+
 			gotoxy((j * 2) + ab_x, i + ab_y);
+
 			if(board.board[i][j] == 1)
-				printf ((i < 3) ? "□" : "■");
+				cout << ((i < 3) ? "□" : "■");
 			else
-				cout << "  ";
+				cout << "   ";
 		}
 	}
 
@@ -207,6 +198,7 @@ void Renderer::drawBoard(Board& board)
 
 void Renderer::eraseLine(size_t i)
 {
+	cout << endl;
 	SetColor(Color::BLUE);
 	gotoxy(1 * 2 + 5, i + 1);
 	for (size_t j = 1; j < Board::width - 1; j++)

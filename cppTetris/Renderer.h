@@ -27,8 +27,8 @@ class Renderer
 {
 public:
 	void show_logo();
+	void show_menu(short menu);
 
-	int input_data();
 	void drawBlock(Block& block);
 	void eraseBlock(Block& block);
 
@@ -37,6 +37,9 @@ public:
 	void drawBoard(Board& board);
 
 	static void eraseLine(size_t i);
+
+
+
 private:
 	Color color = Color::DARK_GRAY;
 	int ab_x = 5;

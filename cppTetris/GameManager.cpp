@@ -12,7 +12,7 @@
 
 using namespace std;
 
-GameManager::GameManager():randType(Tetromino::I), keytemp(NULL), isGameState(0)
+GameManager::GameManager():randType(Tetromino::I), keytemp(NULL), isGameState(0), menuSelector(0)
 {
 	srand((unsigned int)time(NULL));
 }
@@ -22,11 +22,22 @@ GameManager::~GameManager()
 
 }
 
+void GameManager::start()
+{
+	menu();
+	if (menuSelector == 0) {
+		play();
+	}
+	else if (menuSelector == 1) {
+
+	}
+	else if (menuSelector == 2) {
+		exit(0);
+	}
+}
+
 void GameManager::play()
 {
-
-	renderer.show_logo();
-	renderer.input_data();
 	renderer.drawBoard(board);
 	init();
 	int i = 0;
@@ -41,8 +52,41 @@ void GameManager::play()
 	}
 }
 
+void GameManager::menu() {
+	menuSelector = 0;
+	renderer.show_menu(menuSelector);
+	while (keytemp != '\r') {
+
+		if (_kbhit()) {
+			keytemp = _getch();
+			if (keytemp == EXT_KEY) {
+				keytemp = _getch();
+				switch (keytemp)
+				{
+				case KEY_UP:
+					if (menuSelector > 0) {
+						menuSelector--;
+						renderer.show_menu(menuSelector);
+					}
+					break;
+				case KEY_DOWN:
+					if (menuSelector < 2) {
+						menuSelector++;
+						renderer.show_menu(menuSelector);
+					}
+					break;
+				}
+			}
+		}
+	}
+	
+	system("cls");
+}
+
 void GameManager::init()
 {
+	isGameState = 0;
+	menuSelector = 0;
 	randType = static_cast<Tetromino>(rand() % 7);
 	current_block.setBlock(randType);
 	randType = static_cast<Tetromino>(rand() % 7);
@@ -65,6 +109,7 @@ void GameManager::input()
 				//current_block.rotate();
 				renderer.drawBlock(current_block);
 				break;
+
 			case KEY_LEFT:	// 왼쪽으로 이동
 				//if (current_block.getX() <= 1) break;
 				renderer.eraseBlock(current_block);
@@ -72,8 +117,8 @@ void GameManager::input()
 				if (board.strike_check(current_block)) 
 					current_block.move(1, 0);
 				renderer.drawBlock(current_block);
-				
 				break;
+
 			case KEY_RIGHT:	// 오른쪽으로 이동
 				if (current_block.getX() >= Board::width-1) break;
 				renderer.eraseBlock(current_block);
@@ -81,8 +126,8 @@ void GameManager::input()
 				if (board.strike_check(current_block))
 					current_block.move(-1, 0);
 				renderer.drawBlock(current_block);
-				
 				break;
+
 			case KEY_DOWN:	// 아래로 이동
 				renderer.eraseBlock(current_block);
 				isGameState = board.move_block(current_block);
