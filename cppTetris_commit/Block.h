@@ -17,7 +17,10 @@ public:
 
 	int getX() const { return x; };
 	int getY() const { return y; };
-	Tetromino getType() { return type; };
+	Tetromino getType()  { return type; }
+
+
+
 	
 private:
 	shapeVec shape;

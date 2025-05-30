@@ -32,6 +32,7 @@ public:
 	void drawBlock(Block& block);
 	void eraseBlock(Block& block);
 
+	void show_next_block(Block& block);
 
 	void setBlockColor(Tetromino t);
 	void drawBoard(Board& board);

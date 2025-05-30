@@ -35,6 +35,7 @@ void GameManager::play()
 		checkState();
 		if (i % 30 == 0)
 			update();
+			renderer.show_next_block(next_block);
 		i++;
 		Sleep(15);
 		gotoxy(77, 23);
