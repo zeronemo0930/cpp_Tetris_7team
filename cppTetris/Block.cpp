@@ -15,8 +15,8 @@ Block::~Block()
 
 void Block::setBlock(Tetromino t)
 {
-	x = 5;
-	y = 0;
+	x = 17;
+	y = 1;
 	type = t;
 	switch (t)
 	{
@@ -89,8 +89,14 @@ void Block::rotate()
 }
 
 
-void Block::move(int dx, int dy)
+void Block::move(short dx, short dy)
 {
 	x += dx;
 	y += dy;
+}
+
+void Block::setPos(short x, short y)
+{
+	this->x = x;
+	this->y = y;
 }

@@ -12,7 +12,8 @@ public:
 
 	void setBlock(Tetromino t);
 	void rotate();
-	void move(int dx, int dy);
+	void move(short dx, short dy);
+	void setPos(short x, short y);
 	const shapeVec& getShape() const { return shape; };
 
 	int getX() const { return x; };
@@ -24,6 +25,6 @@ private:
 	Tetromino type;
 
 	// int대신 short을 사용할까?
-	int x, y;
+	short x, y;
 };
 

@@ -27,7 +27,7 @@ void GameManager::start()
 	menu();
 	if (menuSelector == 0) {
 		play();
-	}
+	} 
 	else if (menuSelector == 1) {
 
 	}
@@ -89,8 +89,10 @@ void GameManager::init()
 	menuSelector = 0;
 	randType = static_cast<Tetromino>(rand() % 7);
 	current_block.setBlock(randType);
+	current_block.setPos(5, 0);
 	randType = static_cast<Tetromino>(rand() % 7);
 	next_block.setBlock(randType);
+	renderer.drawBlock(next_block);
 }
 
 void GameManager::input()
@@ -159,13 +161,21 @@ void GameManager::checkState()
 {
 	if (isGameState == 2) {
 		// create New Block
-		renderer.drawBoard(board);
-		current_block = next_block;
-		randType = static_cast<Tetromino>(rand() % 7);
-		next_block.setBlock(randType);
+		makeNewBlock();
 	}
 	else if (isGameState == 1) {
 		exit(0);
 	}
 	isGameState = 0;
+}
+
+void GameManager::makeNewBlock()
+{
+	renderer.drawBoard(board);
+	renderer.eraseBlock(next_block);
+	current_block = next_block;
+	current_block.setPos(5, 0);
+	randType = static_cast<Tetromino>(rand() % 7);
+	next_block.setBlock(randType);
+	renderer.drawBlock(next_block);
 }
