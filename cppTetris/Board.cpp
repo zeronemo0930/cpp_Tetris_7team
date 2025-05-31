@@ -103,7 +103,7 @@ void Board::rotate_shift(Block& b) // È¸ÀüÀÌ °¡´ÉÇÑ °æ¿ì¿¡¸¸ µµÇüÀ» È¸ÀüÇØÁÖ´Â Ç
 		b = block; //
 }
 
-int Board::move_block(Block& block)
+int Board::move_block(Block& block) 
 {
 	block.move(0, 1);
 	if (strike_check(block)) {
