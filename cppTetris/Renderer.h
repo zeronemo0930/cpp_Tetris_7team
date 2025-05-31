@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <array>
 #include <Windows.h>
 #include "Block.h"
 #include "Board.h"
@@ -26,6 +27,8 @@ enum class Color{
 class Renderer
 {
 public:
+	Renderer();
+
 	void show_logo();
 	void show_menu(short menu);
 
@@ -37,11 +40,12 @@ public:
 	void drawBoard(Board& board);
 
 	static void eraseLine(size_t i);
-
+	//void show_next_block(Block& nextBlock);
 
 
 private:
 	Color color = Color::DARK_GRAY;
+	std::array<std::string, 3> menu_string;
 	int ab_x = 5;
 	int ab_y = 1;
 };
