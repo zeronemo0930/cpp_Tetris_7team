@@ -19,6 +19,13 @@ void SetColor(Color color) {
 Renderer::Renderer()
 {
 	menu_string = { "Start", "Setting", "Exit" };
+	system("Tetris");
+	system("mode con:cols=100 lines=30");
+	CONSOLE_CURSOR_INFO ConsoleCursor;
+	ConsoleCursor.bVisible = false;
+	ConsoleCursor.dwSize = 1;
+	HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleCursorInfo(consoleHandle, &ConsoleCursor);
 }
 
 void Renderer::show_logo()
@@ -83,7 +90,7 @@ void Renderer::show_menu(short menu)
 {
 	cout << endl;
 	for (size_t i = 0; i < 3; i++) {
-		gotoxy(28, 20 + i);
+		gotoxy(42, 20 + i);
 		if (menu == i) 
 			SetColor(Color::YELLOW);
 		else
