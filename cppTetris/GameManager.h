@@ -30,5 +30,7 @@ public:
 	void update();
 
 	void checkState();
+
+	void makeNewBlock();
 };
 

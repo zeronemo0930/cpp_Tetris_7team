@@ -91,6 +91,8 @@ void GameManager::init()
 	current_block.setBlock(randType);
 	randType = static_cast<Tetromino>(rand() % 7);
 	next_block.setBlock(randType);
+	current_block.setPosition(5, 0);
+	renderer.drawBlock(next_block);
 }
 
 void GameManager::input()
@@ -159,13 +161,22 @@ void GameManager::checkState()
 {
 	if (isGameState == 2) {
 		// create New Block
-		renderer.drawBoard(board);
-		current_block = next_block;
-		randType = static_cast<Tetromino>(rand() % 7);
-		next_block.setBlock(randType);
+		makeNewBlock();
 	}
 	else if (isGameState == 1) {
+		// 게임 종료
 		exit(0);
 	}
 	isGameState = 0;
+}
+
+void GameManager::makeNewBlock()
+{
+	renderer.eraseBlock(next_block);	// 블럭 지우고
+	renderer.drawBoard(board);			// 판 새로 그리고
+	current_block = next_block;			// 다음 블럭 할당하고
+	current_block.setPosition(5, 0);	// Block의 위치를 board판 위로 재 설정
+	randType = static_cast<Tetromino>(rand() % 7);	// 새로운 블럭 할당
+	next_block.setBlock(randType); 
+	renderer.drawBlock(next_block);	// next_block 표시하기.
 }

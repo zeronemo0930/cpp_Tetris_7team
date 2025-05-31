@@ -1,3 +1,7 @@
+/*
+* 블럭 초기 위치 : (15, 1), 게임 화면 상 next_block이 표시되는 위치.
+*/
+
 #pragma once
 #include <vector>
 
@@ -12,7 +16,8 @@ public:
 
 	void setBlock(Tetromino t);
 	void rotate();
-	void move(int dx, int dy);
+	void move(short dx, short dy);
+	void setPosition(short x, short y);
 	const shapeVec& getShape() const { return shape; };
 
 	int getX() const { return x; };
@@ -24,6 +29,6 @@ private:
 	Tetromino type;
 
 	// int대신 short을 사용할까?
-	int x, y;
+	short x, y;
 };
 

@@ -4,7 +4,9 @@
 #include <Windows.h>
 #include "Block.h"
 #include "Board.h"
-
+/*
+* Console Size : cols=100, lines=35
+*/
 enum class Color{
 	BLACK,
 	DARK_BLUE, 
@@ -39,8 +41,8 @@ public:
 	void setBlockColor(Tetromino t);
 	void drawBoard(Board& board);
 
-	static void eraseLine(size_t i);
-	//void show_next_block(Block& nextBlock);
+	static void eraseLine(int i);
+	void show_next_block(Block& nextBlock);
 
 
 private:

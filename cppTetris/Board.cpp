@@ -14,12 +14,13 @@ Board::Board()
 bool Board::strike_check(const Block& b)
 {
 	const shapeVec& shape = b.getShape();
-	size_t b_size = shape.size();
+	size_t m = shape.size();
+	size_t n = shape[0].size();
 	int x = b.getX();
 	int y = b.getY();
 
-	for (int i = 0; i < b_size; ++i) {
-		for (int j = 0; j < b_size; ++j) {
+	for (int i = 0; i < m; ++i) {
+		for (int j = 0; j < n; ++j) {
 			if (shape[i][j] != 1) continue; // ºí·Ï ¼¿ÀÌ ¾Æ´Ñ °æ¿ì
 
 			int board_x = x + j;
@@ -42,12 +43,13 @@ bool Board::strike_check(const Block& b)
 void Board::merge_block(Block& block)
 {
 	const shapeVec& shape = block.getShape();
-	size_t b_size = shape.size();
+	size_t m = shape.size();
+	size_t n = shape[0].size();
 	int x = block.getX();
 	int y = block.getY();
 
-	for (size_t i = 0; i < b_size; i++) {
-		for (size_t j = 0; j < b_size; j++) {
+	for (size_t i = 0; i < m; i++) {
+		for (size_t j = 0; j < n; j++) {
 			board[y + i][x + j] |= shape[i][j];
 		}
 	}
@@ -89,11 +91,11 @@ void Board::rotate_shift(Block& b) // È¸ÀüÀÌ °¡´ÉÇÑ °æ¿ì¿¡¸¸ µµÇüÀ» È¸ÀüÇØÁÖ´Â Ç
 	Block block = b; // parameter block¿¡ ´ëÇÑ ¾èÀº º¹»ç
 	block.rotate(); // µµÇüÀ» ÀÓÀÇ·Î È¸Àü
 	const shapeVec& shape = block.getShape(); // È¸ÀüÇÑ µµÇü Á¤º¸
-	size_t size = shape.size(); // µµÇüÀÇ ¿ë·®
-	while (block.getX() < 1 || block.getX() + size > 13) { // µµÇüÀÌ boardÀÇ edge¿¡ °ÉÃÄÁ® ÀÖ´Ù¸é
+	size_t n = shape[0].size();	// µµÇüÀÇ ¿ë·®
+	while (block.getX() < 1 || block.getX() + n > 13) { // µµÇüÀÌ boardÀÇ edge¿¡ °ÉÃÄÁ® ÀÖ´Ù¸é
 		if (block.getX() < 1) // ¿ŞÂÊ edge¿¡ °ÉÃÄÀÖÀ» ¶§
 			block.move(1, 0); // right shift
-		else if (block.getX() + size > 13) //¿À¸¥ÂÊ edge¿¡ °ÉÃÄÀÖÀ» ¶§
+		else if (block.getX() + n > 13) //¿À¸¥ÂÊ edge¿¡ °ÉÃÄÀÖÀ» ¶§
 			block.move(-1, 0); // left shift
 	}
 	if (!strike_check(block)) /* ´ÙÀ½ Á¶°Ç¹® falseÀÇ ÀÇ¹Ì : shift ¿Ï·á ÈÄ¿¡µµ µµÇüÀÌ board¿¡ strikeÇÔ

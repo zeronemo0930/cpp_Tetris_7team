@@ -18,7 +18,16 @@ void SetColor(Color color) {
 
 Renderer::Renderer()
 {
-	menu_string = { "Start", "Setting", "Exit" };
+	menu_string = {"New Game", "Setting", "Exit"};
+	//menu_string = { "Load Game", "New Game", "Setting", "Exit"};
+	system("Tetirs");
+	system("mode con:cols=100 lines=35");
+
+	CONSOLE_CURSOR_INFO ConsoleCursor;
+	ConsoleCursor.bVisible = false;
+	ConsoleCursor.dwSize = 1;
+	HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleCursorInfo(consoleHandle, &ConsoleCursor);
 }
 
 void Renderer::show_logo()
@@ -79,12 +88,33 @@ void Renderer::show_logo()
 	system("cls");
 }
 
+// 게임 SAVE 넣을 시
+//void Renderer::show_menu(short menu)
+//{
+//	cout << endl;
+//	int i;
+//	bool isSaved = false;
+//	for ((isSaved ? i = 0 : i = 1); i < 4; i++) {
+//		gotoxy(44, 20 + i);
+//		if (menu == i) 
+//			SetColor(Color::YELLOW);
+//		else
+//			SetColor(Color::WHITE);
+//		cout << "▶" << menu_string[i] << endl;
+//	}
+//
+//	SetColor(Color::WHITE);
+//	gotoxy(77, 23);
+//}
+
+
 void Renderer::show_menu(short menu)
 {
 	cout << endl;
-	for (size_t i = 0; i < 3; i++) {
-		gotoxy(28, 20 + i);
-		if (menu == i) 
+	;
+	for (int i = 0; i < 3; i++) {
+		gotoxy(44, 20 + i);
+		if (menu == i)
 			SetColor(Color::YELLOW);
 		else
 			SetColor(Color::WHITE);
@@ -94,7 +124,6 @@ void Renderer::show_menu(short menu)
 	SetColor(Color::WHITE);
 	gotoxy(77, 23);
 }
-
 // 약간의 개선이 필요할듯
 void Renderer::drawBlock(Block& block)
 {
@@ -172,8 +201,8 @@ void Renderer::drawBoard(Board& board)
 {
 	cout << endl;
 	SetColor(Color::DARK_GRAY);
-	for (size_t i = 0; i < Board::height; i++) {
-		for (size_t j = 0; j < Board::width; j++) {
+	for (int i = 0; i < Board::height; i++) {
+		for (int j = 0; j < Board::width; j++) {
 
 			gotoxy((j * 2) + ab_x, i + ab_y);
 
@@ -188,21 +217,27 @@ void Renderer::drawBoard(Board& board)
 	gotoxy(77, 23);
 }
 
-void Renderer::eraseLine(size_t i)
+void Renderer::eraseLine(int i)
 {
 	cout << endl;
 	SetColor(Color::BLUE);
 	gotoxy(1 * 2 + 5, i + 1);
-	for (size_t j = 1; j < Board::width - 1; j++)
+	for (int j = 1; j < Board::width - 1; j++)
 	{
 		cout << "□";
 		Sleep(10);
 	}
 	gotoxy(1 * 2, i);
-	for (size_t j = 1; j < 13; j++)
+	for (int j = 1; j < 13; j++)
 	{
 		cout << "  ";
 		Sleep(10);
 	}
+}
+
+void Renderer::show_next_block(Block& nextBlock) {
+	cout << endl;
+	setBlockColor(nextBlock.getType());
+	SetColor(color);
 }
 
