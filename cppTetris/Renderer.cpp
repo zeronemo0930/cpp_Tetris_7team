@@ -115,9 +115,9 @@ void Renderer::drawBlock(Block& block, bool isShadow)
 
 	for (int i = 0; i < shape.size(); i++) {
 		for (int j = 0; j < shape[0].size(); j++) {
-			if (shape[i][j] == 1) {
+			if (shape[i][j] != 0) {
 				gotoxy((x + j)*2 + ab_x, y + i + ab_y);
-				cout << (isShadow ? "в├" : "бс");
+				cout << (isShadow ? "бр" : "бс");
 			}
 
 		}
@@ -135,7 +135,7 @@ void Renderer::eraseBlock(Block& block)
 	shapeVec shape = block.getShape();
 	for (int i = 0; i < shape.size(); i++) {
 		for (int j = 0; j < shape[0].size(); j++) {
-			if (shape[i][j] == 1) {
+			if (shape[i][j] != 0) {
 				gotoxy((x + j) * 2 + ab_x, y + i + ab_y);
 				cout << "  ";
 			}
@@ -173,20 +173,25 @@ void Renderer::setBlockColor(Tetromino t)
 		break;
 	}
 	SetColor(color);
-
 }
 
 void Renderer::drawBoard(Board& board)
 {
 	cout << endl;
-	SetColor(Color::DARK_GRAY);
+	
 	for (size_t i = 0; i < Board::height; i++) {
 		for (size_t j = 0; j < Board::width; j++) {
 
 			gotoxy((j * 2) + ab_x, i + ab_y);
-
-			if(board.board[i][j] == 1)
+			if (j == 0 || j == Board::width - 1 || i == Board::height - 1) {
+				SetColor(Color::WHITE);
 				cout << ((i < 3) ? "бр" : "бс");
+			}
+			else if (board.board[i][j] != 0) {
+				setBlockColor(static_cast<Tetromino>(board.board[i][j] - 1));
+				SetColor(color);
+				cout << "в├";
+			}
 			else
 				cout << "   ";
 		}

@@ -181,6 +181,7 @@ void GameManager::moveSpace()
 	while (isGameState == 0) {
 		isGameState = board.move_block(current_block);
 	}
+
 }
 
 

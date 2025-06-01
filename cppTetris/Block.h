@@ -16,6 +16,8 @@ public:
 	void setPos(short x, short y);
 	const shapeVec& getShape() const { return shape; };
 
+	
+
 	int getX() const { return x; };
 	int getY() const { return y; };
 	Tetromino getType() { return type; };

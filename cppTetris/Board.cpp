@@ -20,7 +20,7 @@ bool Board::strike_check(const Block& b)
 
 	for (int i = 0; i < b_size; ++i) {
 		for (int j = 0; j < b_size; ++j) {
-			if (shape[i][j] != 1) continue; // 블록 셀이 아닌 경우
+			if (shape[i][j] == 0) continue; // 블록 셀이 아닌 경우
 
 			int board_x = x + j;
 			int board_y = y + i;
@@ -31,7 +31,7 @@ bool Board::strike_check(const Block& b)
 				return true;
 
 			// 다른 블록과의 충돌
-			if (board[board_y][board_x] == 1)
+			if (board[board_y][board_x] != 0)
 				return true;
 		}
 	}
@@ -48,7 +48,8 @@ void Board::merge_block(Block& block)
 
 	for (size_t i = 0; i < b_size; i++) {
 		for (size_t j = 0; j < b_size; j++) {
-			board[y + i][x + j] |= shape[i][j];
+			if(board[y + i][x + j] == 0)
+				board[y + i][x + j] = shape[i][j];
 		}
 	}
 	for (size_t i = 3; i < height - 1; i++) {

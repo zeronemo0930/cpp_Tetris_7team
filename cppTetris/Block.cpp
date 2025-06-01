@@ -31,43 +31,43 @@ void Block::setBlock(Tetromino t)
 		break;
 	case Tetromino::O:
 		shape = {
-			{1, 1},
-			{1, 1}
+			{2, 2},
+			{2, 2}
 		};
 		break;
 	case Tetromino::T:
 		shape = {
 			{0, 0, 0},
-			{1, 1, 1},
-			{0, 1, 0}
+			{3, 3, 3},
+			{0, 3, 0}
 		};
 		break;
 	case Tetromino::J:
 		shape = {
 			{0, 0, 0},
-			{1, 1, 1},
-			{0, 0, 1}
+			{4, 4, 4},
+			{0, 0, 4}
 		};
 		break;
 	case Tetromino::L:
 		shape = {
 			{0, 0, 0},
-			{1, 1, 1},
-			{1, 0, 0}
+			{5, 5, 5},
+			{5, 0, 0}
 		};
 		break;
 	case Tetromino::S:
 		shape = {
 			{0, 0, 0},
-			{0, 1, 1},
-			{1, 1, 0}
+			{0, 6, 6},
+			{6, 6, 0}
 		};
 		break;
 	case Tetromino::Z:
 		shape = {
 			{0, 0, 0},
-			{1, 1, 0},
-			{0, 1, 1}
+			{7, 7, 0},
+			{0, 7, 7}
 		};
 		break;
 	}

@@ -12,15 +12,15 @@ enum class Color{
 	DARK_SKY_BLUE, 
 	DARK_RED, 
 	DARK_VOILET, 
-	DARK_YELLOW, 
+	DARK_YELLOW,		// Tetris L Block
 	GRAY,    
-	DARK_GRAY,  
-	BLUE,     
-	GREEN,   
-	SKY_BLUE, 
-	RED,     
-	VOILET,   
-	YELLOW, 
+	DARK_GRAY,			
+	BLUE,				// Tetris J Block
+	GREEN,				// Tetris S Block
+	SKY_BLUE,			// Tetris I Block
+	RED,				// Tetris Z Block
+	VOILET,				// Tetris T Block
+	YELLOW,				// Tetris O Block
 	WHITE,  
 };
 
@@ -39,6 +39,8 @@ public:
 	void drawBoard(Board& board);
 
 	static void eraseLine(size_t i);
+
+	void setBoardBlockColor(Tetromino t);
 	//void show_next_block(Block& nextBlock);
 
 
