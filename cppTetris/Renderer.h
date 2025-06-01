@@ -4,7 +4,8 @@
 #include <Windows.h>
 #include "Block.h"
 #include "Board.h"
-
+#include "Monster.h"
+#include <iomanip>
 enum class Color{
 	BLACK,
 	DARK_BLUE, 
@@ -42,10 +43,8 @@ public:
 
 	void show_game_stat(int score);
 
-	void setBoardBlockColor(Tetromino t);
-	//void show_next_block(Block& nextBlock);
-
-
+	void drawMonster(Monster& mon);
+	void drawMonsterHp(Monster& mon);
 private:
 	Color color = Color::DARK_GRAY;
 	std::array<std::string, 3> menu_string;

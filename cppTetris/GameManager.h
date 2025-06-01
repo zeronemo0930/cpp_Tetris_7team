@@ -19,6 +19,8 @@ private:
 	Renderer renderer;
 	
 	Tetromino randType;
+
+	Monster monster;
 public:
 	GameManager();
 	~GameManager();

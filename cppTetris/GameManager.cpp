@@ -12,7 +12,7 @@
 
 using namespace std;
 
-GameManager::GameManager():randType(Tetromino::I), keytemp(NULL), isGameState(0), menuSelector(0)
+GameManager::GameManager():randType(Tetromino::I), keytemp(NULL), isGameState(0), menuSelector(0), monster(MonsterName::RAT)
 {
 	srand((unsigned int)time(NULL));
 }
@@ -38,18 +38,24 @@ void GameManager::start()
 
 void GameManager::play()
 {
+
+	// 테스트용 몬스터
+	renderer.drawMonster(monster);
+	renderer.drawMonsterHp(monster);
+
 	renderer.drawBoard(board);
 	init();
 	int i = 0;
 	score = 0;
 	renderer.show_game_stat(score);
 	while (true) {
-		score += board.get_clear_line_score(); // ← 점수만 계산해서 추가
+
 		input();
 		checkState();
-		if (i % 30 == 0)
+		if (i % 30 == 0) {
 			update();
-		renderer.show_game_stat(score);
+		}
+
 		i++;
 		Sleep(15);
 		gotoxy(77, 23);
@@ -207,6 +213,14 @@ void GameManager::checkState()
 	if (isGameState == 2) {
 		// create New Block
 		makeNewBlock();
+		int temp = board.get_clear_line_score();
+		if (temp != 0) {
+			for(int i = 0; i < temp/100; i++)
+				monster.takeDamage();
+			renderer.drawMonsterHp(monster);
+		}
+		score += temp;
+		renderer.show_game_stat(score);
 	}
 	else if (isGameState == 1) {
 		exit(0);

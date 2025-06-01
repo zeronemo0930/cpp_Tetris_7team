@@ -88,6 +88,7 @@ void Renderer::show_logo()
 
 void Renderer::show_game_stat(int score)
 {
+	cout << endl;
 	static bool printed_text = false;
 	SetColor(Color::GRAY);
 
@@ -103,6 +104,38 @@ void Renderer::show_game_stat(int score)
 	gotoxy(35, 10);
 	printf("%10d", score);
 }
+
+void Renderer::drawMonster(Monster& mon)
+{
+	cout << endl;
+	monsterVec monster = mon.getMonsterVec();
+	for (int i = 0; i < monster.size(); i++) {
+		gotoxy(60, 10 + i);
+		cout << monster[i];
+	}
+}
+
+void Renderer::drawMonsterHp(Monster& mon)
+{
+	cout << endl;
+	SetColor(Color::WHITE);
+	int hp = mon.getCurrentHp();
+	int maxHp = mon.getMaxHp();
+	gotoxy(60, 5);
+	cout << "                              ";
+	gotoxy(60, 5);
+	cout << "HP : " << hp << " / " << maxHp;
+	for (int i = 0; i < maxHp; i++) {
+		gotoxy(60 + i*2, 6);
+		if (i < hp)
+			cout << "бс";
+		else
+			cout << "бр";
+	}
+}
+
+
+
 
 void Renderer::show_menu(short menu)
 {

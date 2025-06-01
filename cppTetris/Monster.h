@@ -1,10 +1,12 @@
 #pragma once
-
-
+#include <vector>
+#include <string>
 // Monster 이름, 난이도 다시 정하기
 enum class MonsterName {
-	SLIME, GHOST, HAMSTER
+	RAT, GHOST, HAMSTER
 };
+
+using monsterVec = std::vector<std::string>;
 
 class Monster
 {
@@ -12,16 +14,20 @@ public:
 	Monster() = delete;
 	Monster(MonsterName name);
 	~Monster();
-	void printMonster() const;
-	void printStatus() const;
-	void takeDamage() { hp--; }
-	bool isDead() const { return hp <= 0; }
-	static Monster* getNextMonster();
 
+	void takeDamage() { currentHp--; }
+	bool isDead() const { return currentHp <= 0; }
+	monsterVec& getMonsterVec() { return this->monsterShape; }
+	int getMaxHp() { return this->MaxHp; }
+	int getCurrentHp() { return this->currentHp; }
 private:
 	MonsterName current_Monster;
+	monsterVec monsterShape;
+
 	static int stage;
 	int speed;
 	int stick_rate;
-	int hp;
+
+	int MaxHp;
+	int currentHp;
 };
