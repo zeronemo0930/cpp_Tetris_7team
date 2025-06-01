@@ -117,7 +117,7 @@ void Renderer::drawBlock(Block& block, bool isShadow)
 		for (int j = 0; j < shape[0].size(); j++) {
 			if (shape[i][j] != 0) {
 				gotoxy((x + j)*2 + ab_x, y + i + ab_y);
-				cout << (isShadow ? "бр" : "бс");
+				cout << (isShadow ? "в╩" : "бс");
 			}
 
 		}
@@ -190,7 +190,7 @@ void Renderer::drawBoard(Board& board)
 			else if (board.board[i][j] != 0) {
 				setBlockColor(static_cast<Tetromino>(board.board[i][j] - 1));
 				SetColor(color);
-				cout << "в├";
+				cout << "бс";
 			}
 			else
 				cout << "   ";

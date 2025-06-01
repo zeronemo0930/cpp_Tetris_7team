@@ -218,5 +218,6 @@ void GameManager::makeNewBlock()
 	randType = static_cast<Tetromino>(rand() % 7);
 	next_block.setBlock(randType);
 	renderer.drawBlock(next_block, false);
+	renderer.drawBlock(current_block, false);
 	shadowBlock(true);
 }
