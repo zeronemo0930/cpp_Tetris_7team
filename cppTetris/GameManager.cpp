@@ -213,10 +213,16 @@ void GameManager::checkState()
 	if (isGameState == 2) {
 		// create New Block
 		makeNewBlock();
+
+		// 몬스터에 데미지가 들어가면 업데이트
 		int temp = board.get_clear_line_score();
 		if (temp != 0) {
-			for(int i = 0; i < temp/100; i++)
-				monster.takeDamage();
+			monster.takeDamage(temp / 100);
+
+			// 테스트 용으로 넣어놓은 코드
+			if (monster.isDead()) {
+				exit(0);
+			}
 			renderer.drawMonsterHp(monster);
 		}
 		score += temp;

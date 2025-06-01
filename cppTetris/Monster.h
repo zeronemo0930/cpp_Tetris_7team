@@ -15,7 +15,7 @@ public:
 	Monster(MonsterName name);
 	~Monster();
 
-	void takeDamage() { currentHp--; }
+	void takeDamage(int damage) { currentHp -= damage; }
 	bool isDead() const { return currentHp <= 0; }
 	monsterVec& getMonsterVec() { return this->monsterShape; }
 	int getMaxHp() { return this->MaxHp; }
