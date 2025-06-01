@@ -41,11 +41,15 @@ void GameManager::play()
 	renderer.drawBoard(board);
 	init();
 	int i = 0;
+	score = 0;
+	renderer.show_game_stat(score);
 	while (true) {
+		score += board.get_clear_line_score(); // ← 점수만 계산해서 추가
 		input();
 		checkState();
 		if (i % 30 == 0)
 			update();
+		renderer.show_game_stat(score);
 		i++;
 		Sleep(15);
 		gotoxy(77, 23);
@@ -135,6 +139,7 @@ void GameManager::update()
 	//renderer.drawBoard(board);
 	renderer.eraseBlock(current_block);
 	isGameState = board.move_block(current_block);
+
 	renderer.drawBlock(current_block, false);
 	checkState();
 }

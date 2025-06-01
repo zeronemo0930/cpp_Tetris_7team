@@ -86,6 +86,24 @@ void Renderer::show_logo()
 	system("cls");
 }
 
+void Renderer::show_game_stat(int score)
+{
+	static bool printed_text = false;
+	SetColor(Color::GRAY);
+
+	// "SCORE" 텍스트는 한 번만 출력
+	if (!printed_text)
+	{
+		gotoxy(35, 9);
+		std::cout << "SCORE";
+		printed_text = true;
+	}
+
+	// 점수는 계속 업데이트됨
+	gotoxy(35, 10);
+	printf("%10d", score);
+}
+
 void Renderer::show_menu(short menu)
 {
 	cout << endl;

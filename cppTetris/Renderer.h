@@ -40,6 +40,8 @@ public:
 
 	static void eraseLine(size_t i);
 
+	void show_game_stat(int score);
+
 	void setBoardBlockColor(Tetromino t);
 	//void show_next_block(Block& nextBlock);
 

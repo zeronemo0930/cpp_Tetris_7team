@@ -9,6 +9,7 @@ private:
 	char keytemp;
 	int isGameState;
 
+	int score = 0;
 	Board board;
 
 	Block shadow_block;
