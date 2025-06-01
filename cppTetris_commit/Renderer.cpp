@@ -6,6 +6,20 @@
 using namespace std;
 
 
+enum {
+	BLACK = 0,
+	BLUE = 1,
+	GREEN = 2,
+	SKY_BLUE = 3,
+	RED = 4,
+	VOILET = 5,
+	YELLOW = 6,
+	WHITE = 7,
+	GRAY = 8,
+	DARK_YELLOW = 14
+};
+
+
 void gotoxy(int x, int y) {
     COORD pos = { static_cast<SHORT>(x), static_cast<SHORT>(y) };
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
@@ -156,6 +170,80 @@ void Renderer::eraseBlock(Block& block)
 		}
 	}
 }
+
+void SetColor(int color)															// color 설정하는거 못찾아서 새로추가...
+{
+	static HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, color);
+}
+
+void Renderer::show_next_block(Block& nextBlock)
+{
+	const shapeVec& shape = nextBlock.getShape();
+	Tetromino type = nextBlock.getType();
+
+	// 색 설정 (기존 enum 값 사용)
+	switch (type)
+	{
+	case Tetromino::I: SetColor(SKY_BLUE); break;
+	case Tetromino::O: SetColor(YELLOW); break;
+	case Tetromino::T: SetColor(VOILET); break;
+	case Tetromino::J: SetColor(BLUE); break;
+	case Tetromino::L: SetColor(DARK_YELLOW); break;
+	case Tetromino::S: SetColor(GREEN); break;
+	case Tetromino::Z: SetColor(RED); break;
+	}
+
+	// 테두리 박스 출력 (위치 고정)
+	for (int i = 0; i < 6; i++)
+	{
+		gotoxy(33, i + 1);
+		for (int j = 0; j < 6; j++)
+		{
+			if (i == 0 || i == 5 || j == 0 || j == 5)
+				printf("■");
+			else
+				printf("  ");
+		}
+	}
+
+	// 블록 도형 출력 (위치: x=35, y=2 기준)
+	for (int i = 0; i < shape.size(); ++i)
+	{
+		for (int j = 0; j < shape[i].size(); ++j)
+		{
+			if (shape[i][j] == 1)
+			{
+				gotoxy(35 + j * 2, 2 + i);
+				printf("■");
+			}
+		}
+	}
+
+	SetColor(BLACK);     // 색상 초기화
+	gotoxy(77, 23);      // 커서 숨김용
+}
+
+
+void Renderer::show_game_stat(int score)
+{
+	static bool printed_text = false;
+	SetColor(Color::GRAY);
+
+	// "SCORE" 텍스트는 한 번만 출력
+	if (!printed_text)
+	{
+		gotoxy(35, 9);
+		std::cout << "SCORE";
+		printed_text = true;
+	}
+
+	// 점수는 계속 업데이트됨
+	gotoxy(35, 10);
+	printf("%10d", score);
+}
+
+
 
 
 void Renderer::setBlockColor(Tetromino t)

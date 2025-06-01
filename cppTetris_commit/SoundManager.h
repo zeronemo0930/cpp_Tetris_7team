@@ -11,18 +11,20 @@ private:
     std::string levelKey;
 
     std::unordered_map<std::string, const char*> bgmMap = {
-        {"s1", "_스토리-진행_.wav"},
-        {"s2", "_스토리-진행-2_.wav"},
-        {"e", "엘레에터-올라가는_.wav"},
-        {"5f", "_5층_.wav"},
-        {"6f", "_6층_.wav"},
-        {"6f-1", "_6층-1_.wav"},
-        {"6f-2", "_6층-2_.wav"},
-        {"str", "_계단_.wav"},
-         {"1f", "_1층_.wav"},
-        {"1f-U", "Undertale_OST_1층.wav"},
-        {"final2", "마지막2.wav"}
+     {"story1", "../music/_스토리-진행_.wav"},
+     {"story2", "../music/_스토리-진행-2_.wav"},
+     {"elevator", "../music/엘레에터-올라가는_.wav"},
+     {"floor5", "../music/_5층_.wav"},
+     {"floor6", "../music/_6층_.wav"},
+     {"stairs", "../music/_6층-1_.wav"},
+     {"final1", "../music/_6층-2_.wav"},
+     {"floor2", "../music/_계단_.wav"},
+     {"floor1", "../music/_1층_.wav"},
+     {"floor1_return", "../music/Undertale_OST_1층.wav"},
+     {"final2", "../music/마지막2.wav"}
     };
+
+
 
     const char* levelKeys[11] = {
         "story1",
