@@ -11,6 +11,7 @@ private:
 
 	Board board;
 
+	Block shadow_block;
 	Block current_block;
 	Block next_block;
 
@@ -25,10 +26,18 @@ public:
 	void start();
 	void play();
 	void menu();
+
 	void init();
 	void input();
 	void update();
 
+	void moveRotate();
+	void moveLeft();
+	void moveRight();
+	void moveDown();
+	void moveSpace();
+
+	void shadowBlock(bool isNew);
 	void checkState();
 	void makeNewBlock();
 };

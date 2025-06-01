@@ -92,7 +92,8 @@ void GameManager::init()
 	current_block.setPos(5, 0);
 	randType = static_cast<Tetromino>(rand() % 7);
 	next_block.setBlock(randType);
-	renderer.drawBlock(next_block);
+	renderer.drawBlock(next_block, false);
+	shadowBlock(true);
 }
 
 void GameManager::input()
@@ -106,44 +107,25 @@ void GameManager::input()
 			switch (keytemp) 
 			{
 			case KEY_UP:	// 회전
-				renderer.eraseBlock(current_block);
-				board.rotate_shift(current_block); // rotate할 때 strike_check 여부를 확인하고 rotate 가능한 좌표로 변환해주는 rotate_shift
-				//current_block.rotate();
-				renderer.drawBlock(current_block);
+				moveRotate();
 				break;
 
 			case KEY_LEFT:	// 왼쪽으로 이동
-				//if (current_block.getX() <= 1) break;
-				renderer.eraseBlock(current_block);
-				current_block.move(-1, 0);
-				if (board.strike_check(current_block)) 
-					current_block.move(1, 0);
-				renderer.drawBlock(current_block);
+				moveLeft();
 				break;
 
 			case KEY_RIGHT:	// 오른쪽으로 이동
-				if (current_block.getX() >= Board::width-1) break;
-				renderer.eraseBlock(current_block);
-				current_block.move(1, 0);
-				if (board.strike_check(current_block))
-					current_block.move(-1, 0);
-				renderer.drawBlock(current_block);
+				moveRight();
 				break;
 
 			case KEY_DOWN:	// 아래로 이동
-				renderer.eraseBlock(current_block);
-				isGameState = board.move_block(current_block);
-				renderer.drawBlock(current_block);
+				moveDown();
 				break;
 			}
 		}
 		if (keytemp == 32)	//스페이스바를 눌렀을때
 		{
-			renderer.eraseBlock(current_block);
-			while (isGameState == 0) {
-				isGameState = board.move_block(current_block);
-			}
-			//renderer.drawBoard(board);
+			moveSpace();
 		}
 	}
 }
@@ -153,8 +135,65 @@ void GameManager::update()
 	//renderer.drawBoard(board);
 	renderer.eraseBlock(current_block);
 	isGameState = board.move_block(current_block);
-	renderer.drawBlock(current_block);
+	renderer.drawBlock(current_block, false);
 	checkState();
+}
+
+void GameManager::moveRotate()
+{
+	renderer.eraseBlock(current_block);
+	board.rotate_shift(current_block); // rotate할 때 strike_check 여부를 확인하고 rotate 가능한 좌표로 변환해주는 rotate_shift
+	renderer.drawBlock(current_block, false);
+	shadowBlock(false);
+}
+
+void GameManager::moveLeft()
+{
+	renderer.eraseBlock(current_block);
+	current_block.move(-1, 0);
+	if (board.strike_check(current_block))
+		current_block.move(1, 0);
+	renderer.drawBlock(current_block, false);
+	shadowBlock(false);
+}
+
+void GameManager::moveRight()
+{
+	if (current_block.getX() >= Board::width - 1) return;
+	renderer.eraseBlock(current_block);
+	current_block.move(1, 0);
+	if (board.strike_check(current_block))
+		current_block.move(-1, 0);
+	renderer.drawBlock(current_block, false);
+	shadowBlock(false);
+}
+
+void GameManager::moveDown()
+{
+	renderer.eraseBlock(current_block);
+	isGameState = board.move_block(current_block);
+	renderer.drawBlock(current_block, false);
+}
+
+void GameManager::moveSpace()
+{
+	renderer.eraseBlock(current_block);
+	while (isGameState == 0) {
+		isGameState = board.move_block(current_block);
+	}
+}
+
+
+void GameManager::shadowBlock(bool isNew)
+{
+	if(!isNew)
+		renderer.eraseBlock(shadow_block);
+	shadow_block = current_block;
+	while (!board.strike_check(shadow_block)) {
+		shadow_block.move(0, 1);
+	}
+	shadow_block.move(0, -1);
+	renderer.drawBlock(shadow_block, true);
 }
 
 void GameManager::checkState()
@@ -177,5 +216,6 @@ void GameManager::makeNewBlock()
 	current_block.setPos(5, 0);
 	randType = static_cast<Tetromino>(rand() % 7);
 	next_block.setBlock(randType);
-	renderer.drawBlock(next_block);
+	renderer.drawBlock(next_block, false);
+	shadowBlock(true);
 }

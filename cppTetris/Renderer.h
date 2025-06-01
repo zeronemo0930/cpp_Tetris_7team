@@ -32,9 +32,8 @@ public:
 	void show_logo();
 	void show_menu(short menu);
 
-	void drawBlock(Block& block);
+	void drawBlock(Block& block, bool isShadow);
 	void eraseBlock(Block& block);
-
 
 	void setBlockColor(Tetromino t);
 	void drawBoard(Board& board);

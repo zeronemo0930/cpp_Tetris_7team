@@ -73,7 +73,7 @@ void Renderer::show_logo()
 				if (rand() % 2 == 0) 
 					block.rotate();
 				
-				drawBlock(block);
+				drawBlock(block, false);
 			}
 		}
 
@@ -103,7 +103,7 @@ void Renderer::show_menu(short menu)
 }
 
 // 약간의 개선이 필요할듯
-void Renderer::drawBlock(Block& block)
+void Renderer::drawBlock(Block& block, bool isShadow)
 {
 	cout << endl;
 	setBlockColor(block.getType());
@@ -117,7 +117,7 @@ void Renderer::drawBlock(Block& block)
 		for (int j = 0; j < shape[0].size(); j++) {
 			if (shape[i][j] == 1) {
 				gotoxy((x + j)*2 + ab_x, y + i + ab_y);
-				cout << "■";
+				cout << (isShadow ? "▣" : "■");
 			}
 
 		}
@@ -143,6 +143,7 @@ void Renderer::eraseBlock(Block& block)
 		}
 	}
 }
+
 
 
 void Renderer::setBlockColor(Tetromino t)
