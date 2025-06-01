@@ -51,12 +51,21 @@ void Board::merge_block(Block& block)
 			board[y + i][x + j] |= shape[i][j];
 		}
 	}
+
+	lastScore = 0; // 점수 초기화
 	for (size_t i = 3; i < height - 1; i++) {
 		if (check_full_line(i)) {
 			eraseBoardLine(i);
+			lastScore += 100;  // 줄 당 100점씩 가산
 		}
 	}
-	
+}
+
+int Board::get_clear_line_score()
+{
+	int temp = lastScore;
+	lastScore = 0;  // 반환 후 점수 초기화
+	return temp;
 }
 
 bool Board::check_full_line(size_t i)

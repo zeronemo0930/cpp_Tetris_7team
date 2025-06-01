@@ -5,6 +5,7 @@ enum class Tetromino{ I, O, T, J, L, S, Z};
 using shapeVec = std::vector<std::vector<int>>;
 class Block
 {
+
 public:
 	Block();
 	Block(Tetromino t);

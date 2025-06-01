@@ -28,14 +28,21 @@ void GameManager::play()
 	renderer.show_logo();
 	renderer.input_data();
 	renderer.drawBoard(board);
+	renderer.show_game_stat(score);
 	init();
 	int i = 0;
+
+	sound.setLevel(0);  // => _스토리-진행_.wav 재생
+
 	while (true) {
+		score += board.get_clear_line_score(); // ← 점수만 계산해서 추가
 		input();
 		checkState();
-		if (i % 30 == 0)
+		if (i % 30 == 0) 
 			update();
-			renderer.show_next_block(next_block);
+		renderer.show_game_stat(score);																	// if 문 안에 넣을까
+		renderer.show_next_block(next_block);
+		
 		i++;
 		Sleep(15);
 		gotoxy(77, 23);
@@ -107,7 +114,9 @@ void GameManager::update()
 {
 	renderer.drawBoard(board);
 	renderer.eraseBlock(current_block);
+
 	isGameState = board.move_block(current_block);
+
 	renderer.drawBlock(current_block);
 	checkState();
 }
@@ -119,6 +128,7 @@ void GameManager::checkState()
 		current_block = next_block;
 		randType = static_cast<Tetromino>(rand() % 7);
 		next_block.setBlock(randType);
+		
 	}
 	else if (isGameState == 1) {
 		exit(0);

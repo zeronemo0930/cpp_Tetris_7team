@@ -34,10 +34,14 @@ public:
 
 	void show_next_block(Block& block);
 
+	void show_game_stat(int score);
+
 	void setBlockColor(Tetromino t);
 	void drawBoard(Board& board);
 
 	static void eraseLine(size_t i);
+
+
 private:
 	Color color = Color::DARK_GRAY;
 	int ab_x = 5;
