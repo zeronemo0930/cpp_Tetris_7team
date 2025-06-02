@@ -30,60 +30,88 @@ Renderer::Renderer()
 
 void Renderer::show_logo()
 {
-	srand(static_cast<unsigned int>(time(NULL))); // 랜덤 초기화
-
-	SetColor(Color::DARK_SKY_BLUE);
-
-
-	// 추후 수정!
-	const vector<string> logoLines = {
-		"┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓",
-		"┃ ◆◆◆  ◆◆◆  ◆◆◆   ◆◆     ◆   ◆◆◆ ┃",
-		"┃   ◆    ◆        ◆     ◆ ◆    ◆   ◆     ┃",
-		"┃   ◆    ◆◆◆    ◆     ◆◆     ◆     ◆   ┃",
-		"┃   ◆    ◆        ◆     ◆ ◆    ◆       ◆ ┃",
-		"┃   ◆    ◆◆◆    ◆     ◆  ◆   ◆   ◆◆◆ ┃",
-		"┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛"
-	};
-	for (size_t i = 0; i < logoLines.size(); ++i) {
-		gotoxy(13, 3 + static_cast<int>(i));
-		cout << logoLines[i];
-		Sleep(100);
-	}
-
-	gotoxy(28, 20);
-	SetColor(Color::WHITE);
-	cout << "Please Press Any Key~!";
-
-	int i = 0;
-	while(true) {
-		
-		if (i % 40 == 0)
+	cout << endl;
+	std::vector<std::vector<std::string>> logo = {
+		// M
 		{
-			for (int j = 0; j < 5; j++) {
-				gotoxy(6, 14 + j);
-				printf("                                                                ");
-			}
-
-			// 무작위 겹치지 않는 블럭 4개 생성 후 화면에 출력
-			Block block;
-			for (int k = 0; k < 4; k++) {
-				block.setBlock(static_cast<Tetromino>((i + k) % 7));
-				block.move(1 + 6*k, 14);
-				if (rand() % 2 == 0) 
-					block.rotate();
-				
-				drawBlock(block, false);
-			}
+			" __  __ ",
+			"|  \\/  |",
+			"| \\  / |",
+			"| |\\/| |",
+			"| |  | |",
+			"|_|  |_|"
+		},
+		// O
+		{
+			"  ____  ",
+			" / __ \\ ",
+			"| |  | |",
+			"| |  | |",
+			"| |__| |",
+			" \\____/ "
+		},
+		// N
+		{
+			" _   _ ",
+			"| \\ | |",
+			"|  \\| |",
+			"| . ` |",
+			"| |\\  |",
+			"|_| \\_|"
+		},
+		// S
+		{
+			"  _____ ",
+			" / ____|",
+			"| (___  ",
+			" \\___ \\ ",
+			" ____) |",
+			"|_____/ "
+		},
+		// T
+		{
+			" _______ ",
+			"|__   __|",
+			"   | |   ",
+			"   | |   ",
+			"   | |   ",
+			"   |_|   "
+		},
+		// R
+		{
+			" _____  ",
+			"|  __ \\ ",
+			"| |__) |",
+			"|  _  / ",
+			"| | \\ \\ ",
+			"|_|  \\_\\"
+		},
+		// I
+		{
+			" _____ ",
+			"|_   _|",
+			"  | |  ",
+			"  | |  ",
+			" _| |_ ",
+			"|_____|"
+		},
+		// S
+		{
+			"  _____ ",
+			" / ____|",
+			"| (___  ",
+			" \\___ \\ ",
+			" ____) |",
+			"|_____/ "
 		}
-
-		if (_kbhit()) break;
-		Sleep(30);
-		i++;
+	};
+	for (int i = 0; i < logo.size(); i++) {
+		for (int j = 0; j < logo[0].size(); j++) {
+			gotoxy(22 + 8*i, 3 + j);
+			SetColor(static_cast<Color>(i+1));
+			cout << logo[i][j];
+		}
 	}
-
-	_getch();
-	system("cls");
 }
 
 void Renderer::show_game_stat(int score)
@@ -113,6 +141,7 @@ void Renderer::drawMonster(Monster& mon)
 		gotoxy(60, 10 + i);
 		cout << monster[i];
 	}
+	gotoxy(77, 23);
 }
 
 void Renderer::drawMonsterHp(Monster& mon)
@@ -132,6 +161,7 @@ void Renderer::drawMonsterHp(Monster& mon)
 		else
 			cout << "□";
 	}
+	gotoxy(77, 23);
 }
 
 
@@ -141,12 +171,14 @@ void Renderer::show_menu(short menu)
 {
 	cout << endl;
 	for (size_t i = 0; i < 3; i++) {
-		gotoxy(42, 20 + i);
-		if (menu == i) 
+		gotoxy(50, 20 + i);
+		if (menu == i) {
 			SetColor(Color::YELLOW);
+			cout << "▶";
+		}
 		else
 			SetColor(Color::WHITE);
-		cout << "▶" << menu_string[i] << endl;
+		cout << menu_string[i] << "     ";
 	}
 
 	SetColor(Color::WHITE);

@@ -24,6 +24,7 @@ GameManager::~GameManager()
 
 void GameManager::start()
 {
+	
 	menu();
 	if (menuSelector == 0) {
 		play();
@@ -64,6 +65,7 @@ void GameManager::play()
 
 void GameManager::menu() {
 	menuSelector = 0;
+	renderer.show_logo();
 	renderer.show_menu(menuSelector);
 	while (keytemp != '\r') {
 
