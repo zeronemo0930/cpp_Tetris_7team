@@ -48,7 +48,7 @@ public:
 private:
 	Color color = Color::DARK_GRAY;
 	std::array<std::string, 3> menu_string;
-	int ab_x = 5;
+	int ab_x = 10;
 	int ab_y = 1;
 };
 

@@ -123,13 +123,13 @@ void Renderer::show_game_stat(int score)
 	// "SCORE" 텍스트는 한 번만 출력
 	if (!printed_text)
 	{
-		gotoxy(35, 9);
+		gotoxy(ab_x + 28, ab_y + 9);
 		std::cout << "SCORE";
 		printed_text = true;
 	}
 
 	// 점수는 계속 업데이트됨
-	gotoxy(35, 10);
+	gotoxy(ab_x + 28, ab_y + 10);
 	printf("%10d", score);
 }
 

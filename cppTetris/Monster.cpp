@@ -7,7 +7,7 @@ using namespace std;
 int Monster::stage = 0;
 
 Monster::Monster(MonsterName name) : current_Monster(name){
-	
+	//
 	switch (name)
 	{
 	case MonsterName::RAT:

@@ -12,7 +12,7 @@
 
 using namespace std;
 
-GameManager::GameManager():randType(Tetromino::I), keytemp(NULL), isGameState(0), menuSelector(0), monster(MonsterName::RAT)
+GameManager::GameManager():randType(Tetromino::I), keytemp(NULL), isGameState(0), menuSelector(0), monster(MonsterName::RAT), isHold(false)
 {
 	srand((unsigned int)time(NULL));
 }
@@ -97,6 +97,7 @@ void GameManager::menu() {
 
 void GameManager::init()
 {
+	isHold = false;
 	isGameState = 0;
 	menuSelector = 0;
 	randType = static_cast<Tetromino>(rand() % 7);
@@ -138,6 +139,10 @@ void GameManager::input()
 		if (keytemp == 32)	//스페이스바를 눌렀을때
 		{
 			moveSpace();
+		}
+		// HOLD 시키는 거
+		else if (keytemp == 99 || keytemp == 67) {	// c, C를 입력 했을 때
+			hold();
 		}
 	}
 }
@@ -197,6 +202,32 @@ void GameManager::moveSpace()
 
 }
 
+void GameManager::hold()
+{
+	if (isNowHold) return;
+	if (!isHold) {
+		hold_block = current_block;
+	
+		makeNewBlock();
+		isHold = true;
+		hold_block.setPos(-3, 0);
+	}
+	else{
+		renderer.eraseBlock(hold_block);
+		renderer.eraseBlock(current_block);
+		Block temp;
+		temp = hold_block;
+		hold_block = current_block;
+		hold_block.setPos(-3, 0);
+		temp.setPos(5, 0);
+		current_block = temp;
+		renderer.drawBlock(current_block, false);
+		shadowBlock(false);
+	}
+	isNowHold = true;
+	renderer.drawBlock(hold_block, false);
+}
+
 
 void GameManager::shadowBlock(bool isNew)
 {
@@ -248,4 +279,5 @@ void GameManager::makeNewBlock()
 	renderer.drawBlock(next_block, false);
 	shadowBlock(true);
 	renderer.drawBlock(current_block, false);
+	isNowHold = false;
 }
