@@ -44,7 +44,7 @@ void GameManager::play()
 	renderer.drawMonster(monster);
 	renderer.drawMonsterHp(monster);
 
-	renderer.drawBoard(board);
+	
 	init();
 	int i = 0;
 	score = 0;
@@ -97,6 +97,9 @@ void GameManager::menu() {
 
 void GameManager::init()
 {
+	renderer.drawBoard(board);
+	renderer.nextBlockFrame();
+	renderer.holdBlockFrame();
 	isHold = false;
 	isGameState = 0;
 	menuSelector = 0;
@@ -211,7 +214,7 @@ void GameManager::hold()
 	
 		makeNewBlock();
 		isHold = true;
-		hold_block.setPos(-3, 1);
+		
 	}
 	else{
 		renderer.eraseBlock(hold_block);
@@ -222,11 +225,12 @@ void GameManager::hold()
 		current_block.setPos(5, 0);
 
 		hold_block.setBlock(temp);
-		hold_block.setPos(-3, 1);
+
 
 		renderer.drawBlock(current_block, false);
 		shadowBlock(false);
 	}
+	hold_block.setPos(-6, 1);
 	isNowHold = true;
 	renderer.drawBlock(hold_block, false);
 }

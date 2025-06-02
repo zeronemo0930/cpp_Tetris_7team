@@ -227,6 +227,46 @@ void Renderer::eraseBlock(Block& block)
 	}
 }
 
+void Renderer::nextBlockFrame()
+{
+	SetColor(Color::DARK_SKY_BLUE);
+	for (int i = 1; i < 7; i++)
+	{
+		for (int j = 0; j < 6; j++)
+		{
+			gotoxy(ab_x + 30 + j*2, i);
+			if (i == 1 || i == 6 || j == 0 || j == 5)
+			{
+				printf("бс");
+			}
+			else {
+				printf("  ");
+			}
+
+		}
+	}
+}
+
+void Renderer::holdBlockFrame()
+{
+	SetColor(Color::DARK_SKY_BLUE);
+	for (int i = 1; i < 7; i++)
+	{
+		for (int j = 0; j < 6; j++)
+		{
+			gotoxy(j * 2, i);
+			if (i == 1 || i == 6 || j == 0 || j == 5)
+			{
+				printf("бс");
+			}
+			else {
+				printf("  ");
+			}
+
+		}
+	}
+}
+
 
 
 void Renderer::setBlockColor(Tetromino t)
