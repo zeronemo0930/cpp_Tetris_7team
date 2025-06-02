@@ -206,21 +206,24 @@ void GameManager::hold()
 {
 	if (isNowHold) return;
 	if (!isHold) {
-		hold_block = current_block;
+		Tetromino temp = current_block.getType();
+		hold_block.setBlock(temp);
 	
 		makeNewBlock();
 		isHold = true;
-		hold_block.setPos(-3, 0);
+		hold_block.setPos(-3, 1);
 	}
 	else{
 		renderer.eraseBlock(hold_block);
 		renderer.eraseBlock(current_block);
-		Block temp;
-		temp = hold_block;
-		hold_block = current_block;
-		hold_block.setPos(-3, 0);
-		temp.setPos(5, 0);
-		current_block = temp;
+		Tetromino temp;
+		temp = current_block.getType();
+		current_block = hold_block;
+		current_block.setPos(5, 0);
+
+		hold_block.setBlock(temp);
+		hold_block.setPos(-3, 1);
+
 		renderer.drawBlock(current_block, false);
 		shadowBlock(false);
 	}
