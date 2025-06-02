@@ -168,7 +168,7 @@ void Renderer::drawBlock(Block& block, bool isShadow)
 		for (int j = 0; j < shape[0].size(); j++) {
 			if (shape[i][j] != 0) {
 				gotoxy((x + j)*2 + ab_x, y + i + ab_y);
-				cout << (isShadow ? "в╩" : "бс");
+				cout << (isShadow ? "бр" : "бс");
 			}
 
 		}

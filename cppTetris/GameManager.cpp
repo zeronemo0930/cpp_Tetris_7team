@@ -154,8 +154,8 @@ void GameManager::moveRotate()
 {
 	renderer.eraseBlock(current_block);
 	board.rotate_shift(current_block); // rotate할 때 strike_check 여부를 확인하고 rotate 가능한 좌표로 변환해주는 rotate_shift
-	renderer.drawBlock(current_block, false);
 	shadowBlock(false);
+	renderer.drawBlock(current_block, false);
 }
 
 void GameManager::moveLeft()
@@ -164,8 +164,8 @@ void GameManager::moveLeft()
 	current_block.move(-1, 0);
 	if (board.strike_check(current_block))
 		current_block.move(1, 0);
-	renderer.drawBlock(current_block, false);
 	shadowBlock(false);
+	renderer.drawBlock(current_block, false);
 }
 
 void GameManager::moveRight()
@@ -175,8 +175,8 @@ void GameManager::moveRight()
 	current_block.move(1, 0);
 	if (board.strike_check(current_block))
 		current_block.move(-1, 0);
-	renderer.drawBlock(current_block, false);
 	shadowBlock(false);
+	renderer.drawBlock(current_block, false);
 }
 
 void GameManager::moveDown()
@@ -221,6 +221,7 @@ void GameManager::checkState()
 
 			// 테스트 용으로 넣어놓은 코드
 			if (monster.isDead()) {
+				renderer.drawMonsterHp(monster);
 				exit(0);
 			}
 			renderer.drawMonsterHp(monster);
@@ -243,6 +244,6 @@ void GameManager::makeNewBlock()
 	randType = static_cast<Tetromino>(rand() % 7);
 	next_block.setBlock(randType);
 	renderer.drawBlock(next_block, false);
-	renderer.drawBlock(current_block, false);
 	shadowBlock(true);
+	renderer.drawBlock(current_block, false);
 }

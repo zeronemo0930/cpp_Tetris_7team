@@ -19,7 +19,7 @@ public:
 	bool isDead() const { return currentHp <= 0; }
 	monsterVec& getMonsterVec() { return this->monsterShape; }
 	int getMaxHp() { return this->MaxHp; }
-	int getCurrentHp() { return this->currentHp; }
+	int getCurrentHp() { return (this->currentHp > 0) ? this->currentHp : 0; }
 private:
 	MonsterName current_Monster;
 	monsterVec monsterShape;
