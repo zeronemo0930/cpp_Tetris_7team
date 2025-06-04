@@ -270,6 +270,7 @@ void GameManager::checkState()
 		renderer.show_game_stat(score);
 	}
 	else if (isGameState == 1) {
+		if (monster.stage == 0) { monster.stage++; return; }                                                                 // 몬스터 죽으면 스테이지 업
 		exit(0);
 	}
 	isGameState = 0;

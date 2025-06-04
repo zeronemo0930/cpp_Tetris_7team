@@ -1,5 +1,6 @@
-#include "Renderer.h"
+ï»¿#include "Renderer.h"
 #include <conio.h>
+#include <windows.h>  // Sleep í•¨ìˆ˜ ì‚¬ìš©ì„ ìœ„í•´ í•„ìš”
 #include <ctime>
 #include <cstdlib>
 
@@ -120,7 +121,7 @@ void Renderer::show_game_stat(int score)
 	static bool printed_text = false;
 	SetColor(Color::GRAY);
 
-	// "SCORE" ÅØ½ºÆ®´Â ÇÑ ¹ø¸¸ Ãâ·Â
+	// "SCORE" í…ìŠ¤íŠ¸ëŠ” í•œ ë²ˆë§Œ ì¶œë ¥
 	if (!printed_text)
 	{
 		gotoxy(ab_x + 28, ab_y + 9);
@@ -128,7 +129,7 @@ void Renderer::show_game_stat(int score)
 		printed_text = true;
 	}
 
-	// Á¡¼ö´Â °è¼Ó ¾÷µ¥ÀÌÆ®µÊ
+	// ì ìˆ˜ëŠ” ê³„ì† ì—…ë°ì´íŠ¸ë¨
 	gotoxy(ab_x + 28, ab_y + 10);
 	printf("%10d", score);
 }
@@ -138,31 +139,51 @@ void Renderer::drawMonster(Monster& mon)
 	cout << endl;
 	monsterVec monster = mon.getMonsterVec();
 	for (int i = 0; i < monster.size(); i++) {
-		gotoxy(60, 10 + i);
+		gotoxy(65, 1 + i);
 		cout << monster[i];
 	}
-	gotoxy(77, 23);
+	gotoxy(85, 0);
 }
+
+
 
 void Renderer::drawMonsterHp(Monster& mon)
 {
-	cout << endl;
-	SetColor(Color::WHITE);
+	static int prevHp = -1; // ì´ì „ HP ì €ì¥ (ì´ˆê¸°ê°’ -1ë¡œ ì„¤ì •)
 	int hp = mon.getCurrentHp();
 	int maxHp = mon.getMaxHp();
-	gotoxy(60, 5);
-	cout << "                              ";
-	gotoxy(60, 5);
+
+	SetColor(Color::WHITE);
+
+	// HP í…ìŠ¤íŠ¸ ê°±ì‹ 
+	gotoxy(65, 15);
+	cout << "                             ";
+	gotoxy(65, 15);
 	cout << "HP : " << hp << " / " << maxHp;
-	for (int i = 0; i < maxHp; i++) {
-		gotoxy(60 + i*2, 6);
-		if (i < hp)
-			cout << "¡á";
-		else
-			cout << "¡à";
+
+	// ì²˜ìŒì´ê±°ë‚˜ ì²´ë ¥ ì¦ê°€ì¼ ê²½ìš° ë°”ë¡œ ì¶œë ¥
+	if (prevHp == -1 || hp >= prevHp) {
+		for (int i = 0; i < maxHp; i++) {
+			gotoxy(65 + i * 2, 16);
+			if (i < hp)
+				cout << "â– ";
+			else
+				cout << "â–¡";
+		}
 	}
-	gotoxy(77, 23);
+	// ì²´ë ¥ ê°ì†Œì¼ ê²½ìš° ë¶€ë“œëŸ½ê²Œ ê°ì†Œ íš¨ê³¼
+	else {
+		for (int i = prevHp - 1; i >= hp; i--) {
+			gotoxy(65 + i * 2, 16);
+			cout << "â–¡";
+			Sleep(50); // 50ms ë”œë ˆì´ (ë„ˆë¬´ ëŠë¦¬ë©´ 30ìœ¼ë¡œ ì¤„ì—¬ë„ ë¨)
+		}
+	}
+
+	prevHp = hp; // ë‹¤ìŒ í”„ë ˆì„ì„ ìœ„í•´ í˜„ì¬ HP ì €ì¥
+	gotoxy(82, 23);
 }
+
 
 
 
@@ -174,7 +195,7 @@ void Renderer::show_menu(short menu)
 		gotoxy(50, 20 + i);
 		if (menu == i) {
 			SetColor(Color::YELLOW);
-			cout << "¢º";
+			cout << "â–¶";
 		}
 		else
 			SetColor(Color::WHITE);
@@ -185,7 +206,7 @@ void Renderer::show_menu(short menu)
 	gotoxy(77, 23);
 }
 
-// ¾à°£ÀÇ °³¼±ÀÌ ÇÊ¿äÇÒµí
+// ì•½ê°„ì˜ ê°œì„ ì´ í•„ìš”í• ë“¯
 void Renderer::drawBlock(Block& block, bool isShadow)
 {
 	cout << endl;
@@ -200,7 +221,7 @@ void Renderer::drawBlock(Block& block, bool isShadow)
 		for (int j = 0; j < shape[0].size(); j++) {
 			if (shape[i][j] != 0) {
 				gotoxy((x + j)*2 + ab_x, y + i + ab_y);
-				cout << (isShadow ? "¡à" : "¡á");
+				cout << (isShadow ? "â–¡" : "â– ");
 			}
 
 		}
@@ -237,7 +258,7 @@ void Renderer::nextBlockFrame()
 			gotoxy(ab_x + 30 + j*2, i);
 			if (i == 1 || i == 6 || j == 0 || j == 5)
 			{
-				printf("¡á");
+				printf("â– ");
 			}
 			else {
 				printf("  ");
@@ -257,7 +278,7 @@ void Renderer::holdBlockFrame()
 			gotoxy(j * 2, i);
 			if (i == 1 || i == 6 || j == 0 || j == 5)
 			{
-				printf("¡á");
+				printf("â– ");
 			}
 			else {
 				printf("  ");
@@ -308,12 +329,12 @@ void Renderer::drawBoard(Board& board)
 			gotoxy((j * 2) + ab_x, i + ab_y);
 			if (j == 0 || j == Board::width - 1 || i == Board::height - 1) {
 				SetColor(Color::WHITE);
-				cout << ((i < 3) ? "¡à" : "¡á");
+				cout << ((i < 3) ? "â–¡" : "â– ");
 			}
 			else if (board.board[i][j] != 0) {
 				setBlockColor(static_cast<Tetromino>(board.board[i][j] - 1));
 				SetColor(color);
-				cout << "¡á";
+				cout << "â– ";
 			}
 			else
 				cout << "   ";
@@ -331,7 +352,7 @@ void Renderer::eraseLine(size_t i)
 	gotoxy(1 * 2 + 5, i + 1);
 	for (size_t j = 1; j < Board::width - 1; j++)
 	{
-		cout << "¡à";
+		cout << "â–¡";
 		Sleep(10);
 	}
 	gotoxy(1 * 2, i);
