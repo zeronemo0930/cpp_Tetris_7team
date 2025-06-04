@@ -248,7 +248,8 @@ void GameManager::update()
 void GameManager::moveRotate()
 {
 	renderer.eraseBlock(current_block);
-	board.rotate_shift(current_block); // rotate할 때 strike_check 여부를 확인하고 rotate 가능한 좌표로 변환해주는 rotate_shift
+	if(board.rotate_shift(current_block)) // rotate할 때 strike_check 여부를 확인하고 rotate 가능한 좌표로 변환해주는 rotate_shift
+		sm.playEffect("SoundEffects/block_rotate.wav");
 	shadowBlock(false);
 	renderer.drawBlock(current_block, false);
 }
@@ -261,6 +262,7 @@ void GameManager::moveLeft()
 		current_block.move(1, 0);
 	shadowBlock(false);
 	renderer.drawBlock(current_block, false);
+	sm.playEffect("SoundEffects/block_move.wav");
 }
 
 void GameManager::moveRight()
@@ -272,6 +274,7 @@ void GameManager::moveRight()
 		current_block.move(-1, 0);
 	shadowBlock(false);
 	renderer.drawBlock(current_block, false);
+	sm.playEffect("SoundEffects/block_move.wav");
 }
 
 void GameManager::moveDown()
@@ -279,6 +282,7 @@ void GameManager::moveDown()
 	renderer.eraseBlock(current_block);
 	isGameState = board.move_block(current_block);
 	renderer.drawBlock(current_block, false);
+	sm.playEffect("SoundEffects/block_move.wav");
 }
 
 void GameManager::moveSpace()
@@ -287,6 +291,7 @@ void GameManager::moveSpace()
 	while (isGameState == 0) {
 		isGameState = board.move_block(current_block);
 	}
+	sm.playEffect("SoundEffects/block_move.wav");
 
 }
 
@@ -342,6 +347,7 @@ void GameManager::checkState()
 		// 몬스터에 데미지가 들어가면 업데이트
 		int temp = board.get_clear_line_score();
 		if (temp != 0) {
+			sm.playEffect("SoundEffects/line_clear.wav");
 			monster.takeDamage(temp / 100);
 
 			// 테스트 용으로 넣어놓은 코드

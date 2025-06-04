@@ -1,6 +1,5 @@
 ﻿#include "Renderer.h"
 #include <conio.h>
-#include <windows.h>  // Sleep 함수 사용을 위해 필요
 #include <ctime>
 #include <cstdlib>
 
@@ -8,8 +7,8 @@ using namespace std;
 
 
 void gotoxy(int x, int y) {
-    COORD pos = { static_cast<SHORT>(x), static_cast<SHORT>(y) };
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+	COORD pos = { static_cast<SHORT>(x), static_cast<SHORT>(y) };
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 }
 
 void SetColor(Color color) {
@@ -110,8 +109,8 @@ void Renderer::show_logo()
 	};
 	for (int i = 0; i < logo.size(); i++) {
 		for (int j = 0; j < logo[0].size(); j++) {
-			gotoxy(22 + 8*i, 3 + j);
-			SetColor(static_cast<Color>(i+1));
+			gotoxy(22 + 8 * i, 3 + j);
+			SetColor(static_cast<Color>(i + 1));
 			cout << logo[i][j];
 		}
 	}
@@ -141,51 +140,31 @@ void Renderer::drawMonster(Monster& mon)
 	cout << endl;
 	monsterVec monster = mon.getMonsterVec();
 	for (int i = 0; i < monster.size(); i++) {
-		gotoxy(65, 1 + i);
+		gotoxy(60, 10 + i);
 		cout << monster[i];
 	}
-	gotoxy(85, 0);
+	gotoxy(77, 23);
 }
-
-
 
 void Renderer::drawMonsterHp(Monster& mon)
 {
-	static int prevHp = -1; // 이전 HP 저장 (초기값 -1로 설정)
+	cout << endl;
+	SetColor(Color::WHITE);
 	int hp = mon.getCurrentHp();
 	int maxHp = mon.getMaxHp();
-
-	SetColor(Color::WHITE);
-
-	// HP 텍스트 갱신
-	gotoxy(65, 15);
-	cout << "                             ";
-	gotoxy(65, 15);
+	gotoxy(60, 5);
+	cout << "                              ";
+	gotoxy(60, 5);
 	cout << "HP : " << hp << " / " << maxHp;
-
-	// 처음이거나 체력 증가일 경우 바로 출력
-	if (prevHp == -1 || hp >= prevHp) {
-		for (int i = 0; i < maxHp; i++) {
-			gotoxy(65 + i * 2, 16);
-			if (i < hp)
-				cout << "■";
-			else
-				cout << "□";
-		}
-	}
-	// 체력 감소일 경우 부드럽게 감소 효과
-	else {
-		for (int i = prevHp - 1; i >= hp; i--) {
-			gotoxy(65 + i * 2, 16);
+	for (int i = 0; i < maxHp; i++) {
+		gotoxy(60 + i * 2, 6);
+		if (i < hp)
+			cout << "■";
+		else
 			cout << "□";
-			Sleep(50); // 50ms 딜레이 (너무 느리면 30으로 줄여도 됨)
-		}
 	}
-
-	prevHp = hp; // 다음 프레임을 위해 현재 HP 저장
-	gotoxy(82, 23);
+	gotoxy(77, 23);
 }
-
 
 
 
@@ -218,7 +197,7 @@ void Renderer::drawOption(short optionSelector, float volume, int difficulty)
 		gotoxy(50, (i == 2 ? 15 : 10 + i));
 		if (optionSelector == i) {
 			SetColor(Color::YELLOW);
-			cout << "��";
+			cout << "▶";
 		}
 		else
 			SetColor(Color::WHITE);
@@ -227,22 +206,21 @@ void Renderer::drawOption(short optionSelector, float volume, int difficulty)
 		if (i == 0) {
 			gotoxy(60, 10);
 
-			cout << "�� " << difficulty_string[difficulty] << " ��   ";
+			cout << "◀ " << difficulty_string[difficulty] << " ▶   ";
 		}
 		else if (i == 1) {
 			gotoxy(60, 11);
-			cout << "�� " << volume << " ��   ";
+			cout << "◀ " << volume << " ▶   ";
 		}
-		
-		
+
+
 	}
 
 	SetColor(Color::WHITE);
 	gotoxy(77, 23);
 }
 
-// �ణ�� ������ �ʿ��ҵ�
->>>>>>> c31b03cb349aeb84e9e022adff07721f9de20bc6
+// 약간의 개선이 필요할듯
 void Renderer::drawBlock(Block& block, bool isShadow)
 {
 	cout << endl;
@@ -256,7 +234,7 @@ void Renderer::drawBlock(Block& block, bool isShadow)
 	for (int i = 0; i < shape.size(); i++) {
 		for (int j = 0; j < shape[0].size(); j++) {
 			if (shape[i][j] != 0) {
-				gotoxy((x + j)*2 + ab_x, y + i + ab_y);
+				gotoxy((x + j) * 2 + ab_x, y + i + ab_y);
 				cout << (isShadow ? "□" : "■");
 			}
 
@@ -291,7 +269,7 @@ void Renderer::nextBlockFrame()
 	{
 		for (int j = 0; j < 6; j++)
 		{
-			gotoxy(ab_x + 30 + j*2, i);
+			gotoxy(ab_x + 30 + j * 2, i);
 			if (i == 1 || i == 6 || j == 0 || j == 5)
 			{
 				printf("■");
@@ -358,7 +336,7 @@ void Renderer::setBlockColor(Tetromino t)
 void Renderer::drawBoard(Board& board)
 {
 	cout << endl;
-	
+
 	for (size_t i = 0; i < Board::height; i++) {
 		for (size_t j = 0; j < Board::width; j++) {
 

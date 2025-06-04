@@ -93,7 +93,7 @@ int Board::eraseBoardLine(size_t i)
 	return 0;
 }
 
-void Board::rotate_shift(Block& b) // È¸ÀüÀÌ °¡´ÉÇÑ °æ¿ì¿¡¸¸ µµÇüÀ» È¸ÀüÇØÁÖ´Â ÇÔ¼ö
+bool Board::rotate_shift(Block& b) // È¸ÀüÀÌ °¡´ÉÇÑ °æ¿ì¿¡¸¸ µµÇüÀ» È¸ÀüÇØÁÖ´Â ÇÔ¼ö
 {
 	Block block = b; // parameter block¿¡ ´ëÇÑ ¾èÀº º¹»ç
 	block.rotate(); // µµÇüÀ» ÀÓÀÇ·Î È¸Àü
@@ -105,9 +105,13 @@ void Board::rotate_shift(Block& b) // È¸ÀüÀÌ °¡´ÉÇÑ °æ¿ì¿¡¸¸ µµÇüÀ» È¸ÀüÇØÁÖ´Â Ç
 		else if (block.getX() + size > 13) //¿À¸¥ÂÊ edge¿¡ °ÉÃÄÀÖÀ» ¶§
 			block.move(-1, 0); // left shift
 	}
-	if (!strike_check(block)) /* ´ÙÀ½ Á¶°Ç¹® falseÀÇ ÀÇ¹Ì : shift ¿Ï·á ÈÄ¿¡µµ µµÇüÀÌ board¿¡ strikeÇÔ
-							  -> edge¿¡ strikeÇÑ °ÍÀÌ ¾Æ´Ñ ½×Àº Å×Æ®¸®½º µµÇü³¢¸®ÀÇ Ãæµ¹*/
-		b = block; //
+	if (!strike_check(block)) {
+								/* ´ÙÀ½ Á¶°Ç¹® falseÀÇ ÀÇ¹Ì : shift ¿Ï·á ÈÄ¿¡µµ µµÇüÀÌ board¿¡ strikeÇÔ
+								-> edge¿¡ strikeÇÑ °ÍÀÌ ¾Æ´Ñ ½×Àº Å×Æ®¸®½º µµÇü³¢¸®ÀÇ Ãæµ¹*/
+		b = block;
+		return true;
+	}
+	return false;
 }
 
 int Board::move_block(Block& block) 
