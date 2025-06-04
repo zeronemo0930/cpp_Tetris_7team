@@ -36,7 +36,7 @@ void Monster::SetMonster(MonsterName name) // 임시 보스 설정
 	case MonsterName::RAT:
 		speed = 40;
 		stick_rate = 20;
-		MaxHp = 10;
+		MaxHp = 1;
 		monsterShape = {
 			"`;-.          ___,",
 			"  `.`\\_...._/`.-\"`",

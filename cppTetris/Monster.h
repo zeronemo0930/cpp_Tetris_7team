@@ -28,6 +28,17 @@ public:
 	}
 	int getStage() { return stage; }
 	static int stage;
+
+	static constexpr const char* SCRIPT[3][5] = {
+	{ "플: 해냈다!", "??? : 아직이다.", "플: 누구냐!", nullptr, nullptr },
+	{ "플: 또 이겼다!", "BOSS2: 실력이군.", "플: 각오해!", "BOSS2: 덤벼!", nullptr },
+	{ "플: 마지막이다!", "BOSS3: 네가 과연?", nullptr, nullptr, nullptr }
+	};
+
+	static const char* const* getScriptLine(int s) {
+		return SCRIPT[s]; // 특정 행 반환
+	}
+
 private:
 	MonsterName current_Monster;
 	monsterVec monsterShape;

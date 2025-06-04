@@ -353,6 +353,10 @@ void GameManager::checkState()
 			// 테스트 용으로 넣어놓은 코드
 			if (monster.isDead()) {
 				renderer.drawMonsterHp(monster);
+
+				const char* const* lines = monster.getScriptLine(monster.stage);
+				renderer.printLineAt(77, 23, lines);
+
 				renderer.eraseMonster(monster);
 				monster.getNextMonster();
 				renderer.drawMonster(monster);
@@ -363,12 +367,7 @@ void GameManager::checkState()
 		renderer.show_game_stat(score);
 	}
 	else if (isGameState == 1) {
-		if (monster.stage == 0) { 
-			renderer.drawDialogueFrame();	
-			monster.stage++; 
-			Sleep(10000);
-			return; 
-		}                                                                 // 몬스터 죽으면 스테이지 업
+		                                                           // 몬스터 죽으면 스테이지 업
 		exit(0);
 	}
 	isGameState = 0;
