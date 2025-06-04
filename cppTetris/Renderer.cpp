@@ -183,7 +183,7 @@ void Renderer::act_by_boss(Monster& mon, Board& board)
 {
 	int attack_row = 1;
 	int empty_place = rand() % 12 + 1;
-	if (rand() % 100 < 10) {
+	if (rand() % 100 < 10 * mon.getStage()) {
 		board.result_by_attack(empty_place);
 	}
 }
