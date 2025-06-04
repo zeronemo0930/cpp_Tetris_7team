@@ -18,7 +18,9 @@ void SetColor(Color color) {
 
 Renderer::Renderer()
 {
-	menu_string = { "Start", "Setting", "Exit" };
+	menu_string = { "Start", "Option", "Exit" };
+	option_string = { "Stage", "Volume", "Apply" };
+	difficulty_string = { "Easy", "Normal", "Hard" };
 	system("Tetris");
 	system("mode con:cols=100 lines=30");
 	CONSOLE_CURSOR_INFO ConsoleCursor;
@@ -179,6 +181,36 @@ void Renderer::show_menu(short menu)
 		else
 			SetColor(Color::WHITE);
 		cout << menu_string[i] << "     ";
+	}
+
+	SetColor(Color::WHITE);
+	gotoxy(77, 23);
+}
+
+void Renderer::drawOption(short optionSelector, float volume, int difficulty)
+{
+	cout << endl;
+	for (size_t i = 0; i < option_string.size(); i++) {
+		gotoxy(50, (i == 2 ? 15 : 10 + i));
+		if (optionSelector == i) {
+			SetColor(Color::YELLOW);
+			cout << "¢º";
+		}
+		else
+			SetColor(Color::WHITE);
+		cout << option_string[i] << "  ";
+
+		if (i == 0) {
+			gotoxy(60, 10);
+
+			cout << "¢¸ " << difficulty_string[difficulty] << " ¢º   ";
+		}
+		else if (i == 1) {
+			gotoxy(60, 11);
+			cout << "¢¸ " << volume << " ¢º   ";
+		}
+		
+		
 	}
 
 	SetColor(Color::WHITE);

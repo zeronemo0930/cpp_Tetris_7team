@@ -20,6 +20,7 @@ public:
 	monsterVec& getMonsterVec() { return this->monsterShape; }
 	int getMaxHp() { return this->MaxHp; }
 	int getCurrentHp() { return (this->currentHp > 0) ? this->currentHp : 0; }
+
 private:
 	MonsterName current_Monster;
 	monsterVec monsterShape;
