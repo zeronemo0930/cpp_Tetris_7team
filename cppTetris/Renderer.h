@@ -32,6 +32,7 @@ public:
 
 	void show_logo();
 	void show_menu(short menu);
+	void drawOption(short optionSelector, float volume, int difficulty);
 
 	void drawBlock(Block& block, bool isShadow);
 	void eraseBlock(Block& block);
@@ -56,6 +57,8 @@ public:
 private:
 	Color color = Color::DARK_GRAY;
 	std::array<std::string, 3> menu_string;
+	std::array<std::string, 3> option_string;
+	std::array<std::string, 3> difficulty_string;
 	int ab_x = 14;
 	int ab_y = 1;
 };

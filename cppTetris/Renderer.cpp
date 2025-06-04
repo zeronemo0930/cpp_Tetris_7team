@@ -1,4 +1,4 @@
-#include "Renderer.h"
+ï»¿#include "Renderer.h"
 #include <conio.h>
 #include <ctime>
 #include <cstdlib>
@@ -7,8 +7,8 @@ using namespace std;
 
 
 void gotoxy(int x, int y) {
-    COORD pos = { static_cast<SHORT>(x), static_cast<SHORT>(y) };
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+	COORD pos = { static_cast<SHORT>(x), static_cast<SHORT>(y) };
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 }
 
 void SetColor(Color color) {
@@ -18,7 +18,9 @@ void SetColor(Color color) {
 
 Renderer::Renderer()
 {
-	menu_string = { "Start", "Setting", "Exit" };
+	menu_string = { "Start", "Option", "Exit" };
+	option_string = { "Stage", "Volume", "Apply" };
+	difficulty_string = { "Easy", "Normal", "Hard" };
 	system("Tetris");
 	system("mode con:cols=100 lines=30");
 	CONSOLE_CURSOR_INFO ConsoleCursor;
@@ -107,8 +109,8 @@ void Renderer::show_logo()
 	};
 	for (int i = 0; i < logo.size(); i++) {
 		for (int j = 0; j < logo[0].size(); j++) {
-			gotoxy(22 + 8*i, 3 + j);
-			SetColor(static_cast<Color>(i+1));
+			gotoxy(22 + 8 * i, 3 + j);
+			SetColor(static_cast<Color>(i + 1));
 			cout << logo[i][j];
 		}
 	}
@@ -120,7 +122,7 @@ void Renderer::show_game_stat(int score)
 	static bool printed_text = false;
 	SetColor(Color::GRAY);
 
-	// "SCORE" ÅØ½ºÆ®´Â ÇÑ ¹ø¸¸ Ãâ·Â
+	// "SCORE" í…ìŠ¤íŠ¸ëŠ” í•œ ë²ˆë§Œ ì¶œë ¥
 	if (!printed_text)
 	{
 		gotoxy(ab_x + 28, ab_y + 9);
@@ -128,7 +130,7 @@ void Renderer::show_game_stat(int score)
 		printed_text = true;
 	}
 
-	// Á¡¼ö´Â °è¼Ó ¾÷µ¥ÀÌÆ®µÊ
+	// ì ìˆ˜ëŠ” ê³„ì† ì—…ë°ì´íŠ¸ë¨
 	gotoxy(ab_x + 28, ab_y + 10);
 	printf("%10d", score);
 }
@@ -155,11 +157,11 @@ void Renderer::drawMonsterHp(Monster& mon)
 	gotoxy(60, 5);
 	cout << "HP : " << hp << " / " << maxHp;
 	for (int i = 0; i < maxHp; i++) {
-		gotoxy(60 + i*2, 6);
+		gotoxy(60 + i * 2, 6);
 		if (i < hp)
-			cout << "¡á";
+			cout << "â– ";
 		else
-			cout << "¡à";
+			cout << "â–¡";
 	}
 	gotoxy(77, 23);
 }
@@ -196,7 +198,7 @@ void Renderer::show_menu(short menu)
 		gotoxy(50, 20 + i);
 		if (menu == i) {
 			SetColor(Color::YELLOW);
-			cout << "¢º";
+			cout << "â–¶";
 		}
 		else
 			SetColor(Color::WHITE);
@@ -207,7 +209,40 @@ void Renderer::show_menu(short menu)
 	gotoxy(77, 23);
 }
 
-// ¾à°£ÀÇ °³¼±ÀÌ ÇÊ¿äÇÒµí
+<<<<<<< HEAD
+// ì•½ê°„ì˜ ê°œì„ ì´ í•„ìš”í• ë“¯
+=======
+void Renderer::drawOption(short optionSelector, float volume, int difficulty)
+{
+	cout << endl;
+	for (size_t i = 0; i < option_string.size(); i++) {
+		gotoxy(50, (i == 2 ? 15 : 10 + i));
+		if (optionSelector == i) {
+			SetColor(Color::YELLOW);
+			cout << "â–¶";
+		}
+		else
+			SetColor(Color::WHITE);
+		cout << option_string[i] << "  ";
+
+		if (i == 0) {
+			gotoxy(60, 10);
+
+			cout << "â—€ " << difficulty_string[difficulty] << " â–¶   ";
+		}
+		else if (i == 1) {
+			gotoxy(60, 11);
+			cout << "â—€ " << volume << " â–¶   ";
+		}
+
+
+	}
+
+	SetColor(Color::WHITE);
+	gotoxy(77, 23);
+}
+
+// ì•½ê°„ì˜ ê°œì„ ì´ í•„ìš”í• ë“¯
 void Renderer::drawBlock(Block& block, bool isShadow)
 {
 	cout << endl;
@@ -221,8 +256,8 @@ void Renderer::drawBlock(Block& block, bool isShadow)
 	for (int i = 0; i < shape.size(); i++) {
 		for (int j = 0; j < shape[0].size(); j++) {
 			if (shape[i][j] != 0) {
-				gotoxy((x + j)*2 + ab_x, y + i + ab_y);
-				cout << (isShadow ? "¡à" : "¡á");
+				gotoxy((x + j) * 2 + ab_x, y + i + ab_y);
+				cout << (isShadow ? "â–¡" : "â– ");
 			}
 
 		}
@@ -256,10 +291,10 @@ void Renderer::nextBlockFrame()
 	{
 		for (int j = 0; j < 6; j++)
 		{
-			gotoxy(ab_x + 30 + j*2, i);
+			gotoxy(ab_x + 30 + j * 2, i);
 			if (i == 1 || i == 6 || j == 0 || j == 5)
 			{
-				printf("¡á");
+				printf("â– ");
 			}
 			else {
 				printf("  ");
@@ -279,7 +314,7 @@ void Renderer::holdBlockFrame()
 			gotoxy(j * 2, i);
 			if (i == 1 || i == 6 || j == 0 || j == 5)
 			{
-				printf("¡á");
+				printf("â– ");
 			}
 			else {
 				printf("  ");
@@ -323,19 +358,19 @@ void Renderer::setBlockColor(Tetromino t)
 void Renderer::drawBoard(Board& board)
 {
 	cout << endl;
-	
+
 	for (size_t i = 0; i < Board::height; i++) {
 		for (size_t j = 0; j < Board::width; j++) {
 
 			gotoxy((j * 2) + ab_x, i + ab_y);
 			if (j == 0 || j == Board::width - 1 || i == Board::height - 1) {
 				SetColor(Color::WHITE);
-				cout << ((i < 3) ? "¡à" : "¡á");
+				cout << ((i < 3) ? "â–¡" : "â– ");
 			}
 			else if (board.board[i][j] != 0) {
 				setBlockColor(static_cast<Tetromino>(board.board[i][j] - 1));
 				SetColor(color);
-				cout << "¡á";
+				cout << "â– ";
 			}
 			else
 				cout << "   ";
@@ -353,7 +388,7 @@ void Renderer::eraseLine(size_t i)
 	gotoxy(1 * 2 + 5, i + 1);
 	for (size_t j = 1; j < Board::width - 1; j++)
 	{
-		cout << "¡à";
+		cout << "â–¡";
 		Sleep(10);
 	}
 	gotoxy(1 * 2, i);

@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
-// Monster �̸�, ���̵� �ٽ� ���ϱ�
+// Monster ÀÌ¸§, ³­ÀÌµµ ´Ù½Ã Á¤ÇÏ±â
 enum class MonsterName {
 	RAT, GHOST, CAT
 };
@@ -26,11 +26,12 @@ public:
 	MonsterName getMonster() {
 		return this->current_Monster;
 	}
+	int getStage() { return stage; }
+	static int stage;
 private:
 	MonsterName current_Monster;
 	monsterVec monsterShape;
 
-	static int stage;
 	int speed;
 	int stick_rate;
 
