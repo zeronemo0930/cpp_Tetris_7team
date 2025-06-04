@@ -18,7 +18,7 @@ public:
 	int get_clear_line_score();
 	int move_block(Block& block);
 	int eraseBoardLine(size_t i);
-	void rotate_shift(Block& b);
+	bool rotate_shift(Block& b);
 private:
 
 };
