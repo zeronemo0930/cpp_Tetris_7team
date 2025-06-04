@@ -209,9 +209,7 @@ void Renderer::show_menu(short menu)
 	gotoxy(77, 23);
 }
 
-<<<<<<< HEAD
 // 약간의 개선이 필요할듯
-=======
 void Renderer::drawOption(short optionSelector, float volume, int difficulty)
 {
 	cout << endl;
