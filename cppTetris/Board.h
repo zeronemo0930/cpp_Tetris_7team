@@ -19,6 +19,7 @@ public:
 	int move_block(Block& block);
 	int eraseBoardLine(size_t i);
 	void rotate_shift(Block& b);
+	void result_by_attack(const int empty_place);
 private:
 
 };

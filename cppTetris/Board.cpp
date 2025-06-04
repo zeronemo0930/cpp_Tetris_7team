@@ -110,6 +110,23 @@ void Board::rotate_shift(Block& b) // È¸ÀüÀÌ °¡´ÉÇÑ °æ¿ì¿¡¸¸ µµÇüÀ» È¸ÀüÇØÁÖ´Â Ç
 		b = block; //
 }
 
+void Board::result_by_attack(const int empty_place)
+{
+	for (size_t k = 0; k < height - 1; k++)
+	{
+		for (size_t j = 1; j < 13; j++)
+			board[k][j] = board[k + 1][j];
+	}
+	for (size_t j = 1; j < 13; j++) {
+		if (j != empty_place) {
+			board[height - 2][j] = 1;
+		}
+		else {
+			board[height - 2][j] = 0;
+		}
+	}
+}
+
 int Board::move_block(Block& block) 
 {
 	block.move(0, 1);

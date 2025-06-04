@@ -164,6 +164,28 @@ void Renderer::drawMonsterHp(Monster& mon)
 	gotoxy(77, 23);
 }
 
+void Renderer::eraseMonster(Monster& mon)
+{
+	cout << endl;
+	monsterVec monster = mon.getMonsterVec();
+	for (int i = 0; i < monster.size(); i++) {
+		gotoxy(60, 10 + i);
+		for (int j = 0; j < monster[i].size(); j++) {
+			cout << " ";
+		}
+	}
+	gotoxy(77, 23);
+}
+
+void Renderer::act_by_boss(Monster& mon, Board& board)
+{
+	int attack_row = 1;
+	int empty_place = rand() % 12 + 1;
+	if (rand() % 100 < 10) {
+		board.result_by_attack(empty_place);
+	}
+}
+
 
 
 

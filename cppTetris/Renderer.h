@@ -48,6 +48,11 @@ public:
 
 	void drawMonster(Monster& mon);
 	void drawMonsterHp(Monster& mon);
+
+	void eraseMonster(Monster& mon);
+
+	void act_by_boss(Monster& mon, Board& board);
+
 private:
 	Color color = Color::DARK_GRAY;
 	std::array<std::string, 3> menu_string;
