@@ -43,12 +43,15 @@ public:
 	void setBlockColor(Tetromino t);
 	void drawBoard(Board& board);
 
+
 	static void eraseLine(size_t i);
 
 	void show_game_stat(int score);
 
 	void drawMonster(Monster& mon);
 	void drawMonsterHp(Monster& mon);
+
+	void drawDialogueFrame();
 private:
 	Color color = Color::DARK_GRAY;
 	std::array<std::string, 3> menu_string;

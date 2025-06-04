@@ -140,7 +140,7 @@ void Renderer::drawMonster(Monster& mon)
 	cout << endl;
 	monsterVec monster = mon.getMonsterVec();
 	for (int i = 0; i < monster.size(); i++) {
-		gotoxy(60, 10 + i);
+		gotoxy(65, 2 + i);
 		cout << monster[i];
 	}
 	gotoxy(77, 23);
@@ -148,22 +148,39 @@ void Renderer::drawMonster(Monster& mon)
 
 void Renderer::drawMonsterHp(Monster& mon)
 {
-	cout << endl;
-	SetColor(Color::WHITE);
+	static int prevHp = -1; // 이전 HP 저장 (초기값 -1로 설정)
 	int hp = mon.getCurrentHp();
 	int maxHp = mon.getMaxHp();
-	gotoxy(60, 5);
-	cout << "                              ";
-	gotoxy(60, 5);
+
+	SetColor(Color::WHITE);
+
+	// HP 텍스트 갱신
+	gotoxy(65, 15);
+	cout << "                             ";
+	gotoxy(65, 15);
 	cout << "HP : " << hp << " / " << maxHp;
-	for (int i = 0; i < maxHp; i++) {
-		gotoxy(60 + i * 2, 6);
-		if (i < hp)
-			cout << "■";
-		else
-			cout << "□";
+
+	// 처음이거나 체력 증가일 경우 바로 출력
+	if (prevHp == -1 || hp >= prevHp) {
+		for (int i = 0; i < maxHp; i++) {
+			gotoxy(65 + i * 2, 16);
+			if (i < hp)
+				cout << "■";
+			else
+				cout << "□";
+		}
 	}
-	gotoxy(77, 23);
+	// 체력 감소일 경우 부드럽게 감소 효과
+	else {
+		for (int i = prevHp - 1; i >= hp; i--) {
+			gotoxy(65 + i * 2, 16);
+			cout << "□";
+			Sleep(50); // 50ms 딜레이 (너무 느리면 30으로 줄여도 됨)
+		}
+	}
+
+	prevHp = hp; // 다음 프레임을 위해 현재 HP 저장
+	gotoxy(82, 23);
 }
 
 
@@ -187,9 +204,9 @@ void Renderer::show_menu(short menu)
 	gotoxy(77, 23);
 }
 
-<<<<<<< HEAD
+
 // 약간의 개선이 필요할듯
-=======
+
 void Renderer::drawOption(short optionSelector, float volume, int difficulty)
 {
 	cout << endl;
@@ -377,3 +394,20 @@ void Renderer::eraseLine(size_t i)
 	}
 }
 
+// 대화창 프레임 그리기 (상수 대신 숫자 직접 사용)
+void Renderer::drawDialogueFrame()
+{
+	/* 위치와 크기: x=65, y=18, 폭=26칸, 높이=5줄 */
+	SetColor(Color::DARK_SKY_BLUE);
+
+	for (short i = 0; i < 5; ++i) {          // 높이 5
+		for (short j = 0; j < 26; ++j) {     // 폭 26
+			gotoxy(65 + j * 2, 18 + i);      // (x, y) 좌표
+			bool border = (i == 0 || i == 4  // 위·아래
+				|| j == 0 || j == 25); // 좌·우
+			std::cout << (border ? "■" : "  ");
+		}
+	}
+
+	SetColor(Color::WHITE);                  // 기본색 복귀
+}
