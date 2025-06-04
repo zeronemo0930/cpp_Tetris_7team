@@ -1,6 +1,5 @@
 ﻿#include "Renderer.h"
 #include <conio.h>
-#include <windows.h>  // Sleep �Լ� ����� ���� �ʿ�
 #include <ctime>
 #include <cstdlib>
 
@@ -8,8 +7,8 @@ using namespace std;
 
 
 void gotoxy(int x, int y) {
-    COORD pos = { static_cast<SHORT>(x), static_cast<SHORT>(y) };
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+	COORD pos = { static_cast<SHORT>(x), static_cast<SHORT>(y) };
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 }
 
 void SetColor(Color color) {
@@ -110,8 +109,8 @@ void Renderer::show_logo()
 	};
 	for (int i = 0; i < logo.size(); i++) {
 		for (int j = 0; j < logo[0].size(); j++) {
-			gotoxy(22 + 8*i, 3 + j);
-			SetColor(static_cast<Color>(i+1));
+			gotoxy(22 + 8 * i, 3 + j);
+			SetColor(static_cast<Color>(i + 1));
 			cout << logo[i][j];
 		}
 	}
@@ -123,7 +122,7 @@ void Renderer::show_game_stat(int score)
 	static bool printed_text = false;
 	SetColor(Color::GRAY);
 
-	// "SCORE" �ؽ�Ʈ�� �� ���� ���
+	// "SCORE" 텍스트는 한 번만 출력
 	if (!printed_text)
 	{
 		gotoxy(ab_x + 28, ab_y + 9);
@@ -131,7 +130,7 @@ void Renderer::show_game_stat(int score)
 		printed_text = true;
 	}
 
-	// ������ ��� ������Ʈ��
+	// 점수는 계속 업데이트됨
 	gotoxy(ab_x + 28, ab_y + 10);
 	printf("%10d", score);
 }
@@ -141,51 +140,31 @@ void Renderer::drawMonster(Monster& mon)
 	cout << endl;
 	monsterVec monster = mon.getMonsterVec();
 	for (int i = 0; i < monster.size(); i++) {
-		gotoxy(65, 1 + i);
+		gotoxy(60, 10 + i);
 		cout << monster[i];
 	}
-	gotoxy(85, 0);
+	gotoxy(77, 23);
 }
-
-
 
 void Renderer::drawMonsterHp(Monster& mon)
 {
-	static int prevHp = -1; // ���� HP ���� (�ʱⰪ -1�� ����)
+	cout << endl;
+	SetColor(Color::WHITE);
 	int hp = mon.getCurrentHp();
 	int maxHp = mon.getMaxHp();
-
-	SetColor(Color::WHITE);
-
-	// HP �ؽ�Ʈ ����
-	gotoxy(65, 15);
-	cout << "                             ";
-	gotoxy(65, 15);
+	gotoxy(60, 5);
+	cout << "                              ";
+	gotoxy(60, 5);
 	cout << "HP : " << hp << " / " << maxHp;
-
-	// ó���̰ų� ü�� ������ ��� �ٷ� ���
-	if (prevHp == -1 || hp >= prevHp) {
-		for (int i = 0; i < maxHp; i++) {
-			gotoxy(65 + i * 2, 16);
-			if (i < hp)
-				cout << "��";
-			else
-				cout << "��";
-		}
+	for (int i = 0; i < maxHp; i++) {
+		gotoxy(60 + i * 2, 6);
+		if (i < hp)
+			cout << "■";
+		else
+			cout << "□";
 	}
-	// ü�� ������ ��� �ε巴�� ���� ȿ��
-	else {
-		for (int i = prevHp - 1; i >= hp; i--) {
-			gotoxy(65 + i * 2, 16);
-			cout << "��";
-			Sleep(50); // 50ms ����� (�ʹ� ������ 30���� �ٿ��� ��)
-		}
-	}
-
-	prevHp = hp; // ���� �������� ���� ���� HP ����
-	gotoxy(82, 23);
+	gotoxy(77, 23);
 }
-
 
 
 
@@ -197,7 +176,7 @@ void Renderer::show_menu(short menu)
 		gotoxy(50, 20 + i);
 		if (menu == i) {
 			SetColor(Color::YELLOW);
-			cout << "��";
+			cout << "▶";
 		}
 		else
 			SetColor(Color::WHITE);
@@ -215,7 +194,7 @@ void Renderer::drawOption(short optionSelector, float volume, int difficulty)
 		gotoxy(50, (i == 2 ? 15 : 10 + i));
 		if (optionSelector == i) {
 			SetColor(Color::YELLOW);
-			cout << "��";
+			cout << "▶";
 		}
 		else
 			SetColor(Color::WHITE);
@@ -224,21 +203,21 @@ void Renderer::drawOption(short optionSelector, float volume, int difficulty)
 		if (i == 0) {
 			gotoxy(60, 10);
 
-			cout << "�� " << difficulty_string[difficulty] << " ��   ";
+			cout << "◀ " << difficulty_string[difficulty] << " ▶   ";
 		}
 		else if (i == 1) {
 			gotoxy(60, 11);
-			cout << "�� " << volume << " ��   ";
+			cout << "◀ " << volume << " ▶   ";
 		}
-		
-		
+
+
 	}
 
 	SetColor(Color::WHITE);
 	gotoxy(77, 23);
 }
 
-// �ణ�� ������ �ʿ��ҵ�
+// 약간의 개선이 필요할듯
 void Renderer::drawBlock(Block& block, bool isShadow)
 {
 	cout << endl;
@@ -252,8 +231,8 @@ void Renderer::drawBlock(Block& block, bool isShadow)
 	for (int i = 0; i < shape.size(); i++) {
 		for (int j = 0; j < shape[0].size(); j++) {
 			if (shape[i][j] != 0) {
-				gotoxy((x + j)*2 + ab_x, y + i + ab_y);
-				cout << (isShadow ? "��" : "��");
+				gotoxy((x + j) * 2 + ab_x, y + i + ab_y);
+				cout << (isShadow ? "□" : "■");
 			}
 
 		}
@@ -287,10 +266,10 @@ void Renderer::nextBlockFrame()
 	{
 		for (int j = 0; j < 6; j++)
 		{
-			gotoxy(ab_x + 30 + j*2, i);
+			gotoxy(ab_x + 30 + j * 2, i);
 			if (i == 1 || i == 6 || j == 0 || j == 5)
 			{
-				printf("��");
+				printf("■");
 			}
 			else {
 				printf("  ");
@@ -310,7 +289,7 @@ void Renderer::holdBlockFrame()
 			gotoxy(j * 2, i);
 			if (i == 1 || i == 6 || j == 0 || j == 5)
 			{
-				printf("��");
+				printf("■");
 			}
 			else {
 				printf("  ");
@@ -354,19 +333,19 @@ void Renderer::setBlockColor(Tetromino t)
 void Renderer::drawBoard(Board& board)
 {
 	cout << endl;
-	
+
 	for (size_t i = 0; i < Board::height; i++) {
 		for (size_t j = 0; j < Board::width; j++) {
 
 			gotoxy((j * 2) + ab_x, i + ab_y);
 			if (j == 0 || j == Board::width - 1 || i == Board::height - 1) {
 				SetColor(Color::WHITE);
-				cout << ((i < 3) ? "��" : "��");
+				cout << ((i < 3) ? "□" : "■");
 			}
 			else if (board.board[i][j] != 0) {
 				setBlockColor(static_cast<Tetromino>(board.board[i][j] - 1));
 				SetColor(color);
-				cout << "��";
+				cout << "■";
 			}
 			else
 				cout << "   ";
@@ -384,7 +363,7 @@ void Renderer::eraseLine(size_t i)
 	gotoxy(1 * 2 + 5, i + 1);
 	for (size_t j = 1; j < Board::width - 1; j++)
 	{
-		cout << "��";
+		cout << "□";
 		Sleep(10);
 	}
 	gotoxy(1 * 2, i);
