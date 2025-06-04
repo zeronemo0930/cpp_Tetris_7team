@@ -13,6 +13,7 @@ Block::~Block()
 {
 }
 
+
 // Vector를 이용해서 배열 크기를 블럭 사이즈에 딱 맞게 수정하면, 회전의 조작감이 구려짐
 void Block::setBlock(Tetromino t)
 {

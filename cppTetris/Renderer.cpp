@@ -1,6 +1,6 @@
 ﻿#include "Renderer.h"
 #include <conio.h>
-#include <windows.h>  // Sleep 함수 사용을 위해 필요
+#include <windows.h>  // Sleep �Լ� ����� ���� �ʿ�
 #include <ctime>
 #include <cstdlib>
 
@@ -19,7 +19,9 @@ void SetColor(Color color) {
 
 Renderer::Renderer()
 {
-	menu_string = { "Start", "Setting", "Exit" };
+	menu_string = { "Start", "Option", "Exit" };
+	option_string = { "Stage", "Volume", "Apply" };
+	difficulty_string = { "Easy", "Normal", "Hard" };
 	system("Tetris");
 	system("mode con:cols=100 lines=30");
 	CONSOLE_CURSOR_INFO ConsoleCursor;
@@ -121,7 +123,7 @@ void Renderer::show_game_stat(int score)
 	static bool printed_text = false;
 	SetColor(Color::GRAY);
 
-	// "SCORE" 텍스트는 한 번만 출력
+	// "SCORE" �ؽ�Ʈ�� �� ���� ���
 	if (!printed_text)
 	{
 		gotoxy(ab_x + 28, ab_y + 9);
@@ -129,7 +131,7 @@ void Renderer::show_game_stat(int score)
 		printed_text = true;
 	}
 
-	// 점수는 계속 업데이트됨
+	// ������ ��� ������Ʈ��
 	gotoxy(ab_x + 28, ab_y + 10);
 	printf("%10d", score);
 }
@@ -149,38 +151,38 @@ void Renderer::drawMonster(Monster& mon)
 
 void Renderer::drawMonsterHp(Monster& mon)
 {
-	static int prevHp = -1; // 이전 HP 저장 (초기값 -1로 설정)
+	static int prevHp = -1; // ���� HP ���� (�ʱⰪ -1�� ����)
 	int hp = mon.getCurrentHp();
 	int maxHp = mon.getMaxHp();
 
 	SetColor(Color::WHITE);
 
-	// HP 텍스트 갱신
+	// HP �ؽ�Ʈ ����
 	gotoxy(65, 15);
 	cout << "                             ";
 	gotoxy(65, 15);
 	cout << "HP : " << hp << " / " << maxHp;
 
-	// 처음이거나 체력 증가일 경우 바로 출력
+	// ó���̰ų� ü�� ������ ��� �ٷ� ���
 	if (prevHp == -1 || hp >= prevHp) {
 		for (int i = 0; i < maxHp; i++) {
 			gotoxy(65 + i * 2, 16);
 			if (i < hp)
-				cout << "■";
+				cout << "��";
 			else
-				cout << "□";
+				cout << "��";
 		}
 	}
-	// 체력 감소일 경우 부드럽게 감소 효과
+	// ü�� ������ ��� �ε巴�� ���� ȿ��
 	else {
 		for (int i = prevHp - 1; i >= hp; i--) {
 			gotoxy(65 + i * 2, 16);
-			cout << "□";
-			Sleep(50); // 50ms 딜레이 (너무 느리면 30으로 줄여도 됨)
+			cout << "��";
+			Sleep(50); // 50ms ����� (�ʹ� ������ 30���� �ٿ��� ��)
 		}
 	}
 
-	prevHp = hp; // 다음 프레임을 위해 현재 HP 저장
+	prevHp = hp; // ���� �������� ���� ���� HP ����
 	gotoxy(82, 23);
 }
 
@@ -195,7 +197,7 @@ void Renderer::show_menu(short menu)
 		gotoxy(50, 20 + i);
 		if (menu == i) {
 			SetColor(Color::YELLOW);
-			cout << "▶";
+			cout << "��";
 		}
 		else
 			SetColor(Color::WHITE);
@@ -206,7 +208,37 @@ void Renderer::show_menu(short menu)
 	gotoxy(77, 23);
 }
 
-// 약간의 개선이 필요할듯
+void Renderer::drawOption(short optionSelector, float volume, int difficulty)
+{
+	cout << endl;
+	for (size_t i = 0; i < option_string.size(); i++) {
+		gotoxy(50, (i == 2 ? 15 : 10 + i));
+		if (optionSelector == i) {
+			SetColor(Color::YELLOW);
+			cout << "��";
+		}
+		else
+			SetColor(Color::WHITE);
+		cout << option_string[i] << "  ";
+
+		if (i == 0) {
+			gotoxy(60, 10);
+
+			cout << "�� " << difficulty_string[difficulty] << " ��   ";
+		}
+		else if (i == 1) {
+			gotoxy(60, 11);
+			cout << "�� " << volume << " ��   ";
+		}
+		
+		
+	}
+
+	SetColor(Color::WHITE);
+	gotoxy(77, 23);
+}
+
+// �ణ�� ������ �ʿ��ҵ�
 void Renderer::drawBlock(Block& block, bool isShadow)
 {
 	cout << endl;
@@ -221,7 +253,7 @@ void Renderer::drawBlock(Block& block, bool isShadow)
 		for (int j = 0; j < shape[0].size(); j++) {
 			if (shape[i][j] != 0) {
 				gotoxy((x + j)*2 + ab_x, y + i + ab_y);
-				cout << (isShadow ? "□" : "■");
+				cout << (isShadow ? "��" : "��");
 			}
 
 		}
@@ -258,7 +290,7 @@ void Renderer::nextBlockFrame()
 			gotoxy(ab_x + 30 + j*2, i);
 			if (i == 1 || i == 6 || j == 0 || j == 5)
 			{
-				printf("■");
+				printf("��");
 			}
 			else {
 				printf("  ");
@@ -278,7 +310,7 @@ void Renderer::holdBlockFrame()
 			gotoxy(j * 2, i);
 			if (i == 1 || i == 6 || j == 0 || j == 5)
 			{
-				printf("■");
+				printf("��");
 			}
 			else {
 				printf("  ");
@@ -329,12 +361,12 @@ void Renderer::drawBoard(Board& board)
 			gotoxy((j * 2) + ab_x, i + ab_y);
 			if (j == 0 || j == Board::width - 1 || i == Board::height - 1) {
 				SetColor(Color::WHITE);
-				cout << ((i < 3) ? "□" : "■");
+				cout << ((i < 3) ? "��" : "��");
 			}
 			else if (board.board[i][j] != 0) {
 				setBlockColor(static_cast<Tetromino>(board.board[i][j] - 1));
 				SetColor(color);
-				cout << "■";
+				cout << "��";
 			}
 			else
 				cout << "   ";
@@ -352,7 +384,7 @@ void Renderer::eraseLine(size_t i)
 	gotoxy(1 * 2 + 5, i + 1);
 	for (size_t j = 1; j < Board::width - 1; j++)
 	{
-		cout << "□";
+		cout << "��";
 		Sleep(10);
 	}
 	gotoxy(1 * 2, i);

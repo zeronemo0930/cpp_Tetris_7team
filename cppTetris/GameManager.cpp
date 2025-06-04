@@ -12,7 +12,9 @@
 
 using namespace std;
 
-GameManager::GameManager():randType(Tetromino::I), keytemp(NULL), isGameState(0), menuSelector(0), monster(MonsterName::RAT), isHold(false)
+GameManager::GameManager():randType(Tetromino::I), keytemp(NULL),
+isGameState(0), menuSelector(0), monster(MonsterName::RAT), isHold(false), optionSelector(0),
+volume(50), difficulty(0)
 {
 	srand((unsigned int)time(NULL));
 }
@@ -30,7 +32,7 @@ void GameManager::start()
 		play();
 	} 
 	else if (menuSelector == 1) {
-
+		option();
 	}
 	else if (menuSelector == 2) {
 		exit(0);
@@ -53,7 +55,7 @@ void GameManager::play()
 
 		input();
 		checkState();
-		if (i % 30 == 0) {
+		if (i % (30 - 12*difficulty) == 0) {
 			update();
 		}
 
@@ -67,7 +69,7 @@ void GameManager::menu() {
 	menuSelector = 0;
 	renderer.show_logo();
 	renderer.show_menu(menuSelector);
-	while (keytemp != '\r') {
+	while (true) {
 
 		if (_kbhit()) {
 			keytemp = _getch();
@@ -79,20 +81,103 @@ void GameManager::menu() {
 					if (menuSelector > 0) {
 						menuSelector--;
 						renderer.show_menu(menuSelector);
+						sm.playEffect("SoundEffects/menu.wav");
 					}
 					break;
 				case KEY_DOWN:
 					if (menuSelector < 2) {
 						menuSelector++;
 						renderer.show_menu(menuSelector);
+						sm.playEffect("SoundEffects/menu.wav");
 					}
 					break;
 				}
+			}
+			if (keytemp == '\r') {
+				sm.playEffect("SoundEffects/menu.wav");
+				break;
 			}
 		}
 	}
 	
 	system("cls");
+}
+
+void GameManager::option()
+{
+	optionSelector = 0;
+	renderer.drawOption(optionSelector, volume, difficulty);
+	while (true) {
+
+		if (_kbhit()) {
+			keytemp = _getch();
+			if (keytemp == EXT_KEY) {
+				keytemp = _getch();
+				switch (keytemp)
+				{
+				case KEY_UP:
+					if (optionSelector > 0) {
+						optionSelector--;
+						renderer.drawOption(optionSelector, volume, difficulty);
+						sm.playEffect("SoundEffects/menu.wav");
+					}
+					break;
+				case KEY_DOWN:
+					if (optionSelector < 2) {
+						optionSelector++;
+						renderer.drawOption(optionSelector, volume, difficulty);
+						sm.playEffect("SoundEffects/menu.wav");
+					}
+					break;
+				case KEY_LEFT:
+					if (optionSelector == 0) {
+						if (difficulty > 0) {
+							difficulty--;
+							renderer.drawOption(optionSelector, volume, difficulty);
+							sm.playEffect("SoundEffects/menu.wav");
+						}
+					}
+					else if (optionSelector == 1) {
+						if (volume > 0) {
+							volume--;
+							renderer.drawOption(optionSelector, volume, difficulty);
+							sm.playEffect("SoundEffects/menu.wav");
+						}
+					}
+					break;
+
+				case KEY_RIGHT:
+					if (optionSelector == 0) {
+						if (difficulty < 2) {
+							difficulty++;
+							renderer.drawOption(optionSelector, volume, difficulty);
+							sm.playEffect("SoundEffects/menu.wav");
+						}
+					}
+					else if (optionSelector == 1) {
+						if (volume < 100) {
+							volume++;
+							renderer.drawOption(optionSelector, volume, difficulty);
+							sm.playEffect("SoundEffects/menu.wav");
+						}
+						
+					}
+					break;
+				}
+				
+
+			}
+			if (keytemp == '\r') {
+				if (optionSelector == 2) {
+					sm.playEffect("SoundEffects/menu.wav");
+					sm.SetMasterVolume(volume);
+					break;
+				}
+			}
+		}
+	}
+	system("cls");
+	start();
 }
 
 void GameManager::init()

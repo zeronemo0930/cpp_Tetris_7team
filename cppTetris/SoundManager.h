@@ -38,6 +38,8 @@ private:
         "final2"
     };
 
+
+
 public:
     SoundManager() : level(0), levelKey("story1") {}
 
@@ -62,5 +64,12 @@ public:
 
     void stopSound() {
         PlaySoundA(NULL, 0, 0);
+    }
+
+    void SetMasterVolume(float volume) {
+        // volume: 0.0f (0%) ~ 1.0f (100%)
+        DWORD vol = DWORD(volume * 0xFFFF);
+        DWORD both = (vol & 0xFFFF) | ((vol & 0xFFFF) << 16);
+        waveOutSetVolume(NULL, both);
     }
 };
