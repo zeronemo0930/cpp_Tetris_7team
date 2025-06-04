@@ -343,17 +343,19 @@ void GameManager::checkState()
 	if (isGameState == 2) {
 		// create New Block
 		makeNewBlock();
-
 		// 몬스터에 데미지가 들어가면 업데이트
 		int temp = board.get_clear_line_score();
 		if (temp != 0) {
 			sm.playEffect("SoundEffects/line_clear.wav");
 			monster.takeDamage(temp / 100);
 
+
 			// 테스트 용으로 넣어놓은 코드
 			if (monster.isDead()) {
 				renderer.drawMonsterHp(monster);
-				exit(0);
+				renderer.eraseMonster(monster);
+				monster.getNextMonster();
+				renderer.drawMonster(monster);
 			}
 			renderer.drawMonsterHp(monster);
 		}
@@ -374,6 +376,7 @@ void GameManager::checkState()
 
 void GameManager::makeNewBlock()
 {
+	renderer.act_by_boss(monster, board);
 	renderer.drawBoard(board);
 	renderer.eraseBlock(next_block);
 	current_block = next_block;

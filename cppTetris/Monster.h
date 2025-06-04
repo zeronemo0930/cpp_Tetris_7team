@@ -1,9 +1,9 @@
 #pragma once
 #include <vector>
 #include <string>
-// Monster �̸�, ���̵� �ٽ� ���ϱ�
+// Monster ÀÌ¸§, ³­ÀÌµµ ´Ù½Ã Á¤ÇÏ±â
 enum class MonsterName {
-	RAT, GHOST, HAMSTER
+	RAT, GHOST, CAT
 };
 
 using monsterVec = std::vector<std::string>;
@@ -17,9 +17,15 @@ public:
 
 	void takeDamage(int damage) { currentHp -= damage; }
 	bool isDead() const { return currentHp <= 0; }
+	Monster& getNextMonster();
+	void SetMonster(MonsterName name);
+
 	monsterVec& getMonsterVec() { return this->monsterShape; }
 	int getMaxHp() { return this->MaxHp; }
 	int getCurrentHp() { return (this->currentHp > 0) ? this->currentHp : 0; }
+	MonsterName getMonster() {
+		return this->current_Monster;
+	}
 	int getStage() { return stage; }
 	static int stage;
 private:

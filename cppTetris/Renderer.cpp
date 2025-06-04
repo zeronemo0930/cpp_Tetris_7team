@@ -179,9 +179,28 @@ void Renderer::drawMonsterHp(Monster& mon)
 		}
 	}
 
-	prevHp = hp; // 다음 프레임을 위해 현재 HP 저장
-	gotoxy(82, 23);
+void Renderer::eraseMonster(Monster& mon)
+{
+	cout << endl;
+	monsterVec monster = mon.getMonsterVec();
+	for (int i = 0; i < monster.size(); i++) {
+		gotoxy(60, 10 + i);
+		for (int j = 0; j < monster[i].size(); j++) {
+			cout << " ";
+		}
+	}
+	gotoxy(77, 23);
 }
+
+void Renderer::act_by_boss(Monster& mon, Board& board)
+{
+	int attack_row = 1;
+	int empty_place = rand() % 12 + 1;
+	if (rand() % 100 < 10 * mon.getStage()) {
+		board.result_by_attack(empty_place);
+	}
+}
+
 
 
 
@@ -204,9 +223,7 @@ void Renderer::show_menu(short menu)
 	gotoxy(77, 23);
 }
 
-
 // 약간의 개선이 필요할듯
-
 void Renderer::drawOption(short optionSelector, float volume, int difficulty)
 {
 	cout << endl;
