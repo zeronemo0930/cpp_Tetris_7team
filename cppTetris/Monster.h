@@ -20,12 +20,12 @@ public:
 	monsterVec& getMonsterVec() { return this->monsterShape; }
 	int getMaxHp() { return this->MaxHp; }
 	int getCurrentHp() { return (this->currentHp > 0) ? this->currentHp : 0; }
-
+	int getStage() { return stage; }
+	static int stage;
 private:
 	MonsterName current_Monster;
 	monsterVec monsterShape;
 
-	static int stage;
 	int speed;
 	int stick_rate;
 

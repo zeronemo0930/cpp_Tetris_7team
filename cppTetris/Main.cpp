@@ -6,6 +6,5 @@ int main() {
 	GameManager GM = GameManager();
 	GM.start();
 	Renderer renderer;
-	
 	return 0;
 }
