@@ -1,13 +1,27 @@
 #pragma once
 #include "Renderer.h"
+#include "SoundManager.h"
 
 class Menu
 {
 public:
-	Menu(Renderer* renderer);
+	Menu();
+	void setPer(Renderer* renderer, SoundManager* sm);
+	int getMenuSelector() { return menuSelector; }
+	int getDifficulty() { return difficulty; }
 
+
+	void menu();
+	void option();
+	void difficultySet();
 private:
 	Renderer* renderer;
+	SoundManager* sm;
+	short menuSelector;
+	short optionSelector;
+	char keytemp;
+	float volume;
+	int difficulty;	// 0 : easy, 1 : normal, 2 : hard
 
 };
 

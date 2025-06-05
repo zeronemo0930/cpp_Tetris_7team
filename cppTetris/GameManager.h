@@ -8,18 +8,16 @@
 class GameManager
 {
 private:
-	short menuSelector;
-	short optionSelector;
+	
 	char keytemp;
 	int isGameState;
-
-	int difficulty;		// 0 : easy, 1 : normal, 2 : hard
-	float volume;
 
 	bool isHold;		// Hold 되어 있는 Block이 있는가?
 	bool isNowHold;		// 지금 Hold 한 블럭인가?
 
 	int score = 0;
+
+	Menu menu;
 
 	Board board;
 
@@ -41,9 +39,9 @@ public:
 
 
 	void start();
+
+	void mainMenu();
 	void play();
-	void menu();
-	void option();
 
 	void init();
 	void input();
