@@ -160,28 +160,28 @@ void Renderer::drawMonsterHp(Monster& mon)
 	gotoxy(65, 15);
 	cout << "HP : " << hp << " / " << maxHp;
 
-	for (int i = maxHp; i > 0; i--) {
+	/*for (int i = maxHp; i > 0; i--) {
 		gotoxy(60 + i * 2, 6);
 		Sleep(50);
 		if (i <= hp)
 			cout << "■";
-		else
+		else*/
 
 
-// 	// 처음이거나 체력 증가일 경우 바로 출력
-// 	if (prevHp == -1 || hp >= prevHp) {
-// 		for (int i = 0; i < maxHp; i++) {
-// 			gotoxy(65 + i * 2, 16);
-// 			if (i < hp)
-// 				cout << "■";
-// 			else
-// 				cout << "□";
-// 		}
-// 	}
-// 	// 체력 감소일 경우 부드럽게 감소 효과
-// 	else {
-// 		for (int i = prevHp - 1; i >= hp; i--) {
-// 			gotoxy(65 + i * 2, 16);
+ 	// 처음이거나 체력 증가일 경우 바로 출력
+ 	if (prevHp == -1 || hp >= prevHp) {
+ 		for (int i = 0; i < maxHp; i++) {
+ 			gotoxy(65 + i * 2, 16);
+ 			if (i < hp)
+ 				cout << "■";
+ 			else
+ 				cout << "□";
+ 		}
+ 	}
+ 	// 체력 감소일 경우 부드럽게 감소 효과
+ 	else {
+ 		for (int i = prevHp - 1; i >= hp; i--) {
+ 			gotoxy(65 + i * 2, 16);
 
 			cout << "□";
 			Sleep(50); // 50ms 딜레이 (너무 느리면 30으로 줄여도 됨)
@@ -204,8 +204,8 @@ void Renderer::eraseMonster(Monster& mon)
 	cout << endl;
 	monsterVec monster = mon.getMonsterVec();
 	for (int i = 0; i < monster.size(); i++) {
-		gotoxy(60, 10 + i);
 		for (int j = 0; j < monster[i].size(); j++) {
+			gotoxy(60 + j, 10 + i);
 			cout << " ";
 		}
 	}

@@ -37,9 +37,9 @@ public:
 	void drawBlock(Block& block, bool isShadow);
 	void eraseBlock(Block& block);
 
-	void drawMonster(Monster& mon);
+	/*void drawMonster(Monster& mon);
 	void drawMonsterHp(Monster& mon);
-	void eraseMonster(Monster& mon);
+	void eraseMonster(Monster& mon);*/
 
 	void nextBlockFrame();
 	void holdBlockFrame();

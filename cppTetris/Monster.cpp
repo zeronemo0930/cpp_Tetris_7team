@@ -75,7 +75,7 @@ void Monster::SetMonster(MonsterName name) // 임시 보스 설정
 	case MonsterName::CAT:
 		speed = 4;
 		stick_rate = 10;
-		MaxHp = 1000;
+		MaxHp = 10;
 		monsterShape.clear();
 		monsterShape = {
 			" /\\     /\\",

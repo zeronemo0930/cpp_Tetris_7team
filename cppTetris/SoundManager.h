@@ -67,6 +67,7 @@ public:
     }
 
     void SetMasterVolume(float volume) {
+        volume /= 100;
         // volume: 0.0f (0%) ~ 1.0f (100%)
         DWORD vol = DWORD(volume * 0xFFFF);
         DWORD both = (vol & 0xFFFF) | ((vol & 0xFFFF) << 16);
