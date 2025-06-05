@@ -54,6 +54,7 @@ public:
 	void show_game_stat(int score);
 
 	void drawMonster(Monster& mon);
+	void drawMonsterTalk(Monster& mon);
 	void drawMonsterHp(Monster& mon);
 	void aniMonsterDamaged(Monster& mon);
 

@@ -146,6 +146,17 @@ void Renderer::drawMonster(Monster& mon)
 	gotoxy(77, 23);
 }
 
+void Renderer::drawMonsterTalk(Monster& mon)
+{
+	cout << endl;
+	monsterVec monster = mon.getMonsterVec();
+	for (int i = 0; i < monster.size(); i++) {
+		gotoxy(40, 2 + i);
+		cout << monster[i];
+	}
+	gotoxy(77, 23);
+}
+
 void Renderer::drawMonsterHp(Monster& mon)
 {
 	static int prevHp = -1; // 이전 HP 저장 (초기값 -1로 설정)
@@ -437,28 +448,72 @@ void Renderer::eraseLine(size_t i)
 }
 
 
-void Renderer::printLineAt(int x, int y, vector<string> lines) {
+void Renderer::printLineAt(int x, int y, const std::vector<std::string> lines) {
+	for (const auto& line : lines) {
+		// 기존 출력된 내용 지우기
+		
 
-	for (int i = 0; i < lines.size(); i++) {
+		gotoxy(x, y - 1);
+		std::cout << "                                                                                     ";
+
+		gotoxy(x, y);
+		std::cout << "                                                                                     ";
+
+		gotoxy(x, y + 1);
+		std::cout << "                                                                                     ";
+
+		gotoxy(x, y +2);
+		std::cout << "                                                                                     ";
+
+		gotoxy(x, y +3 );
+		std::cout << "                                                                                     ";
+
+		gotoxy(x, y + 4);
+		std::cout << "                                                                                     ";
+
+
 		// 윗테두리
 		gotoxy(x, y - 1);
-		cout << "+---------------------------------------------+";
+		std::cout << "+------------------------------------------------------------------------------------+";
 
+		
 		// 본문 출력
 		gotoxy(x, y);
-		cout << "|                                             |"; // 비워놓고 덮기
-		gotoxy(x + 2, y); // 실제 텍스트 위치
-		cout << lines[i];
+		std::cout << "| " << std::string(100, ' ') << " |";  // 공간 확보
+		gotoxy(x + 2, y);
+		std::cout << line;
+
+		gotoxy(x, y + 1);
+		std::cout << "| " << "                                                                                  " << " |";
+
+			gotoxy(x, y + 2);
+		std::cout << "| " << "                                                                                  " << " |";
+
+			gotoxy(x, y + 3);
+		std::cout << "| " << "                                                                                  " << " |";
 
 		// 아래 테두리
+		gotoxy(x, y + 4);
+		std::cout << "+------------------------------------------------------------------------------------+";
+
+		std::cin.get();  // 엔터 대기
+
+		gotoxy(x, y - 1);
+		std::cout << "                                                                                       ";
+
+		gotoxy(x, y);
+		std::cout << "                                                                                       ";
+
 		gotoxy(x, y + 1);
-		cout << "+---------------------------------------------+";
+		std::cout << "                                                                                       ";
 
-		cin.get();  // 엔터 대기
+		gotoxy(x, y + 2);
+		std::cout << "                                                                                       ";
 
-		// 지우기
-		gotoxy(x, y - 1); cout << "                                                ";
-		gotoxy(x, y);     cout << "                                                ";
-		gotoxy(x, y + 1); cout << "                                                ";
+		gotoxy(x, y + 3);
+		std::cout << "                                                                                       ";
+
+		gotoxy(x, y + 4);
+		std::cout << "                                                                                       ";
 	}
 }

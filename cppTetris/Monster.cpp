@@ -40,7 +40,14 @@ void Monster::SetMonster(MonsterName name) // 임시 보스 설정
         speed = 40;
         stick_rate = 20;
         MaxHp = 1;
-        monsterShape = {
+        monsterShape = 
+            {
+    " +--------+ ",
+    " |        | ",
+    " |  [][]  | ",
+    " |        | ",
+    " +--------+ "
+
 
         };
 
@@ -51,7 +58,11 @@ void Monster::SetMonster(MonsterName name) // 임시 보스 설정
         MaxHp = 1;
         monsterShape.clear();
         monsterShape = {
-
+    "   ~~~~~~~~   ",
+    "  /        \\  ",
+    " |   ~~~    | ",
+    "  \\        /  ",
+    "   ~~~~~~~~   "
         };
 
         break;
@@ -61,8 +72,12 @@ void Monster::SetMonster(MonsterName name) // 임시 보스 설정
         MaxHp = 10;
         monsterShape.clear();
         monsterShape = {
-
-        };
+    " |^^^^^^^| ",
+    " |  |||  | ",
+    " |  |||  | ",
+    " |__|||__| ",
+    " |_______| "
+        } ;
 
 
         break;
@@ -72,7 +87,11 @@ void Monster::SetMonster(MonsterName name) // 임시 보스 설정
         MaxHp = 10;
         monsterShape.clear();
         monsterShape = {
-
+    "   /~~~~~~~\\  ",
+    "  |  >_<   | ",
+    "  | [] []  | ",
+    "  |   ^    | ",
+    "   \\_____ /  "
         };
 
 

@@ -49,7 +49,13 @@ void GameManager::mainMenu()
 }
 
 void GameManager::play()
-{
+{	
+	renderer.drawMonsterTalk(monster);
+
+	vector<string> lines = monster.getScriptLine(monster.stage);
+	renderer.printLineAt(1, 15, lines);
+
+	system("cls");
 
 	// 테스트용 몬스터
 	renderer.drawMonster(monster);
@@ -60,6 +66,9 @@ void GameManager::play()
 	int i = 0;
 	score = 0;
 	renderer.show_game_stat(score);
+
+	
+
 	while (true) {
 
 		input();
@@ -82,9 +91,11 @@ void GameManager::init()
 	isHold = false;
 	isGameState = 0;
 	randType = static_cast<Tetromino>(rand() % 7);
+	if (monster.stage == 0) randType = static_cast<Tetromino>(1);
 	current_block.setBlock(randType);
 	current_block.setPos(5, 0);
 	randType = static_cast<Tetromino>(rand() % 7);
+	if(monster.stage == 0) randType = static_cast<Tetromino>(1);
 	next_block.setBlock(randType);
 	renderer.drawBlock(next_block, false);
 	shadowBlock(true);
@@ -239,23 +250,34 @@ void GameManager::checkState()
 		// 몬스터에 데미지가 들어가면 업데이트
 		int temp = board.get_clear_line_score();
 		if (temp != 0) {
+			// 테스트 용으로 넣어놓은 코드
+	
 			sm.playEffect("SoundEffects/line_clear.wav");
 			monster.takeDamage(temp / 100);
 			renderer.aniMonsterDamaged(monster);
 			renderer.drawMonsterHp(monster);
-
-			// 테스트 용으로 넣어놓은 코드
 			if (monster.isDead()) {
-				renderer.drawMonsterHp(monster);
-
-				vector<string> lines = monster.getScriptLine(monster.stage++);
-				renderer.printLineAt(52, 23, lines);
-
-				renderer.eraseMonster(monster);
 				monster.getNextMonster();
+
+				system("cls");
+
+				renderer.drawMonsterTalk(monster);
+
+				vector<string> lines = monster.getScriptLine(++monster.stage);
+				renderer.printLineAt(1, 15, lines);
+
+				system("cls");
+
+				renderer.drawBoard(board);
+				
+				renderer.drawMonsterHp(monster);
+				renderer.eraseMonster(monster);
+
 				renderer.drawMonster(monster);
 				renderer.drawMonsterHp(monster);
+				init();
 			}
+			
 		}
 		score += temp;
 		renderer.show_game_stat(score);
@@ -275,6 +297,7 @@ void GameManager::makeNewBlock()
 	current_block = next_block;
 	current_block.setPos(5, 0);
 	randType = static_cast<Tetromino>(rand() % 7);
+	if(monster.stage == 0) randType = static_cast<Tetromino>(1);
 	next_block.setBlock(randType);
 	renderer.drawBlock(next_block, false);
 	shadowBlock(true);
