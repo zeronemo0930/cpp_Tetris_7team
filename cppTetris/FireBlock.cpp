@@ -1,4 +1,5 @@
 #include "FireBlock.h"
+#include "Board.h"
 
 void FireBlock::specialFunc(Board& board)
 {
@@ -11,8 +12,8 @@ void FireBlock::specialFunc(Board& board)
             int y = baseY + dy;
 
             // 보드 범위 안일 때만 삭제
-            if (x >= 0 && x < board.width &&
-                y >= 0 && y < board.height) {
+            if (x >= 0 && x < Board::width &&
+                y >= 0 && y < Board::height) {
                 board.clear_cell(y, x);
             }
         }

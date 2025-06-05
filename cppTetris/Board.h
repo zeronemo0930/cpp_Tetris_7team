@@ -1,6 +1,5 @@
 #pragma once
 #include "Block.h"
-#include "FireBlock.h"
 
 class Board
 {

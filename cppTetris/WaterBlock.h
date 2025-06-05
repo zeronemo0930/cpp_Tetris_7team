@@ -1,8 +1,8 @@
 #pragma once
 #include "Block.h"
 
-class FireBlock :public Block {
+class WaterBlock :public Block{
 public:
-	FireBlock() :Block(Tetromino::B) {};
+	WaterBlock : Block(Tetromino::B) {};
 	void specialFunc(Board& board) override;
 };
