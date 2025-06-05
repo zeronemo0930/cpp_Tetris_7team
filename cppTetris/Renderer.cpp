@@ -456,8 +456,8 @@ void Renderer::printLineAt(int x, int y, vector<string> lines) {
 		cin.get();  // 엔터 대기
 
 		// 지우기
-		gotoxy(x, y - 1); cout << "                                              ";
-		gotoxy(x, y);     cout << "                                              ";
-		gotoxy(x, y + 1); cout << "                                              ";
+		gotoxy(x, y - 1); cout << "                                                ";
+		gotoxy(x, y);     cout << "                                                ";
+		gotoxy(x, y + 1); cout << "                                                ";
 	}
 }
