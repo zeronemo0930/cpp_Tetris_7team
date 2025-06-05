@@ -56,7 +56,7 @@ void Monster::SetMonster(MonsterName name) // 임시 보스 설정
 	case MonsterName::GHOST:
 		speed = 20;
 		stick_rate = 15;
-		MaxHp = 12;
+		MaxHp = 1;
 		monsterShape.clear();
 		monsterShape = {
 			"     .-'      `-.",

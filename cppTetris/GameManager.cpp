@@ -354,7 +354,7 @@ void GameManager::checkState()
 			if (monster.isDead()) {
 				renderer.drawMonsterHp(monster);
 
-				const char* const* lines = monster.getScriptLine(monster.stage);
+				const char* const* lines = monster.getScriptLine(monster.stage++);
 				renderer.printLineAt(77, 23, lines);
 
 				renderer.eraseMonster(monster);
