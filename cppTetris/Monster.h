@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
-// Monster ÀÌ¸§, ³­ÀÌµµ ´Ù½Ã Á¤ÇÏ±â
+// Monster
 enum class MonsterName {
 	RAT, GHOST, CAT
 };
