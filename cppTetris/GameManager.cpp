@@ -13,7 +13,7 @@
 using namespace std;
 
 GameManager::GameManager():randType(Tetromino::I), keytemp(NULL),
-isGameState(0), menuSelector(0), monster(MonsterName::RAT), isHold(false), optionSelector(0),
+isGameState(0), menuSelector(0), monster(MonsterName::Square), isHold(false), optionSelector(0),
 volume(50), difficulty(0)
 {
 	srand((unsigned int)time(NULL));

@@ -32,26 +32,6 @@ Monster& Monster::getNextMonster() {
     return *this;
 }
 
-
-Monster& Monster::getNextMonster() {
-
-    switch (current_Monster) {
-    case MonsterName::Square:
-        current_Monster = MonsterName::Water;
-        break;
-    case MonsterName::Water:
-        current_Monster = MonsterName::Castle;
-        break;
-    case MonsterName::Castle:
-        current_Monster = MonsterName::greenhate;
-        break;
-    case MonsterName::greenhate:
-        break;
-    }
-    SetMonster(current_Monster);
-    return *this;
-}
-
 void Monster::SetMonster(MonsterName name) // 임시 보스 설정
 {
     switch (name)
