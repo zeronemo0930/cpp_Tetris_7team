@@ -63,6 +63,7 @@ public:
 	void act_by_boss(Monster& mon, Board& board);
 
 	void printLineAt(int x, int y, std::vector<std::string> lines);
+	void printLineProlog(int x, int y, std::vector<std::string> lines);
 private:
 	Color color = Color::DARK_GRAY;
 	std::array<std::string, 3> menu_string;

@@ -517,3 +517,29 @@ void Renderer::printLineAt(int x, int y, const std::vector<std::string> lines) {
 		std::cout << "                                                                                       ";
 	}
 }
+
+#include <chrono>
+#include <thread>  // 시간 지연을 위한 헤더
+
+void Renderer::printLineProlog(int x, int y, const std::vector<std::string> lines) {
+	// 윗테두리 출력
+	gotoxy(x, y - 1);
+	std::cout << "+------------------------------------------------------------------------------------------------+";
+
+	for (size_t i = 0; i < lines.size(); ++i) {
+		gotoxy(x, y + i);
+		std::cout << "| " << std::string(100, ' ') << " |";  // 공간 확보
+
+		gotoxy(x + 2, y + i);  // 실제 텍스트 위치
+		for (char ch : lines[i]) {
+			std::cout << ch;
+			std::this_thread::sleep_for(std::chrono::milliseconds(10));  // 0.01초 딜레이
+		}
+	}
+
+	// 아래 테두리 출력
+	gotoxy(x, y + lines.size());
+	std::cout << "+------------------------------------------------------------------------------------------------+";
+
+	std::cin.get();  // 엔터 대기 후 화면 유지
+}
