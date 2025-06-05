@@ -360,6 +360,10 @@ void Renderer::setBlockColor(Tetromino t)
 	case Tetromino::Z:
 		color = Color::RED;
 		break;
+	default:
+		color = Color::GRAY;
+		break;
+
 	}
 	SetColor(color);
 }
