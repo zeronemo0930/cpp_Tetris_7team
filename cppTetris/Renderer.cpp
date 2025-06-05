@@ -156,14 +156,25 @@ void Renderer::drawMonsterHp(Monster& mon)
 	cout << "                              ";
 	gotoxy(60, 5);
 	cout << "HP : " << hp << " / " << maxHp;
-	for (int i = 0; i < maxHp; i++) {
+	for (int i = maxHp; i > 0; i--) {
 		gotoxy(60 + i * 2, 6);
-		if (i < hp)
+		Sleep(50);
+		if (i <= hp)
 			cout << "■";
 		else
 			cout << "□";
 	}
 	gotoxy(77, 23);
+}
+
+void Renderer::aniMonsterDamaged(Monster& mon)
+{
+	for (int i = 0; i < 5; i++) {
+		if (i % 2 == 0) SetColor(Color::WHITE);
+		else SetColor(Color::RED);
+		Sleep(100);
+		drawMonster(mon);
+	}
 }
 
 void Renderer::eraseMonster(Monster& mon)

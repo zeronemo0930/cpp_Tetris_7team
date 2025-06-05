@@ -49,6 +49,7 @@ public:
 
 	void drawMonster(Monster& mon);
 	void drawMonsterHp(Monster& mon);
+	void aniMonsterDamaged(Monster& mon);
 
 	void eraseMonster(Monster& mon);
 
