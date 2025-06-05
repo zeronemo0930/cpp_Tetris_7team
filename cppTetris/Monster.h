@@ -29,15 +29,6 @@ public:
 	int getStage() { return stage; }
 	static int stage;
 
-    static constexpr const char* SCRIPT[4][5] = {
-        // Stage 0: 시작의 블록
-        {
-            "조아: ...여기가 어디지...?",
-            "조아: 여기는 테트리스 세계인 거 같다.",
-            "조아: 우선 앞에 보이는 네모 블록부터 처리하자.",
-            "Squarebot: 각도는 완벽해야 한다.",
-            "Squarebot: 삐뚤어지면 안 돼."
-        },
 
     std::vector<std::vector<std::string>> SCRIPTS = {
            {
