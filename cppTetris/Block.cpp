@@ -71,6 +71,12 @@ void Block::setBlock(Tetromino t)
 			{0, 7, 7}
 		};
 		break;
+
+	case Tetromino::B:
+		shape = {
+			{8}
+		};
+		break;
 	}
 }
 
@@ -101,4 +107,8 @@ void Block::setPos(short x, short y)
 {
 	this->x = x;
 	this->y = y;
+}
+
+void Block::specialFunc(Board& board)
+{
 }

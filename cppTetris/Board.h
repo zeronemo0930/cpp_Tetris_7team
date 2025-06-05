@@ -1,5 +1,6 @@
 #pragma once
 #include "Block.h"
+#include "FireBlock.h"
 
 class Board
 {
@@ -11,7 +12,7 @@ public:
 	static const int height = 24;
 
 	Board();
-
+	void clear_cell(int y, int x) { board[y][x] = 0; }
 	bool strike_check(const Block& b);
 	void merge_block(Block& block);
 	bool check_full_line(size_t i);
