@@ -11,4 +11,5 @@ void WaterBlock::specialFunc(Board& board)
 			}
 		}
 	}
+	board.board[getY()][getX()] = 0;
 }

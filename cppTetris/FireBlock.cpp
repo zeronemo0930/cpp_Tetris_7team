@@ -18,5 +18,6 @@ void FireBlock::specialFunc(Board& board)
             }
         }
     }
+    board.board[getY()][getX()] = 0;
 }
 

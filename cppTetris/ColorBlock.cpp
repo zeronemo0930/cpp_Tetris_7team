@@ -11,4 +11,5 @@ void ColorBlock::specialFunc(Board& board)
 			if (board.board[i][j] == colNum) board.clear_cell(i, j);
 		}
 	}
+	board.board[getY()][getX()] = 0;
 }
