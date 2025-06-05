@@ -37,9 +37,9 @@ public:
 	void drawBlock(Block& block, bool isShadow);
 	void eraseBlock(Block& block);
 
-	void drawMonster(Monster& mon);
+	/*void drawMonster(Monster& mon);
 	void drawMonsterHp(Monster& mon);
-	void eraseMonster(Monster& mon);
+	void eraseMonster(Monster& mon);*/
 
 	void nextBlockFrame();
 	void holdBlockFrame();
@@ -51,6 +51,12 @@ public:
 	static void eraseLine(size_t i);
 
 	void show_game_stat(int score);
+
+	void drawMonster(Monster& mon);
+	void drawMonsterHp(Monster& mon);
+	void aniMonsterDamaged(Monster& mon);
+
+	void eraseMonster(Monster& mon);
 
 	void act_by_boss(Monster& mon, Board& board);
 	void printLineAt(int x, int y, const char* const* line);

@@ -348,20 +348,21 @@ void GameManager::checkState()
 		if (temp != 0) {
 			sm.playEffect("SoundEffects/line_clear.wav");
 			monster.takeDamage(temp / 100);
-
+			renderer.aniMonsterDamaged(monster);
+			renderer.drawMonsterHp(monster);
 
 			// 테스트 용으로 넣어놓은 코드
 			if (monster.isDead()) {
 				renderer.drawMonsterHp(monster);
 
-				const char* const* lines = monster.getScriptLine(monster.stage++);
-				renderer.printLineAt(77, 23, lines);
+				/*const char* const* lines = monster.getScriptLine(monster.stage++);
+				renderer.printLineAt(77, 23, lines);*/
 
 				renderer.eraseMonster(monster);
 				monster.getNextMonster();
 				renderer.drawMonster(monster);
+				renderer.drawMonsterHp(monster);
 			}
-			renderer.drawMonsterHp(monster);
 		}
 		score += temp;
 		renderer.show_game_stat(score);
