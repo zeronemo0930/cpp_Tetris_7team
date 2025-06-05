@@ -417,6 +417,7 @@ void Renderer::drawBoard(Board& board)
 	gotoxy(77, 23);
 }
 
+// 안 쓰는 함수
 void Renderer::eraseLine(size_t i)
 {
 	cout << endl;

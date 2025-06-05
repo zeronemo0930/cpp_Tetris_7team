@@ -2,6 +2,8 @@
 #include <iostream>
 #include "Renderer.h"
 #include "SoundManager.h"
+#include "Menu.h"
+
 
 class GameManager
 {
