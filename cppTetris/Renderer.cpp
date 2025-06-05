@@ -178,6 +178,7 @@ void Renderer::drawMonsterHp(Monster& mon)
 			Sleep(50); // 50ms 딜레이 (너무 느리면 30으로 줄여도 됨)
 		}
 	}
+}
 
 void Renderer::eraseMonster(Monster& mon)
 {
@@ -411,20 +412,19 @@ void Renderer::eraseLine(size_t i)
 	}
 }
 
-// 대화창 프레임 그리기 (상수 대신 숫자 직접 사용)
-void Renderer::drawDialogueFrame()
-{
-	/* 위치와 크기: x=65, y=18, 폭=26칸, 높이=5줄 */
-	SetColor(Color::DARK_SKY_BLUE);
 
-	for (short i = 0; i < 5; ++i) {          // 높이 5
-		for (short j = 0; j < 26; ++j) {     // 폭 26
-			gotoxy(65 + j * 2, 18 + i);      // (x, y) 좌표
-			bool border = (i == 0 || i == 4  // 위·아래
-				|| j == 0 || j == 25); // 좌·우
-			std::cout << (border ? "■" : "  ");
-		}
+void Renderer::printLineAt(int x, int y, const char* const* line) {
+	if (line == nullptr) return;
+
+	for (int i = 0; line[i] != nullptr; i++) { // 각 문장을 하나씩 출력
+		gotoxy(x, y);
+		cout << "                          "; // 기존 문장 지우기
+		gotoxy(x, y);
+		cout << line[i];  // 한 문장 출력
+
+		cin.get();  // 엔터 입력 대기
 	}
 
-	SetColor(Color::WHITE);                  // 기본색 복귀
+	gotoxy(x, y);
+	cout << "                          "; // 마지막 문장 지우기
 }
