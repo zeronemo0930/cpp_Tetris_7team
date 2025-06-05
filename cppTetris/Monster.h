@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
-// Monster ÀÌ¸§, ³­ÀÌµµ ´Ù½Ã Á¤ÇÏ±â
+// Monster
 enum class MonsterName {
 	RAT, GHOST, CAT
 };
@@ -29,16 +29,12 @@ public:
 	int getStage() { return stage; }
 	static int stage;
 
-	static constexpr const char* SCRIPT[3][5] = {
-		{ "player: i win!", "??? : wait.", "player: who!", nullptr, nullptr },
-		{ "p!", "BOSS2: 실력이군.", "플: 각오해!", "BOSS2: 덤벼!", nullptr },
-		{ "플: 마지막이다!", "BOSS3: 네가 과연?", nullptr, nullptr, nullptr }
-	};
 
 	
 
 	static const char* const* getScriptLine(int s) {
-		return SCRIPT[s]; // 특정 행 반환
+		//return SCRIPT[s];
+		return NULL;
 	}
 
 private:
