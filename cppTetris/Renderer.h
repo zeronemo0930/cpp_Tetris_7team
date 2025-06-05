@@ -37,11 +37,16 @@ public:
 	void drawBlock(Block& block, bool isShadow);
 	void eraseBlock(Block& block);
 
+	void drawMonster(Monster& mon);
+	void drawMonsterHp(Monster& mon);
+	void eraseMonster(Monster& mon);
+
 	void nextBlockFrame();
 	void holdBlockFrame();
-
 	void setBlockColor(Tetromino t);
+
 	void drawBoard(Board& board);
+
 
 	static void eraseLine(size_t i);
 
@@ -54,7 +59,7 @@ public:
 	void eraseMonster(Monster& mon);
 
 	void act_by_boss(Monster& mon, Board& board);
-
+	void printLineAt(int x, int y, const char* const* line);
 private:
 	Color color = Color::DARK_GRAY;
 	std::array<std::string, 3> menu_string;

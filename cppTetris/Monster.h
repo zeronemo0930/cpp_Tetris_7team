@@ -28,6 +28,15 @@ public:
 	}
 	int getStage() { return stage; }
 	static int stage;
+
+
+	
+
+	static const char* const* getScriptLine(int s) {
+		//return SCRIPT[s];
+		return NULL;
+	}
+
 private:
 	MonsterName current_Monster;
 	monsterVec monsterShape;

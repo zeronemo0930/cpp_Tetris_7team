@@ -1,20 +1,23 @@
 #pragma once
 #include <vector>
 
-enum class Tetromino{ I, O, T, J, L, S, Z};
+class Board;
+
+enum class Tetromino { I, O, T, J, L, S, Z, B };
 using shapeVec = std::vector<std::vector<int>>;
 class Block
 {
 public:
 	Block();
 	Block(Tetromino t);
-	~Block();
+	virtual ~Block();
 
 	void setBlock(Tetromino t);
 	void rotate();
 	void move(short dx, short dy);
 	void setPos(short x, short y);
 	const shapeVec& getShape() const { return shape; };
+	virtual void specialFunc(Board& board);
 
 	
 

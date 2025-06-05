@@ -45,10 +45,10 @@ void Board::merge_block(Block& block)
 	size_t b_size = shape.size();
 	int x = block.getX();
 	int y = block.getY();
-
+	block.specialFunc(*this);
 	for (size_t i = 0; i < b_size; i++) {
 		for (size_t j = 0; j < b_size; j++) {
-			if(board[y + i][x + j] == 0)
+			if (board[y + i][x + j] == 0)
 				board[y + i][x + j] = shape[i][j];
 		}
 	}

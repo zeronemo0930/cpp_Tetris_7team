@@ -140,7 +140,7 @@ void Renderer::drawMonster(Monster& mon)
 	cout << endl;
 	monsterVec monster = mon.getMonsterVec();
 	for (int i = 0; i < monster.size(); i++) {
-		gotoxy(60, 10 + i);
+		gotoxy(65, 2 + i);
 		cout << monster[i];
 	}
 	gotoxy(77, 23);
@@ -148,23 +148,45 @@ void Renderer::drawMonster(Monster& mon)
 
 void Renderer::drawMonsterHp(Monster& mon)
 {
-	cout << endl;
-	SetColor(Color::WHITE);
+	static int prevHp = -1; // 이전 HP 저장 (초기값 -1로 설정)
 	int hp = mon.getCurrentHp();
 	int maxHp = mon.getMaxHp();
-	gotoxy(60, 5);
-	cout << "                              ";
-	gotoxy(60, 5);
+
+	SetColor(Color::WHITE);
+
+	// HP 텍스트 갱신
+	gotoxy(65, 15);
+	cout << "                             ";
+	gotoxy(65, 15);
 	cout << "HP : " << hp << " / " << maxHp;
+
 	for (int i = maxHp; i > 0; i--) {
 		gotoxy(60 + i * 2, 6);
 		Sleep(50);
 		if (i <= hp)
 			cout << "■";
 		else
+
+
+// 	// 처음이거나 체력 증가일 경우 바로 출력
+// 	if (prevHp == -1 || hp >= prevHp) {
+// 		for (int i = 0; i < maxHp; i++) {
+// 			gotoxy(65 + i * 2, 16);
+// 			if (i < hp)
+// 				cout << "■";
+// 			else
+// 				cout << "□";
+// 		}
+// 	}
+// 	// 체력 감소일 경우 부드럽게 감소 효과
+// 	else {
+// 		for (int i = prevHp - 1; i >= hp; i--) {
+// 			gotoxy(65 + i * 2, 16);
+
 			cout << "□";
+			Sleep(50); // 50ms 딜레이 (너무 느리면 30으로 줄여도 됨)
+		}
 	}
-	gotoxy(77, 23);
 }
 
 void Renderer::aniMonsterDamaged(Monster& mon)
@@ -198,6 +220,7 @@ void Renderer::act_by_boss(Monster& mon, Board& board)
 		board.result_by_attack(empty_place);
 	}
 }
+
 
 
 
@@ -412,3 +435,19 @@ void Renderer::eraseLine(size_t i)
 	}
 }
 
+
+void Renderer::printLineAt(int x, int y, const char* const* line) {
+	if (line == nullptr) return;
+
+	for (int i = 0; line[i] != nullptr; i++) { // 각 문장을 하나씩 출력
+		gotoxy(x, y);
+		cout << "                          "; // 기존 문장 지우기
+		gotoxy(x, y);
+		cout << line[i];  // 한 문장 출력
+
+		cin.get();  // 엔터 입력 대기
+	}
+
+	gotoxy(x, y);
+	cout << "                          "; // 마지막 문장 지우기
+}
