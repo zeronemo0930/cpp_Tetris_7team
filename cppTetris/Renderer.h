@@ -2,6 +2,7 @@
 #include <iostream>
 #include <array>
 #include <Windows.h>
+#include <vector>
 #include "Block.h"
 #include "Board.h"
 #include "Monster.h"
@@ -59,7 +60,8 @@ public:
 	void eraseMonster(Monster& mon);
 
 	void act_by_boss(Monster& mon, Board& board);
-	void printLineAt(int x, int y, const char* const* line);
+
+	void printLineAt(int x, int y, std::vector<std::string> lines);
 private:
 	Color color = Color::DARK_GRAY;
 	std::array<std::string, 3> menu_string;

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <conio.h>
 #include <cstdlib>
+#include <vector>
 #include <time.h>
 #include "GameManager.h"
 
@@ -355,8 +356,8 @@ void GameManager::checkState()
 			if (monster.isDead()) {
 				renderer.drawMonsterHp(monster);
 
-				/*const char* const* lines = monster.getScriptLine(monster.stage++);
-				renderer.printLineAt(77, 23, lines);*/
+				vector<string> lines = monster.getScriptLine(monster.stage++);
+				renderer.printLineAt(52, 23, lines);
 
 				renderer.eraseMonster(monster);
 				monster.getNextMonster();
