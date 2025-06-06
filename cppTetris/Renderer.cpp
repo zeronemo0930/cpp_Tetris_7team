@@ -141,7 +141,7 @@ void Renderer::drawMonster(Monster& mon)
 	cout << endl;
 	monsterVec monster = mon.getMonsterVec();
 	for (int i = 0; i < monster.size(); i++) {
-		gotoxy(65, 10 + i);
+		gotoxy(65, 8 + i);
 		cout << monster[i];
 	}
 	gotoxy(85, 27);

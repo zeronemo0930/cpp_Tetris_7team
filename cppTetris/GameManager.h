@@ -55,7 +55,7 @@ public:
 	void hold();
 
 	void shadowBlock(bool isNew);
-	void checkState();
+	bool checkState();
 	void makeNewBlock();
 };
 

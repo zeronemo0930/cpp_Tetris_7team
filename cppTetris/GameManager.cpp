@@ -77,16 +77,22 @@ void GameManager::play()
 	score = 0;
 	renderer.show_game_stat(score);
 
-	while (true) {
+	
+
+	while (checkState()) {
+
 		input();
-		checkState();
 		if (i % (30 - 12 * menu.getDifficulty()) == 0) {
 			update();
 		}
 		i++;
 		Sleep(15);
 		gotoxy(77, 23);
+
 	}
+	system("cls");
+	menu.printRetryWIthChoices();
+	
 }
 
 void GameManager::init()
@@ -97,12 +103,26 @@ void GameManager::init()
 	isHold = false;
 	isGameState = 0;
 	randType = static_cast<Tetromino>(rand() % 7);
-	if (monster.stage == 0) randType = static_cast<Tetromino>(1);
+	if (monster.stage == 0) randType = static_cast<Tetromino>(1);										// 네모 블록
+	
 	current_block.setBlock(randType);
+
+	if (monster.stage == 3) {																			// 초록 블록
+		randType = static_cast<Tetromino>(rand() % 7);
+		current_block.setGreenhateBlock(randType);
+	}
+
 	current_block.setPos(5, 0);
 	randType = static_cast<Tetromino>(rand() % 7);
-	if(monster.stage == 0) randType = static_cast<Tetromino>(1);
+	if(monster.stage == 0) randType = static_cast<Tetromino>(1);										// 네모 블록
+	
 	next_block.setBlock(randType);
+
+	if (monster.stage == 3) {																			// 초록 블록
+		randType = static_cast<Tetromino>(rand() % 7);
+		next_block.setGreenhateBlock(randType);
+	}
+
 	renderer.drawBlock(next_block, false);
 	shadowBlock(true);
 }
@@ -158,6 +178,13 @@ void GameManager::update()
 void GameManager::moveRotate()
 {
 	renderer.eraseBlock(current_block);
+	if (monster.stage == 2) {
+		int x = current_block.getPosX();
+		int y = current_block.getPosY();
+		randType = static_cast<Tetromino>(rand() % 7);
+		current_block.setBlock(randType);
+		current_block.setPos(x, y);
+	}
 	if(board.rotate_shift(current_block)) // rotate할 때 strike_check 여부를 확인하고 rotate 가능한 좌표로 변환해주는 rotate_shift
 		sm.playEffect("SoundEffects/block_rotate.wav");
 	shadowBlock(false);
@@ -252,7 +279,7 @@ void GameManager::shadowBlock(bool isNew)
 	}
 }
 
-void GameManager::checkState()
+bool GameManager::checkState()
 {
 	if (isGameState == 2) {
 		// create New Block
@@ -294,9 +321,10 @@ void GameManager::checkState()
 	}
 	else if (isGameState == 1) {
 		                                                           // 몬스터 죽으면 스테이지 업
-		exit(0);
+		return false;
 	}
 	isGameState = 0;
+	return true;
 }
 
 void GameManager::makeNewBlock()
@@ -307,8 +335,12 @@ void GameManager::makeNewBlock()
 	current_block = next_block;
 	current_block.setPos(5, 0);
 	randType = static_cast<Tetromino>(rand() % 7);
-	if(monster.stage == 0) randType = static_cast<Tetromino>(1);
+	if(monster.stage == 0) randType = static_cast<Tetromino>(1);                            // 네모만 나오게 함
 	next_block.setBlock(randType);
+	if (monster.stage == 3 ) {
+		randType = static_cast<Tetromino>(rand() % 7);
+		next_block.setGreenhateBlock(randType);
+	}
 	renderer.drawBlock(next_block, false);
 	shadowBlock(true);
 	renderer.drawBlock(current_block, false);

@@ -81,6 +81,67 @@ void Block::setBlock(Tetromino t)
 	}
 }
 
+void Block::setGreenhateBlock(Tetromino t) {
+	x = 16;
+	switch (t) {
+	case Tetromino::I:
+		shape = {
+			{6, 0, 0, 0},
+			{0, 6, 0, 0},
+			{0, 0, 6, 0},
+			{0, 0, 0, 6}
+		};
+		break;
+	case Tetromino::O:
+		shape = {
+			{6, 6},
+			{6, 6}
+		};
+		break;
+	case Tetromino::T:
+		shape = {
+			{0, 0, 0},
+			{6, 6, 6},
+			{0, 6, 0}
+		};
+		break;
+	case Tetromino::J:
+		shape = {
+			{0, 0, 0},
+			{6, 6, 6},
+			{0, 0, 6}
+		};
+		break;
+	case Tetromino::L:
+		shape = {
+			{0, 0, 0},
+			{6, 6, 6},
+			{6, 0, 0}
+		};
+		break;
+	case Tetromino::S:
+		shape = {
+			{0, 0, 0},
+			{0, 6, 6},
+			{6, 6, 0}
+		};
+		break;
+	case Tetromino::Z:
+		shape = {
+			{0, 0, 0},
+			{6, 6, 0},
+			{0, 6, 6}
+		};
+		break;
+
+	case Tetromino::B:
+		shape = {
+			{6}
+		};
+		break;
+	}
+	
+}
 void Block::rotate()
 {
 	if (type == Tetromino::O) return;
@@ -108,6 +169,16 @@ void Block::setPos(short x, short y)
 {
 	this->x = x;
 	this->y = y;
+}
+
+int Block::getPosY()
+{
+	return y;
+}
+
+int Block::getPosX()
+{
+	return x;
 }
 
 void Block::specialFunc(Board& board)
