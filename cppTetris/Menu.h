@@ -14,6 +14,7 @@ public:
 	void menu();
 	void option();
 	void difficultySet();
+	void printRetryWIthChoices();
 private:
 	Renderer* renderer;
 	SoundManager* sm;

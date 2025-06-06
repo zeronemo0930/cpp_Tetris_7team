@@ -74,10 +74,9 @@ void GameManager::play()
 
 	
 
-	while (true) {
+	while (checkState()) {
 
 		input();
-		checkState();
 		if (i % (30 - 12 * menu.getDifficulty()) == 0) {
 			update();
 		}
@@ -85,7 +84,11 @@ void GameManager::play()
 		i++;
 		Sleep(15);
 		gotoxy(77, 23);
+
 	}
+	system("cls");
+	menu.printRetryWIthChoices();
+	
 }
 
 void GameManager::init()
@@ -272,7 +275,7 @@ void GameManager::shadowBlock(bool isNew)
 	}
 }
 
-void GameManager::checkState()
+bool GameManager::checkState()
 {
 	if (isGameState == 2) {
 		// create New Block
@@ -314,9 +317,10 @@ void GameManager::checkState()
 	}
 	else if (isGameState == 1) {
 		                                                           // 몬스터 죽으면 스테이지 업
-		exit(0);
+		return false;
 	}
 	isGameState = 0;
+	return true;
 }
 
 void GameManager::makeNewBlock()

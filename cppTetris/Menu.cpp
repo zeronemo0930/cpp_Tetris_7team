@@ -1,5 +1,7 @@
 #include "Menu.h"
 #include <conio.h>
+#include <thread>   
+#include <chrono> 
 #include <cstdlib>
 
 #define EXT_KEY			0xffffffe0	//확장키 인식값 
@@ -7,7 +9,7 @@
 #define KEY_RIGHT		0x4d
 #define KEY_UP			0x48
 #define KEY_DOWN		0x50
-
+#define KEY_ENTER       0x0D
 using namespace std;
 
 
@@ -134,4 +136,68 @@ void Menu::difficultySet()
 	difficulty %= 3;
 	sm->playEffect("SoundEffects/menu.wav");
 	renderer->drawOption(optionSelector, volume, difficulty);
+}
+
+
+void Menu::printRetryWIthChoices() {
+	int x = 0;
+	int y = 20;
+
+
+	vector<string> lines = {
+		"게임이 끝났습니다. 다시 도전하시겠습니까?"
+	};
+
+	vector<string> choices = {
+		"다시 하기",
+		"메인 메뉴로",
+		"게임 그만두기"
+	};
+
+	const int width = 94;
+	const string border = "+" + string(width, '-') + "+";
+
+	// 텍스트 출력
+	gotoxy(x, y - 1);
+	cout << border;
+
+	for (size_t i = 0; i < lines.size(); ++i) {
+		gotoxy(x, y + i);
+		cout << "| " << string(width - 2, ' ') << " |";
+		gotoxy(x + 2, y + i);
+		for (char ch : lines[i]) {
+			cout << ch;
+
+		}
+	}
+	gotoxy(x, y + lines.size());
+	cout << border;
+
+	// 선택지 처리
+	int selected = 0;
+	bool running = true;
+
+	while (running) {
+		for (size_t i = 0; i < choices.size(); ++i) {
+			gotoxy(x + 4, y + static_cast<int>(lines.size()) + 2 + i);
+			if (i == selected) cout << "> ";
+			else cout << "  ";
+			cout << choices[i] << "       ";
+		}
+
+		int ch = _getch();
+		if (ch == 224) {
+			ch = _getch();
+			if (ch == KEY_UP && selected > 0) selected--;
+			else if (ch == KEY_DOWN && selected < static_cast<int>(choices.size()) - 1) selected++;
+		}
+		else if (ch == KEY_ENTER) {
+			running = false;
+		}
+	}
+
+	// 결과 확인용 (예: 나중엔 이 값 리턴 가능)
+	gotoxy(x + 2, y + static_cast<int>(lines.size()) + static_cast<int>(choices.size()) + 4);
+	cout << "선택됨: " << choices[selected];
+	cin.get();
 }
