@@ -58,7 +58,6 @@ void GameManager::mainMenu()
 			return;
 
 		}
-		play();
 	}
 	else if (menuSelector == 1) {
 		menu.option();
