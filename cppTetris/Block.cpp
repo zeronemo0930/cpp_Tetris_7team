@@ -83,6 +83,8 @@ void Block::setBlock(Tetromino t)
 
 void Block::setGreenhateBlock(Tetromino t) {
 	x = 16;
+	y = 1;
+	type = t;
 	switch (t) {
 	case Tetromino::I:
 		shape = {
