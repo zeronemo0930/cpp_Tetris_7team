@@ -14,8 +14,11 @@ public:
 
 	void setBlock(Tetromino t);
 	void rotate();
+	void setGreenhateBlock(Tetromino t);
 	void move(short dx, short dy);
 	void setPos(short x, short y);
+	int getPosX();
+	int getPosY();
 	const shapeVec& getShape() const { return shape; };
 	virtual void specialFunc(Board& board);
 

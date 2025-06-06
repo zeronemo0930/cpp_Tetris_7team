@@ -69,7 +69,7 @@ void Monster::SetMonster(MonsterName name) // 임시 보스 설정
     case MonsterName::Castle:
         speed = 4;
         stick_rate = 10;
-        MaxHp = 10;
+        MaxHp = 1;
         monsterShape.clear();
         monsterShape = {
     " |^^^^^^^| ",
