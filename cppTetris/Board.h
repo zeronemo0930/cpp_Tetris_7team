@@ -25,7 +25,7 @@ public:
 
 	void resetBoard();	// 보드에 있는 모든 블럭을 제거하는 함수
 
-  bool rotate_shift(Block& b);
+	bool rotate_shift(Block& b);
 	void result_by_attack(const int empty_place);
 private:
 

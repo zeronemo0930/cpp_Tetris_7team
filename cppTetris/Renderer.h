@@ -36,6 +36,10 @@ public:
 	void show_menu(short menu);
 	void drawOption(short optionSelector, float volume, int difficulty);
 	void drawStageSelect(short stageSelector);
+	void drawGameClear();
+	void drawGameOverFrame();
+	void drawGameOver(short selector);
+	
 
 	// Block ฐüทร Renderer
 	void drawBlock(Block& block, bool isShadow);
@@ -72,6 +76,7 @@ private:
 	std::array<std::string, 3> option_string;
 	std::array<std::string, 3> difficulty_string;
 	std::array<std::string, 7> stage_string;
+	std::array<std::string, 2> retry_string;
 	int ab_x = 14;
 	int ab_y = 1;
 };

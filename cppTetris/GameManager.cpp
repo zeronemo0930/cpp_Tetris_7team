@@ -102,8 +102,10 @@ void GameManager::play()
 	if (monster.stage != 5) {
 	renderer.drawMonsterTalk(monster);
 
-	vector<string> lines = monster.getScriptLine(monster.stage);
-	renderer.printLineAt(1, 15, lines);
+		vector<string> lines = monster.getScriptLine(monster.stage);
+		renderer.printLineAt(1, 15, lines);
+	}
+	
 
 
 	system("cls");
@@ -134,10 +136,13 @@ void GameManager::play()
 		}
 		system("cls");
 		if (monster.stage == 4) monster.stage = -1;											// 다 끝나면 다시 게임 시작하면 처음으로 돌아가게
-		int select = menu.printRetryWIthChoices();
+		int select = menu.retrySelect();
 		if (select == 0) {
 			play();
 			system("cls");
+		}
+		else {
+			return;
 		}
 	}
 }
@@ -146,6 +151,7 @@ void GameManager::play()
 
 void GameManager::init()
 {
+	board.resetBoard();			// 보드 초기화
 	renderer.drawBoard(board);
 	renderer.nextBlockFrame();
 	renderer.holdBlockFrame();
