@@ -9,7 +9,7 @@ public:
 	void setPer(Renderer* renderer, SoundManager* sm);
 	int getMenuSelector() { return menuSelector; }
 	int getDifficulty() { return difficulty; }
-
+	int getStageSelected() { return stageSelector; }
 
 	void menu();
 	void option();

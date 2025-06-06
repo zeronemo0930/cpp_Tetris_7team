@@ -290,7 +290,7 @@ void Renderer::drawStageSelect(short stageSelector)
 {
 	cout << endl;
 	for (size_t i = 0; i < stage_string.size(); i++) {
-		gotoxy(50, 10 + i);
+		gotoxy(46, i != 6 ? 10 + i : 20);
 		if (stageSelector == i) {
 			SetColor(Color::YELLOW);
 			cout << "▶";

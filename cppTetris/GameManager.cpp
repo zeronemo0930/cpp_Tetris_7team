@@ -39,7 +39,26 @@ void GameManager::mainMenu()
 	int menuSelector = menu.getMenuSelector();
 	if (menuSelector == 0) {
 		menu.stageSelect();
-		
+		switch (menu.getStageSelected())
+		{
+		case 0:		// Story 모드 (프롤로그부터 실행)
+			play();
+			break;
+		case 1:		// 1 Stage 프롤로그 대화 스킵하고 게임만
+			break;
+		case 2:		// 2 Stage 
+			break;
+		case 3:		// 3 Stage
+			break;
+		case 4:		// Boss
+			break;
+		case 5:		// 무한모드
+			break;
+		case 6:		// back
+			return;
+
+		}
+		play();
 	}
 	else if (menuSelector == 1) {
 		menu.option();
