@@ -100,18 +100,18 @@ void GameManager::play()
 	
 	
 	if (monster.stage != 5) {
-	renderer.drawMonsterTalk(monster);
+		renderer.drawMonsterTalk(monster);
 
 		vector<string> lines = monster.getScriptLine(monster.stage);
 		renderer.printLineAt(1, 15, lines);
-	}
-	
 
 
-	system("cls");
 
-	// 테스트용 몬스터
-	
+
+		system("cls");
+
+		// 테스트용 몬스터
+
 		renderer.drawMonster(monster);
 		renderer.drawMonsterHp(monster);
 	}
