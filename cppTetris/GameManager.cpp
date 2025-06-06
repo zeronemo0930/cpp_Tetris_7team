@@ -139,7 +139,7 @@ void GameManager::init()
 	isHold = false;
 	isGameState = 0;
 	randType = static_cast<Tetromino>(rand() % 7);
-	if (monster.stage == 0) randType = static_cast<Tetromino>(1);										// 네모 블록
+	if (monster.stage == 0 && rand()% 3 == 0) randType = static_cast<Tetromino>(1);										// 네모 블록
 	
 	current_block.setBlock(randType);
 
@@ -150,7 +150,7 @@ void GameManager::init()
 
 	current_block.setPos(5, 0);
 	randType = static_cast<Tetromino>(rand() % 7);
-	if(monster.stage == 0 && rand()%10 == 0) randType = static_cast<Tetromino>(1);										// 네모 블록
+	if(monster.stage == 0 && rand()%3 == 0) randType = static_cast<Tetromino>(1);										// 네모 블록
 	
 	next_block.setBlock(randType);
 
@@ -371,7 +371,7 @@ void GameManager::makeNewBlock()
 	current_block = next_block;
 	current_block.setPos(5, 0);
 	randType = static_cast<Tetromino>(rand() % 7);
-	if(monster.stage == 0) randType = static_cast<Tetromino>(1);                            // 네모만 나오게 함
+	if(monster.stage == 0 && rand() % 3 == 0) randType = static_cast<Tetromino>(1);                            // 네모만 나오게 함
 	next_block.setBlock(randType);
 	if (monster.stage == 3 ) {
 		randType = static_cast<Tetromino>(rand() % 7);
