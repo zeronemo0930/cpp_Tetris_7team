@@ -38,7 +38,8 @@ void GameManager::mainMenu()
 	menu.menu();
 	int menuSelector = menu.getMenuSelector();
 	if (menuSelector == 0) {
-		play();
+		menu.stageSelect();
+		
 	}
 	else if (menuSelector == 1) {
 		menu.option();
@@ -50,7 +51,11 @@ void GameManager::mainMenu()
 
 void GameManager::play()
 {	
-	vector<string> prolog = { "<프롤로그>"," 이 이야기는 그린시러와 그린조아의 다툼으로 벌어집니다."," 테트로니아는 블록들로 이루어진 세계로, 평소엔 조화롭게 돌아가지만,","그린시러의 영향으로 특정 블록들이 자의식을 얻어 제멋대로 움직이며 세계의 균형을 위협하기 시작합니","다.","  이 블록들을 통제할 수 있는 유일한 사람은 전설의 \"테트리스 마스터\"뿐!"};
+	vector<string> prolog = { "<프롤로그>",
+		" 이 이야기는 그린시러와 그린조아의 다툼으로 벌어집니다.",
+		" 테트로니아는 블록들로 이루어진 세계로, 평소엔 조화롭게 돌아가지만,",
+		"그린시러의 영향으로 특정 블록들이 자의식을 얻어 제멋대로 움직이며 세계의 균형을 위협하기 시작합니","다.",
+		"  이 블록들을 통제할 수 있는 유일한 사람은 전설의 \"테트리스 마스터\"뿐!"};
 	renderer.printLineProlog(1, 10, prolog);
 	system("cls");
 
@@ -72,16 +77,12 @@ void GameManager::play()
 	score = 0;
 	renderer.show_game_stat(score);
 
-	
-
 	while (true) {
-
 		input();
 		checkState();
 		if (i % (30 - 12 * menu.getDifficulty()) == 0) {
 			update();
 		}
-
 		i++;
 		Sleep(15);
 		gotoxy(77, 23);

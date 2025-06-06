@@ -18,6 +18,9 @@ public:
 	int get_clear_line_score();
 	int move_block(Block& block);
 	int eraseBoardLine(size_t i);
+
+	void resetBoard();	// 보드에 있는 모든 블럭을 제거하는 함수
+
   bool rotate_shift(Block& b);
 	void result_by_attack(const int empty_place);
 private:

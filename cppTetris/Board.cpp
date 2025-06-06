@@ -3,12 +3,7 @@
 
 Board::Board()
 {
-	for (size_t i = 0; i < height; i++) {
-		for (size_t j = 0; j < width; j++) {
-			if (i == 23 || j == 0 || j == 13) board[i][j] = 1;
-			else board[i][j] = 0;
-		}
-	}
+	resetBoard();
 }
 //I, O, T, J, L, S, Z
 bool Board::strike_check(const Block& b)
@@ -91,6 +86,16 @@ int Board::eraseBoardLine(size_t i)
 	for (size_t j = 1; j < 13; j++)
 		board[0][j] = 0;
 	return 0;
+}
+
+void Board::resetBoard()
+{
+	for (size_t i = 0; i < height; i++) {
+		for (size_t j = 0; j < width; j++) {
+			if (i == 23 || j == 0 || j == 13) board[i][j] = 1;
+			else board[i][j] = 0;
+		}
+	}
 }
 
 bool Board::rotate_shift(Block& b) // 회전이 가능한 경우에만 도형을 회전해주는 함수

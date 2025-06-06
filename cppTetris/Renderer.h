@@ -31,37 +31,35 @@ class Renderer
 public:
 	Renderer();
 
+	// 메뉴 관련 Renderer
 	void show_logo();
 	void show_menu(short menu);
 	void drawOption(short optionSelector, float volume, int difficulty);
+	void drawStageSelect(short stageSelector);
 
+	// Block 관련 Renderer
 	void drawBlock(Block& block, bool isShadow);
 	void eraseBlock(Block& block);
-
-	/*void drawMonster(Monster& mon);
-	void drawMonsterHp(Monster& mon);
-	void eraseMonster(Monster& mon);*/
-
+	void setBlockColor(Tetromino t);
 	void nextBlockFrame();
 	void holdBlockFrame();
-	void setBlockColor(Tetromino t);
 
+	
+	// Board 관련 Renderer
 	void drawBoard(Board& board);
-
+	void show_game_stat(int score);
 
 	static void eraseLine(size_t i);
 
-	void show_game_stat(int score);
-
+	// Monster 관련 Renderer
 	void drawMonster(Monster& mon);
 	void drawMonsterTalk(Monster& mon);
 	void drawMonsterHp(Monster& mon);
 	void aniMonsterDamaged(Monster& mon);
-
 	void eraseMonster(Monster& mon);
-
 	void act_by_boss(Monster& mon, Board& board);
 
+	// 대화창 관련 Renderer
 	void printLineAt(int x, int y, std::vector<std::string> lines);
 	void printLineProlog(int x, int y, std::vector<std::string> lines);
 private:
@@ -69,6 +67,7 @@ private:
 	std::array<std::string, 3> menu_string;
 	std::array<std::string, 3> option_string;
 	std::array<std::string, 3> difficulty_string;
+	std::array<std::string, 7> stage_string;
 	int ab_x = 14;
 	int ab_y = 1;
 };

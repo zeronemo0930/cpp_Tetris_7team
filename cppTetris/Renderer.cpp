@@ -21,6 +21,7 @@ Renderer::Renderer()
 	menu_string = { "Start", "Option", "Exit" };
 	option_string = { "Stage", "Volume", "Apply" };
 	difficulty_string = { "Easy", "Normal", "Hard" };
+	stage_string = { "Story", "Stage 1", "Stage 2", "Stage 3", "Boss", "무한 모드", "Back"};
 	system("Tetris");
 	system("mode con:cols=100 lines=30");
 	CONSOLE_CURSOR_INFO ConsoleCursor;
@@ -285,6 +286,22 @@ void Renderer::drawOption(short optionSelector, float volume, int difficulty)
 	gotoxy(77, 23);
 }
 
+void Renderer::drawStageSelect(short stageSelector)
+{
+	cout << endl;
+	for (size_t i = 0; i < stage_string.size(); i++) {
+		gotoxy(50, 10 + i);
+		if (stageSelector == i) {
+			SetColor(Color::YELLOW);
+			cout << "▶";
+		}
+		else
+			SetColor(Color::WHITE);
+		cout << stage_string[i] << "    ";
+	}
+
+}
+
 // 약간의 개선이 필요할듯
 void Renderer::drawBlock(Block& block, bool isShadow)
 {
@@ -525,7 +542,9 @@ void Renderer::printLineProlog(int x, int y, const std::vector<std::string> line
 	// 윗테두리 출력
 	gotoxy(x, y - 1);
 	std::cout << "+------------------------------------------------------------------------------------------------+";
-
+	// 아래 테두리 출력
+	gotoxy(x, y + lines.size());
+	std::cout << "+------------------------------------------------------------------------------------------------+";
 	for (size_t i = 0; i < lines.size(); ++i) {
 		gotoxy(x, y + i);
 		std::cout << "| " << std::string(100, ' ') << " |";  // 공간 확보
@@ -537,9 +556,7 @@ void Renderer::printLineProlog(int x, int y, const std::vector<std::string> line
 		}
 	}
 
-	// 아래 테두리 출력
-	gotoxy(x, y + lines.size());
-	std::cout << "+------------------------------------------------------------------------------------------------+";
+	
 
 	std::cin.get();  // 엔터 대기 후 화면 유지
 }

@@ -11,7 +11,8 @@
 using namespace std;
 
 
-Menu::Menu() : menuSelector(0), optionSelector(0), volume(20), difficulty(0)
+Menu::Menu() : keytemp(NULL), menuSelector(0), optionSelector(0), volume(20), difficulty(0),
+stageSelector(0), renderer(nullptr), sm(nullptr)
 {
 }
 
@@ -112,8 +113,6 @@ void Menu::option()
 					}
 					break;
 				}
-
-
 			}
 			if (keytemp == '\r') {
 				if (optionSelector == 2) {
@@ -134,4 +133,41 @@ void Menu::difficultySet()
 	difficulty %= 3;
 	sm->playEffect("SoundEffects/menu.wav");
 	renderer->drawOption(optionSelector, volume, difficulty);
+}
+
+void Menu::stageSelect()
+{
+	stageSelector = 0;
+	renderer->drawStageSelect(stageSelector);
+	while (true) {
+		if (_kbhit()) {
+			keytemp = _getch();
+			if (keytemp == EXT_KEY) {
+				keytemp = _getch();
+				switch (keytemp)
+				{
+				case KEY_UP:
+					if (stageSelector > 0) {
+						stageSelector--;
+						renderer->drawStageSelect(stageSelector);
+						sm->playEffect("SoundEffects/menu.wav");
+					}
+					break;
+				case KEY_DOWN:
+					if (stageSelector < 6) {
+						stageSelector++;
+						renderer->drawStageSelect(stageSelector);
+						sm->playEffect("SoundEffects/menu.wav");
+					}
+					break;
+				}
+			}
+			if (keytemp == '\r') {
+				sm->playEffect("SoundEffects/menu.wav");
+				break;
+			}
+		}
+	}
+	system("cls");
+	return;
 }

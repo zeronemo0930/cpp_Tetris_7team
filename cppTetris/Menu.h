@@ -14,11 +14,14 @@ public:
 	void menu();
 	void option();
 	void difficultySet();
+	void stageSelect();
 private:
 	Renderer* renderer;
 	SoundManager* sm;
+
 	short menuSelector;
 	short optionSelector;
+	short stageSelector;
 	char keytemp;
 	float volume;
 	int difficulty;	// 0 : easy, 1 : normal, 2 : hard
