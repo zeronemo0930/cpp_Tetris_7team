@@ -69,6 +69,8 @@ void GameManager::mainMenu()
 			play();
 			break;
 		case 5:		// 무한모드
+			monster.stage = 5;
+			play();
 			break;
 		case 6:		// back
 			return;
@@ -97,7 +99,7 @@ void GameManager::play()
 	}
 	
 	
-
+	if (monster.stage != 5) {
 	renderer.drawMonsterTalk(monster);
 
 	vector<string> lines = monster.getScriptLine(monster.stage);
@@ -107,13 +109,15 @@ void GameManager::play()
 	system("cls");
 
 	// 테스트용 몬스터
-	renderer.drawMonster(monster);
-	renderer.drawMonsterHp(monster);
-
+	
+		renderer.drawMonster(monster);
+		renderer.drawMonsterHp(monster);
+	}
 	
 	init();
 	int i = 0;
 	score = 0;
+	combo = 0;
 	renderer.show_game_stat(score);
 
 	
@@ -127,7 +131,6 @@ void GameManager::play()
 			i++;
 			Sleep(15);
 			gotoxy(77, 23);
-
 		}
 		system("cls");
 		if (monster.stage == 4) monster.stage = -1;											// 다 끝나면 다시 게임 시작하면 처음으로 돌아가게
@@ -138,6 +141,8 @@ void GameManager::play()
 		}
 	}
 }
+
+
 
 void GameManager::init()
 {
@@ -208,6 +213,15 @@ void GameManager::update()
 
 	renderer.drawBlock(current_block, false);
 	checkState();
+
+	if (comboTimer > 0) {								// 콤보 타이머 감소
+		comboTimer--;
+		if (comboTimer == 0) {
+			combo = 0;
+			gotoxy(43, 13);
+			cout << "COMBO: 0   "; // 콤보 리셋 출력
+		}
+	}
 }
 
 void GameManager::moveRotate()
@@ -318,52 +332,62 @@ void GameManager::shadowBlock(bool isNew)
 bool GameManager::checkState()
 {
 	if (isGameState == 2) {
-		// create New Block
 		makeNewBlock();
-		// 몬스터에 데미지가 들어가면 업데이트
 		int temp = board.get_clear_line_score();
 		if (temp != 0) {
-			// 테스트 용으로 넣어놓은 코드
-	
+			// 콤보 갱신
+			if (comboTimer > 0) combo++; // 시간 안에 또 없앴다 → 콤보++
+			else combo = 1;              // 콤보 초기화 후 시작
+
+			comboTimer = 6;  // 콤보 유지 시간 (프레임 기준 약 2초)
+
 			sm.playEffect("SoundEffects/line_clear.wav");
-			monster.takeDamage(temp / 100);
-			renderer.aniMonsterDamaged(monster);
-			renderer.drawMonsterHp(monster);
-			if (monster.isDead()) {
-				monster.setMonsterShape(++monster.stage); // 코드 간편화
-				++board.limit; // key값 변경
 
-				system("cls");
-
-				renderer.drawMonsterTalk(monster);
-
-				vector<string> lines = monster.getScriptLine(monster.stage);
-				renderer.printLineAt(1, 15, lines);
-
-				system("cls");
-
-				renderer.drawBoard(board);
-				
+			if (monster.stage != 5) {
+				monster.takeDamage(temp / 100);
+				renderer.aniMonsterDamaged(monster);
 				renderer.drawMonsterHp(monster);
-				renderer.eraseMonster(monster);
+				if (monster.isDead()) {
+					monster.setMonsterShape(++monster.stage);
+					++board.limit;
 
-				renderer.drawMonster(monster);
-				renderer.drawMonsterHp(monster);
-				init();
-				if (monster.stage == 4) return false;              // 다 끝나면 false return 함. 
+					system("cls");
+					renderer.drawMonsterTalk(monster);
+					vector<string> lines = monster.getScriptLine(monster.stage);
+					renderer.printLineAt(1, 15, lines);
+					system("cls");
+					renderer.drawBoard(board);
+					renderer.eraseMonster(monster);
+					renderer.drawMonster(monster);
+					renderer.drawMonsterHp(monster);
+					init();
+					if (monster.stage == 4) return false;
+				}
 			}
-			
+		} else {
+			// 줄을 못 없앴다면 콤보 타이머 감소
+			if (comboTimer > 0) comboTimer--;
+			else combo = 0;
 		}
-		score += temp*monster.stage;
-		renderer.show_game_stat(score);
+		if (monster.stage == 5) {
+			// 점수 계산
+			score += temp * monster.stage + combo * combo * temp;
+			renderer.show_game_stat(score);
+			if (combo > 0) {
+				// 콤보 출력
+				gotoxy(43, 13);
+				cout << "COMBO: " << combo << "   ";
+			}
+		}
 	}
 	else if (isGameState == 1) {
-		                                                           // 몬스터 죽으면 스테이지 업
 		return false;
 	}
 	isGameState = 0;
 	return true;
 }
+
+
 
 void GameManager::makeNewBlock()
 {
