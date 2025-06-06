@@ -61,6 +61,9 @@ void GameManager::mainMenu()
 			play();
 			break;
 		case 4:		// Boss
+			monster.stage = 3;
+			monster.setMonsterShape(3);
+			play();
 			break;
 		case 5:		// 무한모드
 			break;
@@ -88,6 +91,8 @@ void GameManager::play()
 		renderer.printLineProlog(1, 10, prolog);
 		system("cls");
 	}
+	monster.stage = 0;
+	
 
 	renderer.drawMonsterTalk(monster);
 
