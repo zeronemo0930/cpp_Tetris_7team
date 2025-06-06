@@ -130,6 +130,7 @@ void GameManager::play()
 
 		}
 		system("cls");
+		if (monster.stage == 4) monster.stage = -1;											// 다 끝나면 다시 게임 시작하면 처음으로 돌아가게
 		int select = menu.printRetryWIthChoices();
 		if (select == 0) {
 			play();
@@ -271,8 +272,9 @@ void GameManager::hold()
 	if (isNowHold) return;
 	if (!isHold) {
 		Tetromino temp = current_block.getType();
+		
 		hold_block.setBlock(temp);
-	
+		if (monster.stage == 3) hold_block.setGreenhateBlock(temp);
 		makeNewBlock();
 		isHold = true;
 		
@@ -348,6 +350,7 @@ bool GameManager::checkState()
 				renderer.drawMonster(monster);
 				renderer.drawMonsterHp(monster);
 				init();
+				if (monster.stage == 4) return false;              // 다 끝나면 false return 함. 
 			}
 			
 		}
