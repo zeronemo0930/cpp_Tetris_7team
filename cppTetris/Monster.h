@@ -18,7 +18,9 @@ public:
 	void takeDamage(int damage) { currentHp -= damage; }
 	bool isDead() const { return currentHp <= 0; }
 	Monster& getNextMonster();
+    Monster& setMonsterShape(int stage);
 	void SetMonster(MonsterName name);
+
 
 	monsterVec& getMonsterVec() { return this->monsterShape; }
 	int getMaxHp() { return this->MaxHp; }

@@ -32,6 +32,26 @@ Monster& Monster::getNextMonster() {
     return *this;
 }
 
+Monster& Monster::setMonsterShape(int stage) {
+    switch (stage) {
+    case 0:
+        current_Monster = MonsterName::Square;
+        break;
+    case 1:
+        current_Monster = MonsterName::Water;
+        break;
+    case 2:
+        current_Monster = MonsterName::Castle;
+        break;
+    case 3:
+        current_Monster = MonsterName::greenhate;
+        break;
+
+    }
+    SetMonster(current_Monster);
+    return *this;
+}
+
 void Monster::SetMonster(MonsterName name) // 임시 보스 설정
 {
     switch (name)
