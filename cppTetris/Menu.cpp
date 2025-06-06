@@ -174,66 +174,43 @@ void Menu::stageSelect()
 	return;
 }
 
-void Menu::printRetryWIthChoices() {
-	int x = 0;
-	int y = 20;
-
-
-	vector<string> lines = {
-		"게임이 끝났습니다. 다시 도전하시겠습니까?"
-	};
-
-	vector<string> choices = {
-		"다시 하기",
-		"메인 메뉴로",
-		"게임 그만두기"
-	};
-
-	const int width = 94;
-	const string border = "+" + string(width, '-') + "+";
-
-	// 텍스트 출력
-	gotoxy(x, y - 1);
-	cout << border;
-
-	for (size_t i = 0; i < lines.size(); ++i) {
-		gotoxy(x, y + i);
-		cout << "| " << string(width - 2, ' ') << " |";
-		gotoxy(x + 2, y + i);
-		for (char ch : lines[i]) {
-			cout << ch;
-
+int Menu::retrySelect()
+{
+	int selector = 0;
+	renderer->drawGameOverFrame();
+	renderer->drawGameOver(selector);
+	while (true) {
+		if (_kbhit()) {
+			keytemp = _getch();
+			if (keytemp == EXT_KEY) {
+				keytemp = _getch();
+				switch (keytemp)
+				{
+				case KEY_LEFT:
+					if (selector > 0) {
+						selector--;
+						renderer->drawGameOver(selector);
+						sm->playEffect("SoundEffects/menu.wav");
+					}
+					break;
+				case KEY_RIGHT:
+					if (selector < 1) {
+						selector++;
+						renderer->drawGameOver(selector);
+						sm->playEffect("SoundEffects/menu.wav");
+					}
+					break;
+				}
+			}
+			if (keytemp == '\r') {
+				sm->playEffect("SoundEffects/menu.wav");
+				break;
+			}
 		}
 	}
-	gotoxy(x, y + lines.size());
-	cout << border;
-
-	// 선택지 처리
-	int selected = 0;
-	bool running = true;
-
-	while (running) {
-		for (size_t i = 0; i < choices.size(); ++i) {
-			gotoxy(x + 4, y + static_cast<int>(lines.size()) + 2 + i);
-			if (i == selected) cout << "> ";
-			else cout << "  ";
-			cout << choices[i] << "       ";
-		}
-
-		int ch = _getch();
-		if (ch == 224) {
-			ch = _getch();
-			if (ch == KEY_UP && selected > 0) selected--;
-			else if (ch == KEY_DOWN && selected < static_cast<int>(choices.size()) - 1) selected++;
-		}
-		else if (ch == KEY_ENTER) {
-			running = false;
-		}
-	}
-
-	// 결과 확인용 (예: 나중엔 이 값 리턴 가능)
-	gotoxy(x + 2, y + static_cast<int>(lines.size()) + static_cast<int>(choices.size()) + 4);
-	cout << "선택됨: " << choices[selected];
-	cin.get();
+	system("cls");
+	return selector;
 }
+
+
 

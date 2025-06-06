@@ -22,6 +22,7 @@ Renderer::Renderer()
 	option_string = { "Stage", "Volume", "Apply" };
 	difficulty_string = { "Easy", "Normal", "Hard" };
 	stage_string = { "Story", "Stage 1", "Stage 2", "Stage 3", "Boss", "무한 모드", "Back"};
+	retry_string = { "Retry", "Back To Menu" };
 	system("Tetris");
 	system("mode con:cols=100 lines=30");
 	CONSOLE_CURSOR_INFO ConsoleCursor;
@@ -303,6 +304,38 @@ void Renderer::drawStageSelect(short stageSelector)
 
 }
 
+void Renderer::drawGameOverFrame()
+{
+	cout << endl;
+	SetColor(Color::WHITE);
+	gotoxy(40, 10);
+	cout << "┏━━━━━━━━━━━━━━━━━━━━━━━━━━┓";
+	gotoxy(40, 11);
+	cout << "┃**************************┃";
+	gotoxy(40, 12);
+	cout << "┃*        GAME OVER       *┃";
+	gotoxy(40, 13);
+	cout << "┃**************************┃";
+	gotoxy(40, 14);
+	cout << "┗━━━━━━━━━━━━━━━━━━━━━━━━━━┛";
+	
+}
+
+void Renderer::drawGameOver(short selector)
+{
+	cout << endl;
+	for (int i = 0; i < retry_string.size(); i++) {
+		gotoxy(40 + i * 8, 16);
+		if (i == selector) {
+			SetColor(Color::YELLOW);
+			cout << "▶";
+		}
+		else
+			SetColor(Color::WHITE);
+		cout << retry_string[i] << "   ";
+	}
+}
+
 // 약간의 개선이 필요할듯
 void Renderer::drawBlock(Block& block, bool isShadow)
 {
@@ -423,7 +456,6 @@ void Renderer::setBlockColor(Tetromino t)
 void Renderer::drawBoard(Board& board)
 {
 	cout << endl;
-
 	for (size_t i = 0; i < Board::height; i++) {
 		for (size_t j = 0; j < Board::width; j++) {
 
@@ -509,7 +541,7 @@ void Renderer::printLineAt(int x, int y, const vector<string> lines) {
 		gotoxy(x, y + 4);
 		cout << "+------------------------------------------------------------------------------------+";
 
-		cin.get();  // 엔터 대기
+		_getch();  // 아무 키 입력
 
 		gotoxy(x, y - 1);
 		cout << "                                                                                       ";
@@ -554,5 +586,5 @@ void Renderer::printLineProlog(int x, int y, const vector<string> lines) {
 		}
 	}
 
-	cin.get();  // 엔터 대기 후 화면 유지
+	_getch();  // 아무 키 입력
 }

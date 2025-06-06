@@ -12,6 +12,9 @@ private:
 	char keytemp;
 	int isGameState;
 
+	int combo=0;
+	int comboTimer = 0;
+
 	bool isHold;		// Hold 되어 있는 Block이 있는가?
 	bool isNowHold;		// 지금 Hold 한 블럭인가?
 
@@ -42,6 +45,7 @@ public:
 
 	void mainMenu();
 	void play();
+
 
 	void init();
 	void input();

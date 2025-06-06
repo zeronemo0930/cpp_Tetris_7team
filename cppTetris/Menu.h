@@ -15,7 +15,7 @@ public:
 	void option();
 	void difficultySet();
 	void stageSelect();
-	void printRetryWIthChoices();
+	int retrySelect();
 private:
 	Renderer* renderer;
 	SoundManager* sm;
