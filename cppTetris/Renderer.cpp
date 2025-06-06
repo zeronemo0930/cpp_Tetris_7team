@@ -147,16 +147,6 @@ void Renderer::drawMonster(Monster& mon)
 	gotoxy(85, 27);
 }
 
-void Renderer::drawMonsterTalk(Monster& mon)
-{
-	cout << endl;
-	monsterVec monster = mon.getMonsterVec();
-	for (int i = 0; i < monster.size(); i++) {
-		gotoxy(40, 2 + i);
-		cout << monster[i];
-	}
-	gotoxy(77, 23);
-}
 
 void Renderer::drawMonsterHp(Monster& mon)
 {
