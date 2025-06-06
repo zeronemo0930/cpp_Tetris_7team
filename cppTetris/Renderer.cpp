@@ -464,99 +464,94 @@ void Renderer::eraseLine(size_t i)
 	}
 }
 
-
-void Renderer::printLineAt(int x, int y, const std::vector<std::string> lines) {
+void Renderer::printLineAt(int x, int y, const vector<string> lines) {
 	for (const auto& line : lines) {
 		// 기존 출력된 내용 지우기
-		
-
 		gotoxy(x, y - 1);
-		std::cout << "                                                                                     ";
+		cout << "                                                                                     ";
 
 		gotoxy(x, y);
-		std::cout << "                                                                                     ";
+		cout << "                                                                                     ";
 
 		gotoxy(x, y + 1);
-		std::cout << "                                                                                     ";
+		cout << "                                                                                     ";
 
-		gotoxy(x, y +2);
-		std::cout << "                                                                                     ";
+		gotoxy(x, y + 2);
+		cout << "                                                                                     ";
 
-		gotoxy(x, y +3 );
-		std::cout << "                                                                                     ";
+		gotoxy(x, y + 3);
+		cout << "                                                                                     ";
 
 		gotoxy(x, y + 4);
-		std::cout << "                                                                                     ";
-
+		cout << "                                                                                     ";
 
 		// 윗테두리
 		gotoxy(x, y - 1);
-		std::cout << "+------------------------------------------------------------------------------------+";
+		cout << "+------------------------------------------------------------------------------------+";
 
-		
 		// 본문 출력
 		gotoxy(x, y);
-		std::cout << "| " << std::string(100, ' ') << " |";  // 공간 확보
+		cout << "| " << string(100, ' ') << " |";  // 공간 확보
 		gotoxy(x + 2, y);
-		std::cout << line;
+		cout << line;
 
 		gotoxy(x, y + 1);
-		std::cout << "| " << "                                                                                  " << " |";
+		cout << "| " << "                                                                                  " << " |";
 
-			gotoxy(x, y + 2);
-		std::cout << "| " << "                                                                                  " << " |";
+		gotoxy(x, y + 2);
+		cout << "| " << "                                                                                  " << " |";
 
-			gotoxy(x, y + 3);
-		std::cout << "| " << "                                                                                  " << " |";
+		gotoxy(x, y + 3);
+		cout << "| " << "                                                                                  " << " |";
 
 		// 아래 테두리
 		gotoxy(x, y + 4);
-		std::cout << "+------------------------------------------------------------------------------------+";
+		cout << "+------------------------------------------------------------------------------------+";
 
-		std::cin.get();  // 엔터 대기
+		cin.get();  // 엔터 대기
 
 		gotoxy(x, y - 1);
-		std::cout << "                                                                                       ";
+		cout << "                                                                                       ";
 
 		gotoxy(x, y);
-		std::cout << "                                                                                       ";
+		cout << "                                                                                       ";
 
 		gotoxy(x, y + 1);
-		std::cout << "                                                                                       ";
+		cout << "                                                                                       ";
 
 		gotoxy(x, y + 2);
-		std::cout << "                                                                                       ";
+		cout << "                                                                                       ";
 
 		gotoxy(x, y + 3);
-		std::cout << "                                                                                       ";
+		cout << "                                                                                       ";
 
 		gotoxy(x, y + 4);
-		std::cout << "                                                                                       ";
+		cout << "                                                                                       ";
 	}
 }
 
 #include <chrono>
 #include <thread>  // 시간 지연을 위한 헤더
 
-void Renderer::printLineProlog(int x, int y, const std::vector<std::string> lines) {
+void Renderer::printLineProlog(int x, int y, const vector<string> lines) {
 	// 윗테두리 출력
 	gotoxy(x, y - 1);
-	std::cout << "+------------------------------------------------------------------------------------------------+";
+	cout << "+------------------------------------------------------------------------------------------------+";
+
 	// 아래 테두리 출력
 	gotoxy(x, y + lines.size());
-	std::cout << "+------------------------------------------------------------------------------------------------+";
+	cout << "+------------------------------------------------------------------------------------------------+";
+
 	for (size_t i = 0; i < lines.size(); ++i) {
 		gotoxy(x, y + i);
-		std::cout << "| " << std::string(100, ' ') << " |";  // 공간 확보
+		cout << "| " << string(100, ' ') << " |";  // 공간 확보
 
 		gotoxy(x + 2, y + i);  // 실제 텍스트 위치
 		for (char ch : lines[i]) {
-			std::cout << ch;
-			std::this_thread::sleep_for(std::chrono::milliseconds(10));  // 0.01초 딜레이
+			cout << ch;
+			Sleep(1);
 		}
 	}
 
-	
-
-	std::cin.get();  // 엔터 대기 후 화면 유지
+	cin.get();  // 엔터 대기 후 화면 유지
 }
