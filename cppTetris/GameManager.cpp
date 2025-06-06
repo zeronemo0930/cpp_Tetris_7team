@@ -234,7 +234,6 @@ void GameManager::hold()
 	renderer.drawBlock(hold_block, false);
 }
 
-
 void GameManager::shadowBlock(bool isNew)
 {
 	if(!isNew)
@@ -245,6 +244,11 @@ void GameManager::shadowBlock(bool isNew)
 	}
 	shadow_block.move(0, -1);
 	renderer.drawBlock(shadow_block, true);
+	if (monster.stage == 2 && rand()%35 == 0) {
+		sm.playEffect("SoundEffects/gravity.wav");
+		current_block = shadow_block;
+		renderer.drawBlock(current_block, false);
+	}
 }
 
 void GameManager::checkState()
