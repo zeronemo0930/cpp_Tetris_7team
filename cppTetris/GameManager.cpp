@@ -94,7 +94,7 @@ void GameManager::play()
 			"그린시러의 영향으로 특정 블록들이 자의식을 얻어 제멋대로 움직이며 세계의 균형을 위협하기 시작합니","다.",
 			"  이 블록들을 통제할 수 있는 유일한 사람은 전설의 \"테트리스 마스터\"뿐!" };
 		renderer.printLineProlog(1, 10, prolog);
-		system("cls");
+		::system("cls");												// 왜 인지 모르겠는데 :: 추가 해야된다네요
 		monster.stage = 0;
 		monster.setMonsterShape(0);
 	}
@@ -109,7 +109,7 @@ void GameManager::play()
 
 
 
-		system("cls");
+		::system("cls");												// 왜 인지 모르겠는데 :: 추가 해야된다네요
 
 		// 테스트용 몬스터
 
@@ -142,13 +142,14 @@ void GameManager::play()
 			int select = menu.retrySelect();
 			if (select == 0) {
 				play();
-				system("cls");
+				::system("cls");												// 왜 인지 모르겠는데 :: 추가 해야된다네요
 			}
 			else {
 				return;
 			}
 		}
 		else if (monster.stage == 4) {
+			::system("cls");												// 왜 인지 모르겠는데 :: 추가 해야된다네요
 			monster.stage = -1;
 			return;
 		}
@@ -367,7 +368,7 @@ bool GameManager::checkState()
 
 					if (monster.stage == 4) {
 						//  여기서 바로 에필로그 보여주고 종료
-						system("cls");
+						::system("cls");												// 왜 인지 모르겠는데 :: 추가 해야된다네요
 
 						vector<string> epilog = {
 							"<에필로그>",
@@ -384,11 +385,11 @@ bool GameManager::checkState()
 						return false;
 					}
 
-					system("cls");
+					::system("cls");												// 왜 인지 모르겠는데 :: 추가 해야된다네요
 					renderer.drawMonsterTalk(monster);
 					vector<string> lines = monster.getScriptLine(monster.stage);
 					renderer.printLineAt(1, 15, lines);
-					system("cls");
+					::system("cls");												// 왜 인지 모르겠는데 :: 추가 해야된다네요
 					renderer.drawBoard(board);
 					renderer.eraseMonster(monster);
 					renderer.drawMonster(monster);
