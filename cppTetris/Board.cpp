@@ -46,7 +46,29 @@ void Board::merge_block(Block& block)
 				board[y + i][x + j] = shape[i][j];
 		}
 	}
-	block.specialFunc(*this);
+	if (block.getType() == Tetromino::B && limit > 0) { // 난수 기반으로 여태 획득한 특수 블럭 랜덤 사용
+		switch (rand() % limit) {
+			case 0: {
+				ColorBlock temp;
+				temp.setPos(block.getX(), block.getY());
+				temp.specialFunc(*this);
+				break;
+			}
+			case 1: {
+				WaterBlock temp;
+				temp.setPos(block.getX(), block.getY());
+				temp.specialFunc(*this);
+				break;
+			}
+			case 2: {
+				FireBlock temp;
+				temp.setPos(block.getX(), block.getY());
+				temp.specialFunc(*this);
+				break;
+			}
+			
+		}
+	}
 	lastScore = 0; // 점수 초기화
 	for (size_t i = 3; i < height - 1; i++) {
 		if (check_full_line(i)) {
@@ -128,7 +150,7 @@ void Board::result_by_attack(const int empty_place)
 	}
 	for (size_t j = 1; j < 13; j++) {
 		if (j != empty_place) {
-			board[height - 2][j] = 1;
+			board[height - 2][j] = 10;
 		}
 		else {
 			board[height - 2][j] = 0;

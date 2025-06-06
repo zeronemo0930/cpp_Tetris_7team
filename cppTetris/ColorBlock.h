@@ -7,5 +7,5 @@ public:
 	void specialFunc(Board& board) override;
 private:
 	int colNum = 0;
-}
+};
 

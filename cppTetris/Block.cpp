@@ -142,8 +142,9 @@ void Block::setGreenhateBlock(Tetromino t) {
 		};
 		break;
 	}
-	
+
 }
+
 void Block::rotate()
 {
 	if (type == Tetromino::O) return;
