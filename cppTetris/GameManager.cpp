@@ -96,6 +96,7 @@ void GameManager::play()
 		renderer.printLineProlog(1, 10, prolog);
 		system("cls");
 		monster.stage = 0;
+		monster.setMonsterShape(0);
 	}
 	
 	
@@ -120,10 +121,12 @@ void GameManager::play()
 	int i = 0;
 	score = 0;
 	combo = 0;
+	comboTimer = 0;
 	renderer.show_game_stat(score);
 
 	
 	while (true) {
+		while (_kbhit()) _getch();
 		while (checkState()) {
 
 			input();
@@ -134,14 +137,19 @@ void GameManager::play()
 			Sleep(15);
 			gotoxy(77, 23);
 		}
-		system("cls");
-		if (monster.stage == 4) monster.stage = -1;											// 다 끝나면 다시 게임 시작하면 처음으로 돌아가게
-		int select = menu.retrySelect();
-		if (select == 0) {
-			play();
-			system("cls");
+		//system("cls");
+		if (monster.stage != 4) {
+			int select = menu.retrySelect();
+			if (select == 0) {
+				play();
+				system("cls");
+			}
+			else {
+				return;
+			}
 		}
-		else {
+		else if (monster.stage == 4) {
+			monster.stage = -1;
 			return;
 		}
 	}
@@ -357,6 +365,25 @@ bool GameManager::checkState()
 					monster.setMonsterShape(++monster.stage);
 					++board.limit;
 
+					if (monster.stage == 4) {
+						//  여기서 바로 에필로그 보여주고 종료
+						system("cls");
+
+						vector<string> epilog = {
+							"<에필로그>",
+							" 이 이야기는 그린시러와 그린조아의 다툼으로 벌어집니다.",
+							" 테트로니아는 블록들로 이루어진 세계로, 평소엔 조화롭게 돌아가지만,",
+							"그린시러의 영향으로 특정 블록들이 자의식을 얻어 제멋대로 움직이며 세계의 균형을 위협하기 시작합니","다.",
+							"  이 블록들을 통제할 수 있는 유일한 사람은 전설의 \"테트리스 마스터\"뿐!"
+						};
+
+						renderer.printLineProlog(1, 10, epilog);
+
+					
+						isGameState = 0;
+						return false;
+					}
+
 					system("cls");
 					renderer.drawMonsterTalk(monster);
 					vector<string> lines = monster.getScriptLine(monster.stage);
@@ -367,7 +394,10 @@ bool GameManager::checkState()
 					renderer.drawMonster(monster);
 					renderer.drawMonsterHp(monster);
 					init();
-					if (monster.stage == 4) return false;
+					if (monster.stage == 4) {
+						return false;
+						isGameState = 0;
+					}
 				}
 			}
 		} else {
