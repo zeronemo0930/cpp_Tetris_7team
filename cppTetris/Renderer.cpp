@@ -120,16 +120,15 @@ void Renderer::show_logo()
 void Renderer::show_game_stat(int score)
 {
 	cout << endl;
-	static bool printed_text = false;
+	
 	SetColor(Color::GRAY);
 
-	// "SCORE" 텍스트는 한 번만 출력
-	if (!printed_text)
-	{
-		gotoxy(ab_x + 28, ab_y + 9);
-		std::cout << "SCORE";
-		printed_text = true;
-	}
+	
+	
+	gotoxy(ab_x + 28, ab_y + 9);
+	cout << "SCORE";
+
+	
 
 	// 점수는 계속 업데이트됨
 	gotoxy(ab_x + 28, ab_y + 10);
@@ -146,6 +145,18 @@ void Renderer::drawMonster(Monster& mon)
 	}
 	gotoxy(85, 27);
 }
+
+void Renderer::drawMonsterTalk(Monster& mon)
+{
+	cout << endl;
+	monsterVec monster = mon.getMonsterVec();
+	for (int i = 0; i < monster.size(); i++) {
+		gotoxy(40, 2 + i);
+		cout << monster[i];
+	}
+	gotoxy(77, 23);
+}
+
 
 
 void Renderer::drawMonsterHp(Monster& mon)

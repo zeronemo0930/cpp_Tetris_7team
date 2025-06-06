@@ -90,8 +90,9 @@ void GameManager::play()
 			"  이 블록들을 통제할 수 있는 유일한 사람은 전설의 \"테트리스 마스터\"뿐!" };
 		renderer.printLineProlog(1, 10, prolog);
 		system("cls");
+		monster.stage = 0;
 	}
-	monster.stage = 0;
+	
 	
 
 	renderer.drawMonsterTalk(monster);
@@ -149,7 +150,7 @@ void GameManager::init()
 
 	current_block.setPos(5, 0);
 	randType = static_cast<Tetromino>(rand() % 7);
-	if(monster.stage == 0) randType = static_cast<Tetromino>(1);										// 네모 블록
+	if(monster.stage == 0 && rand()%10 == 0) randType = static_cast<Tetromino>(1);										// 네모 블록
 	
 	next_block.setBlock(randType);
 
@@ -213,13 +214,13 @@ void GameManager::update()
 void GameManager::moveRotate()
 {
 	renderer.eraseBlock(current_block);
-	if (monster.stage == 2) {
+	/*if (monster.stage == 2) {																		// 방향 못바꾸게 하는건데 일단 주석 처리
 		int x = current_block.getPosX();
 		int y = current_block.getPosY();
 		randType = static_cast<Tetromino>(rand() % 7);
 		current_block.setBlock(randType);
 		current_block.setPos(x, y);
-	}
+	}*/
 	if(board.rotate_shift(current_block)) // rotate할 때 strike_check 여부를 확인하고 rotate 가능한 좌표로 변환해주는 rotate_shift
 		sm.playEffect("SoundEffects/block_rotate.wav");
 	shadowBlock(false);
@@ -351,7 +352,7 @@ bool GameManager::checkState()
 			}
 			
 		}
-		score += temp;
+		score += temp*monster.stage;
 		renderer.show_game_stat(score);
 	}
 	else if (isGameState == 1) {
