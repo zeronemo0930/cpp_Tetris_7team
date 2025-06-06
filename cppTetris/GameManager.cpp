@@ -52,16 +52,19 @@ void GameManager::mainMenu()
 			break;
 		case 2:		// 2 Stage 
 			monster.stage = 1;
+			board.limit = 1; // 초기에 eky설정
 			monster.setMonsterShape(1);
 			play();
 			break;
 		case 3:		// 3 Stage
 			monster.stage = 2;
+			board.limit = 2;
 			monster.setMonsterShape(2);
 			play();
 			break;
 		case 4:		// Boss
 			monster.stage = 3;
+			board.limit = 3;
 			monster.setMonsterShape(3);
 			play();
 			break;
@@ -137,27 +140,17 @@ void GameManager::init()
 	renderer.holdBlockFrame();
 	isHold = false;
 	isGameState = 0;
-	randType = static_cast<Tetromino>(rand() % 7);
+	randType = static_cast<Tetromino>(rand() % 8);
 	if (monster.stage == 0) randType = static_cast<Tetromino>(1);										// 네모 블록
-	
 	current_block.setBlock(randType);
-
-	if (monster.stage == 3) {																			// 초록 블록
-		randType = static_cast<Tetromino>(rand() % 7);
-		current_block.setGreenhateBlock(randType);
-	}
+	if (monster.stage == 4) current_block.setGreenhateBlock(randType);
 
 	current_block.setPos(5, 0);
-	randType = static_cast<Tetromino>(rand() % 7);
-	if(monster.stage == 0) randType = static_cast<Tetromino>(1);										// 네모 블록
+	randType = static_cast<Tetromino>(rand() % 8);
+	if (monster.stage == 0) randType = static_cast<Tetromino>(1);										// 네모 블록
 	
 	next_block.setBlock(randType);
-
-	if (monster.stage == 3) {																			// 초록 블록
-		randType = static_cast<Tetromino>(rand() % 7);
-		next_block.setGreenhateBlock(randType);
-	}
-
+	if (monster.stage == 4) current_block.setGreenhateBlock(randType);
 	renderer.drawBlock(next_block, false);
 	shadowBlock(true);
 }
@@ -212,14 +205,7 @@ void GameManager::update()
 
 void GameManager::moveRotate()
 {
-	renderer.eraseBlock(current_block);
-	if (monster.stage == 2) {
-		int x = current_block.getPosX();
-		int y = current_block.getPosY();
-		randType = static_cast<Tetromino>(rand() % 7);
-		current_block.setBlock(randType);
-		current_block.setPos(x, y);
-	}
+	renderer.eraseBlock(current_block); // 이동 제한 삭제
 	if(board.rotate_shift(current_block)) // rotate할 때 strike_check 여부를 확인하고 rotate 가능한 좌표로 변환해주는 rotate_shift
 		sm.playEffect("SoundEffects/block_rotate.wav");
 	shadowBlock(false);
@@ -329,13 +315,14 @@ bool GameManager::checkState()
 			renderer.aniMonsterDamaged(monster);
 			renderer.drawMonsterHp(monster);
 			if (monster.isDead()) {
-				monster.getNextMonster();
+				monster.setMonsterShape(++monster.stage); // 코드 간편화
+				++board.limit; // key값 변경
 
 				system("cls");
 
 				renderer.drawMonsterTalk(monster);
 
-				vector<string> lines = monster.getScriptLine(++monster.stage);
+				vector<string> lines = monster.getScriptLine(monster.stage);
 				renderer.printLineAt(1, 15, lines);
 
 				system("cls");
@@ -369,13 +356,10 @@ void GameManager::makeNewBlock()
 	renderer.eraseBlock(next_block);
 	current_block = next_block;
 	current_block.setPos(5, 0);
-	randType = static_cast<Tetromino>(rand() % 7);
-	if(monster.stage == 0) randType = static_cast<Tetromino>(1);                            // 네모만 나오게 함
+	randType = static_cast<Tetromino>(rand() % 8);
+	if (monster.stage == 0) randType = static_cast<Tetromino>(1);										// 네모 블록
 	next_block.setBlock(randType);
-	if (monster.stage == 3 ) {
-		randType = static_cast<Tetromino>(rand() % 7);
-		next_block.setGreenhateBlock(randType);
-	}
+	if (monster.stage == 4) current_block.setGreenhateBlock(randType);
 	renderer.drawBlock(next_block, false);
 	shadowBlock(true);
 	renderer.drawBlock(current_block, false);

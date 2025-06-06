@@ -3,6 +3,6 @@
 
 class WaterBlock :public Block{
 public:
-	WaterBlock : Block(Tetromino::B) {};
+	WaterBlock() : Block(Tetromino::B) {};
 	void specialFunc(Board& board) override;
 };
