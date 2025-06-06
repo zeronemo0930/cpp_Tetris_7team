@@ -423,6 +423,7 @@ void Renderer::setBlockColor(Tetromino t)
 void Renderer::drawBoard(Board& board)
 {
 	cout << endl;
+	system("cls");
 	for (size_t i = 0; i < Board::height; i++) {
 		for (size_t j = 0; j < Board::width; j++) {
 

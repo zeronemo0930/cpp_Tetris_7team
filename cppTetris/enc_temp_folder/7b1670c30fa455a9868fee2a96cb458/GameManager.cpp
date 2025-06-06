@@ -129,8 +129,8 @@ void GameManager::play()
 		system("cls");
 		int select = menu.printRetryWIthChoices();
 		if (select == 0) {
-			play();
 			system("cls");
+
 		}
 	}
 }

@@ -174,7 +174,7 @@ void Menu::stageSelect()
 	return;
 }
 
-void Menu::printRetryWIthChoices() {
+int Menu::printRetryWIthChoices() {
 	int x = 0;
 	int y = 20;
 
@@ -234,6 +234,9 @@ void Menu::printRetryWIthChoices() {
 	// 결과 확인용 (예: 나중엔 이 값 리턴 가능)
 	gotoxy(x + 2, y + static_cast<int>(lines.size()) + static_cast<int>(choices.size()) + 4);
 	cout << "선택됨: " << choices[selected];
+	
 	cin.get();
+
+	return selected;
 }
 
