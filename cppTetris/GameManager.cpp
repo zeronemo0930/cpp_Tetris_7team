@@ -107,8 +107,6 @@ void GameManager::play()
 		renderer.printLineAt(1, 15, lines);
 
 
-
-
 		::system("cls");												// 왜 인지 모르겠는데 :: 추가 해야된다네요
 
 		// 테스트용 몬스터
@@ -128,6 +126,7 @@ void GameManager::play()
 	while (true) {
 		while (_kbhit()) _getch();
 		while (checkState()) {
+			checkState();
 			input();
 			if (i % (30 - 12 * menu.getDifficulty()) == 0) {
 				update();
@@ -165,6 +164,12 @@ void GameManager::init()
 	renderer.holdBlockFrame();
 	isHold = false;
 	isGameState = 0;
+
+	if (monster.stage >= 0 && monster.stage <= 3) {														// 몬스터가 안그려져요..
+		monster.setMonsterShape(monster.stage);
+		renderer.drawMonster(monster);
+	}
+
 	randType = static_cast<Tetromino>(rand() % 8);
 	if (monster.stage == 0 && rand() % 3 == 0) randType = static_cast<Tetromino>(1);										// 네모 블록
 	
@@ -370,10 +375,10 @@ bool GameManager::checkState()
 
 						vector<string> epilog = {
 							"<에필로그>",
-							" 이 이야기는 그린시러와 그린조아의 다툼으로 벌어집니다.",
-							" 테트로니아는 블록들로 이루어진 세계로, 평소엔 조화롭게 돌아가지만,",
-							"그린시러의 영향으로 특정 블록들이 자의식을 얻어 제멋대로 움직이며 세계의 균형을 위협하기 시작합니","다.",
-							"  이 블록들을 통제할 수 있는 유일한 사람은 전설의 \"테트리스 마스터\"뿐!"
+							" 이 이야기는 그린시러와 그린조아의 다툼으로 벌어진 이야기........",
+							" 결국 그린시러를 물리친 그린조아...........",
+							"하지만 원래세계로 돌아 갈 수 없다는 걸 안 것은 한참 뒤 이야기",
+							" 새로운 테트리스 세계의 왕이 된 그린 조아. 이번엔 테트리스를 초록으로 물들여버린다."
 						};
 
 						renderer.printLineProlog(1, 10, epilog);
