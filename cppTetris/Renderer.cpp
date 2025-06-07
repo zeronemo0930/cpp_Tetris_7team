@@ -423,7 +423,7 @@ void Renderer::holdBlockFrame()
 }
 void Renderer::setBlockColor(Block& block) {
 	if (block.getType() == Tetromino::B) {
-		color = static_cast<Color>(block.getShape()[0][0]);
+		color = getColorFromType(static_cast<Tetromino>(block.getShape()[0][0] - 1));
 	}
 	else {
 		color = getColorFromType(block.getType());

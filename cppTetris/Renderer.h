@@ -9,13 +9,13 @@
 #include <iomanip>
 enum class Color{
 	BLACK,
-	DARK_BLUE, 
+	DARK_BLUE, // Tetris special Block : ColorBlock
 	DARK_GREEN, 
 	DARK_SKY_BLUE, 
-	DARK_RED, 
+	DARK_RED, // Tetris special Block : WaterBlock
 	DARK_VOILET, 
 	DARK_YELLOW,		// Tetris L Block	6
-	GRAY,    
+	GRAY,    // Tetris special Block : FireBlock
 	DARK_GRAY,			
 	BLUE,				// Tetris J Block	9
 	GREEN,				// Tetris S Block	10
