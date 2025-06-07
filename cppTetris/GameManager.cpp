@@ -140,6 +140,7 @@ void GameManager::play()
 		if (monster.stage != 4) {
 			int select = menu.retrySelect();
 			if (select == 0) {
+				monster.setMonsterShape(monster.stage);
 				play();
 				::system("cls");												// 왜 인지 모르겠는데 :: 추가 해야된다네요
 			}
