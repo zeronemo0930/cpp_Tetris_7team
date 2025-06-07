@@ -12,9 +12,9 @@ public:
 	Block(Tetromino t);
 	virtual ~Block();
 
-	void setBlock(Tetromino t);
+	void setBlock(Tetromino t, int stage);
 	void rotate();
-	void setGreenhateBlock(Tetromino t);
+	void setGreenhateBlock(Tetromino t, int stage);
 	void move(short dx, short dy);
 	void setPos(short x, short y);
 	int getPosX();
@@ -28,10 +28,11 @@ public:
 	int getY() const { return y; };
 	Tetromino getType() { return type; };
 	
+	static inline int limit = 0; // 아이템 제한을 설정 및 해제하는 key
+
 private:
 	shapeVec shape;
 	Tetromino type;
-
 	// int대신 short을 사용할까?
 	short x, y;
 };

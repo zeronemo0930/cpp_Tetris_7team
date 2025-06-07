@@ -46,21 +46,21 @@ void Board::merge_block(Block& block)
 				board[y + i][x + j] = shape[i][j];
 		}
 	}
-	if (block.getType() == Tetromino::B && limit > 0) { // 난수 기반으로 여태 획득한 특수 블럭 랜덤 사용
-		switch (rand() % limit) {
-			case 0: {
+	if (block.getType() == Tetromino::B && block.limit > 0) { // 난수 기반으로 여태 획득한 특수 블럭 랜덤 사용
+		switch (shape[0][0]) {
+			case 1: {
 				ColorBlock temp;
 				temp.setPos(block.getX(), block.getY());
 				temp.specialFunc(*this);
 				break;
 			}
-			case 1: {
+			case 4: {
 				WaterBlock temp;
 				temp.setPos(block.getX(), block.getY());
 				temp.specialFunc(*this);
 				break;
 			}
-			case 2: {
+			case 7: {
 				FireBlock temp;
 				temp.setPos(block.getX(), block.getY());
 				temp.specialFunc(*this);

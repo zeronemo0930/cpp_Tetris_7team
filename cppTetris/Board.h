@@ -12,7 +12,6 @@ public:
 	int board[24][14];
 	static const int width = 14;
 	static const int height = 24;
-	static inline int limit = 0; // 아이템 제한을 설정 및 해제하는 key
 
 	Board();
 	void clear_cell(int y, int x) { board[y][x] = 0; }

@@ -7,7 +7,7 @@ Block::Block() : Block(Tetromino::I)
 
 Block::Block(Tetromino t) :x(7), y(0)
 {
-	setBlock(t);
+	setBlock(t, limit);
 }
 
 Block::~Block()
@@ -16,7 +16,7 @@ Block::~Block()
 
 
 // Vector를 이용해서 배열 크기를 블럭 사이즈에 딱 맞게 수정하면, 회전의 조작감이 구려짐
-void Block::setBlock(Tetromino t)
+void Block::setBlock(Tetromino t, int stage)
 {
 	x = 17;
 	y = 1;
@@ -74,71 +74,77 @@ void Block::setBlock(Tetromino t)
 		break;
 
 	case Tetromino::B:
+		int sb = limit;
+		if (sb != 0) sb = rand() % limit;
+		sb = sb * 3 + 1;
 		shape = {
-			{8}
+			{sb}
 		};
 		break;
 	}
 }
 
-void Block::setGreenhateBlock(Tetromino t) {
+void Block::setGreenhateBlock(Tetromino t, int stage) {
 	x = 16;
 	y = 1;
 	type = t;
 	switch (t) {
 	case Tetromino::I:
 		shape = {
-			{6, 0, 0, 0},
-			{0, 6, 0, 0},
-			{0, 0, 6, 0},
-			{0, 0, 0, 6}
+			{1, 0, 0, 0},
+			{0, 1, 0, 0},
+			{0, 0, 1, 0},
+			{0, 0, 0, 1}
 		};
 		break;
 	case Tetromino::O:
 		shape = {
-			{6, 6},
-			{6, 6}
+			{1, 1},
+			{1, 1}
 		};
 		break;
 	case Tetromino::T:
 		shape = {
 			{0, 0, 0},
-			{6, 6, 6},
-			{0, 6, 0}
+			{1, 1, 1},
+			{0, 1, 0}
 		};
 		break;
 	case Tetromino::J:
 		shape = {
 			{0, 0, 0},
-			{6, 6, 6},
-			{0, 0, 6}
+			{1, 1, 1},
+			{0, 0, 1}
 		};
 		break;
 	case Tetromino::L:
 		shape = {
 			{0, 0, 0},
-			{6, 6, 6},
-			{6, 0, 0}
+			{1, 1, 1},
+			{1, 0, 0}
 		};
 		break;
 	case Tetromino::S:
 		shape = {
 			{0, 0, 0},
-			{0, 6, 6},
-			{6, 6, 0}
+			{0, 1, 1},
+			{1, 1, 0}
 		};
 		break;
 	case Tetromino::Z:
 		shape = {
 			{0, 0, 0},
-			{6, 6, 0},
-			{0, 6, 6}
+			{1, 1, 0},
+			{0, 1, 1}
 		};
 		break;
 
 	case Tetromino::B:
+		int sb = limit;
+		if (sb != 0) sb = rand() % limit;
+		sb = sb * 3 + 1;
 		shape = {
-			{6}
+			{sb}
 		};
 		break;
 	}

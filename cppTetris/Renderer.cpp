@@ -167,7 +167,6 @@ void Renderer::drawMonsterHp(Monster& mon)
 	int maxHp = mon.getMaxHp();
 
 	SetColor(Color::WHITE);
-
 	// HP 텍스트 갱신
 	gotoxy(65, 15);
 	cout << "                             ";
@@ -425,7 +424,7 @@ void Renderer::setBlockColor(Tetromino t)
 	switch (t)
 	{
 	case Tetromino::I:
-		color = Color::SKY_BLUE;
+		color = Color::GREEN;
 		break;
 	case Tetromino::O:
 		color = Color::YELLOW;
@@ -440,7 +439,7 @@ void Renderer::setBlockColor(Tetromino t)
 		color = Color::DARK_YELLOW;
 		break;
 	case Tetromino::S:
-		color = Color::GREEN;
+		color = Color::SKY_BLUE;
 		break;
 	case Tetromino::Z:
 		color = Color::RED;

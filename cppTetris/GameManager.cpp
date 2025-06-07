@@ -48,23 +48,23 @@ void GameManager::mainMenu()
 		case 1:		// 1 Stage 프롤로그 대화 스킵하고 게임만
 			monster.stage = 0;
 			play();
-			
+			monster.setMonsterShape(0);
 			break;
 		case 2:		// 2 Stage 
 			monster.stage = 1;
-			board.limit = 1; // 초기에 eky설정
-			
+			current_block.limit = 1; // 초기에 eky설정
+			monster.setMonsterShape(1);
 			play();
 			break;
 		case 3:		// 3 Stage
 			monster.stage = 2;
-			board.limit = 2;
-			
+			current_block.limit = 2;
+			monster.setMonsterShape(2);
 			play();
 			break;
 		case 4:		// Boss
 			monster.stage = 3;
-			board.limit = 3;
+			current_block.limit = 3;
 			monster.setMonsterShape(3);
 			play();
 			break;
@@ -121,7 +121,9 @@ void GameManager::play()
 	score = 0;
 	combo = 0;
 	comboTimer = 0;
-	renderer.show_game_stat(score);
+	if (monster.stage == 5) {
+		renderer.show_game_stat(score);
+	}
 
 	
 	while (true) {
@@ -140,7 +142,6 @@ void GameManager::play()
 		if (monster.stage != 4) {
 			int select = menu.retrySelect();
 			if (select == 0) {
-				monster.setMonsterShape(monster.stage);
 				play();
 				::system("cls");												// 왜 인지 모르겠는데 :: 추가 해야된다네요
 			}
@@ -173,17 +174,17 @@ void GameManager::init()
 	}
 
 	randType = static_cast<Tetromino>(rand() % 8);
-	if (monster.stage == 0 && rand() % 3 == 0) randType = static_cast<Tetromino>(1);										// 네모 블록
-	
-	current_block.setBlock(randType);
-	if (monster.stage == 3) current_block.setGreenhateBlock(randType);
+	if (monster.stage == 0 && rand() % 3 == 0) randType = static_cast<Tetromino>(1);                            // 네모만 나오게 함
+	else if (monster.stage == 0) randType = static_cast<Tetromino>(rand() % 7);
+	if (monster.stage == 3) next_block.setGreenhateBlock(randType, monster.stage);
+	else next_block.setBlock(randType, monster.stage);
 
 	current_block.setPos(5, 0);
-	randType = static_cast<Tetromino>(rand() % 7);
-	if(monster.stage == 0 && rand() % 3 == 0) randType = static_cast<Tetromino>(1);										// 네모 블록
-
-	next_block.setBlock(randType);
-	if (monster.stage == 3) next_block.setGreenhateBlock(randType);
+	randType = static_cast<Tetromino>(rand() % 8);
+	if (monster.stage == 0 && rand() % 3 == 0) randType = static_cast<Tetromino>(1);                            // 네모만 나오게 함
+	else if (monster.stage == 0) randType = static_cast<Tetromino>(rand() % 7);
+	if (monster.stage == 3) next_block.setGreenhateBlock(randType, monster.stage);
+	else next_block.setBlock(randType, monster.stage);
 	renderer.drawBlock(next_block, false);
 	shadowBlock(true);
 }
@@ -231,6 +232,9 @@ void GameManager::update()
 	//renderer.drawBoard(board);
 	renderer.eraseBlock(current_block);
 	isGameState = board.move_block(current_block);
+
+	gotoxy(70, 25);
+	cout << current_block.limit << endl;
 
 	renderer.drawBlock(current_block, false);
 	checkState();
@@ -308,8 +312,8 @@ void GameManager::hold()
 	if (!isHold) {
 		Tetromino temp = current_block.getType();
 		
-		hold_block.setBlock(temp);
-		if (monster.stage == 3) hold_block.setGreenhateBlock(temp);
+		hold_block.setBlock(temp, monster.stage);
+		if (monster.stage == 3) hold_block.setGreenhateBlock(temp, monster.stage);
 		makeNewBlock();
 		isHold = true;
 		
@@ -322,7 +326,7 @@ void GameManager::hold()
 		current_block = hold_block;
 		current_block.setPos(5, 0);
 
-		hold_block.setBlock(temp);
+		hold_block.setBlock(temp, monster.stage);
 
 
 		renderer.drawBlock(current_block, false);
@@ -369,7 +373,7 @@ bool GameManager::checkState()
 				renderer.drawMonsterHp(monster);
 				if (monster.isDead()) {
 					monster.setMonsterShape(++monster.stage);
-					++board.limit;
+					++current_block.limit;
 
 					if (monster.stage == 4) {
 						//  여기서 바로 에필로그 보여주고 종료
@@ -440,8 +444,9 @@ void GameManager::makeNewBlock()
 	current_block.setPos(5, 0);
 	randType = static_cast<Tetromino>(rand() % 8);
 	if(monster.stage == 0 && rand() % 3 == 0) randType = static_cast<Tetromino>(1);                            // 네모만 나오게 함
-	next_block.setBlock(randType);
-	if (monster.stage == 3) next_block.setGreenhateBlock(randType);
+	else if (monster.stage == 0) randType = static_cast<Tetromino>(rand() % 7);
+	if (monster.stage == 3) next_block.setGreenhateBlock(randType, monster.stage);
+	else next_block.setBlock(randType, monster.stage);
 	renderer.drawBlock(next_block, false);
 	shadowBlock(true);
 	renderer.drawBlock(current_block, false);
