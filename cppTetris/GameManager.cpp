@@ -236,12 +236,14 @@ void GameManager::update()
 	renderer.drawBlock(current_block, false);
 	checkState();
 
-	if (comboTimer > 0) {								// 콤보 타이머 감소
-		comboTimer--;
-		if (comboTimer == 0) {
-			combo = 0;
-			gotoxy(43, 13);
-			cout << "COMBO: 0   "; // 콤보 리셋 출력
+	if (monster.stage == 5) {
+		if (comboTimer > 0) {								// 콤보 타이머 감소
+			comboTimer--;
+			if (comboTimer == 0) {
+				combo = 0;
+				gotoxy(43, 13);
+				cout << "COMBO: 0   "; // 콤보 리셋 출력
+			}
 		}
 	}
 }
