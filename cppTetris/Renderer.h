@@ -55,8 +55,6 @@ public:
 	void drawBoard(Board& board);
 	void show_game_stat(int score);
 
-	static void eraseLine(size_t i);
-
 	// Monster ฐüทร Renderer
 	void drawMonster(Monster& mon);
 	void drawMonsterTalk(Monster& mon);

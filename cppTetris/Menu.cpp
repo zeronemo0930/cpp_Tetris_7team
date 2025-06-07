@@ -13,8 +13,8 @@
 using namespace std;
 
 
-Menu::Menu() : keytemp(NULL), menuSelector(0), optionSelector(0), volume(20), difficulty(0),
-stageSelector(0), renderer(nullptr), sm(nullptr)
+Menu::Menu() : keytemp(NULL), optionSelector(0), volume(20), difficulty(0),
+renderer(nullptr), sm(nullptr)
 {
 }
 
@@ -23,8 +23,8 @@ void Menu::setPer(Renderer* renderer, SoundManager* sm)
 	this->renderer = renderer;
 }
 
-void Menu::menu() {
-	menuSelector = 0;
+int Menu::menu() {
+	int menuSelector = 0;
 	renderer->show_logo();
 	renderer->show_menu(menuSelector);
 	while (true) {
@@ -59,7 +59,7 @@ void Menu::menu() {
 	}
 
 	system("cls");
-	return;
+	return menuSelector;
 }
 
 void Menu::option()
@@ -137,9 +137,9 @@ void Menu::difficultySet()
 	renderer->drawOption(optionSelector, volume, difficulty);
 }
 
-void Menu::stageSelect()
+int Menu::stageSelect()
 {
-	stageSelector = 0;
+	int stageSelector = 0;
 	renderer->drawStageSelect(stageSelector);
 	while (true) {
 		if (_kbhit()) {
@@ -171,7 +171,7 @@ void Menu::stageSelect()
 		}
 	}
 	system("cls");
-	return;
+	return stageSelector;
 }
 
 int Menu::retrySelect()

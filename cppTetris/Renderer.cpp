@@ -18,11 +18,13 @@ void SetColor(Color color) {
 
 Renderer::Renderer()
 {
+	// 메뉴에 들어갈 string 할당
 	menu_string = { "Start", "Option", "Exit" };
 	option_string = { "Stage", "Volume", "Apply" };
 	difficulty_string = { "Easy", "Normal", "Hard" };
 	stage_string = { "Story", "Stage 1", "Stage 2", "Stage 3", "Boss", "무한 모드", "Back"};
 	retry_string = { "Retry", "Back To Menu" };
+
 	system("Tetris");
 	system("mode con:cols=100 lines=30");
 	CONSOLE_CURSOR_INFO ConsoleCursor;
@@ -109,6 +111,7 @@ void Renderer::show_logo()
 			"|_____/ "
 		}
 	};
+
 	for (int i = 0; i < logo.size(); i++) {
 		for (int j = 0; j < logo[0].size(); j++) {
 			gotoxy(22 + 8 * i, 3 + j);
@@ -116,6 +119,8 @@ void Renderer::show_logo()
 			cout << logo[i][j];
 		}
 	}
+	gotoxy(45, 10);
+	cout << "-그린조아의 대 모험-";
 }
 
 void Renderer::show_game_stat(int score)
@@ -462,25 +467,6 @@ void Renderer::drawBoard(Board& board)
 
 	SetColor(Color::BLACK);
 	gotoxy(77, 23);
-}
-
-// 안 쓰는 함수
-void Renderer::eraseLine(size_t i)
-{
-	cout << endl;
-	SetColor(Color::BLUE);
-	gotoxy(1 * 2 + 5, i + 1);
-	for (size_t j = 1; j < Board::width - 1; j++)
-	{
-		cout << "□";
-		Sleep(10);
-	}
-	gotoxy(1 * 2, i);
-	for (size_t j = 1; j < 13; j++)
-	{
-		cout << "  ";
-		Sleep(10);
-	}
 }
 
 void Renderer::printLineAt(int x, int y, const vector<string> lines) {

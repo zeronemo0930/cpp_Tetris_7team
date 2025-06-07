@@ -35,124 +35,119 @@ void GameManager::start()
 
 void GameManager::mainMenu()
 {
-	menu.menu();
-	int menuSelector = menu.getMenuSelector();
-	if (menuSelector == 0) {
-		menu.stageSelect();
-		monster.stage = -1;
-		switch (menu.getStageSelected())
-		{
-		case 0:		// Story 모드 (프롤로그부터 실행)
-			play();
-			break;
-		case 1:		// 1 Stage 프롤로그 대화 스킵하고 게임만
-			monster.stage = 0;
-			play();
-			monster.setMonsterShape(0);
-			break;
-		case 2:		// 2 Stage 
-			monster.stage = 1;
-			current_block.limit = 1; // 초기에 eky설정
-			monster.setMonsterShape(1);
-			play();
-			break;
-		case 3:		// 3 Stage
-			monster.stage = 2;
-			current_block.limit = 2;
-			monster.setMonsterShape(2);
-			play();
-			break;
-		case 4:		// Boss
-			monster.stage = 3;
-			current_block.limit = 3;
-			monster.setMonsterShape(3);
-			play();
-			break;
-		case 5:		// 무한모드
-			monster.stage = 5;
-			play();
-			break;
-		case 6:		// back
-			return;
-
-		}
-	
+	int menuSelector = menu.menu();
+	if (menuSelector == 0) {		// Start
+		stage();
 	}
-	else if (menuSelector == 1) {
+	else if (menuSelector == 1) {	// Option
 		menu.option();
 	}
-	else if (menuSelector == 2) {
+	else if (menuSelector == 2) {	// Exit
 		exit(0);
+	}
+}
+
+// Monster 클래스의 stage 멤버로 스테이지 설정
+void GameManager::stage()
+{
+	int stageSelector = menu.stageSelect();
+	monster.stage = -1;
+	switch (stageSelector)
+	{
+	case 0:		// Story 모드 (프롤로그부터 실행)
+		play();
+		break;
+	case 1:		// 1 Stage 프롤로그 대화 스킵하고 게임만
+		monster.stage = 0;
+		play();
+		monster.setMonsterShape(0);
+		break;
+	case 2:		// 2 Stage 
+		monster.stage = 1;
+		current_block.limit = 1; // 초기에 eky설정
+		monster.setMonsterShape(1);
+		play();
+		break;
+	case 3:		// 3 Stage
+		monster.stage = 2;
+		current_block.limit = 2;
+		monster.setMonsterShape(2);
+		play();
+		break;
+	case 4:		// Boss
+		monster.stage = 3;
+		current_block.limit = 3;
+		monster.setMonsterShape(3);
+		play();
+		break;
+	case 5:		// 무한모드
+		monster.stage = 5;
+		play();
+		break;
+	case 6:		// back
+		return;
 	}
 }
 
 void GameManager::play()
 {	
-	if (monster.stage == -1) {
-		vector<string> prolog = { "<프롤로그>",
-			" 이 이야기는 그린시러와 그린조아의 다툼으로 벌어집니다.",
-			" 테트로니아는 블록들로 이루어진 세계로, 평소엔 조화롭게 돌아가지만,",
-			"그린시러의 영향으로 특정 블록들이 자의식을 얻어 제멋대로 움직이며 세계의 균형을 위협하기 시작합니","다.",
-			"  이 블록들을 통제할 수 있는 유일한 사람은 전설의 \"테트리스 마스터\"뿐!" };
-		renderer.printLineProlog(1, 10, prolog);
-		::system("cls");												// 왜 인지 모르겠는데 :: 추가 해야된다네요
-		monster.stage = 0;
-		monster.setMonsterShape(0);
-	}
-	
-	
-	if (monster.stage != 5) {
-		renderer.drawMonsterTalk(monster);
-
-		vector<string> lines = monster.getScriptLine(monster.stage);
-		renderer.printLineAt(1, 15, lines);
-
-
-		::system("cls");												// 왜 인지 모르겠는데 :: 추가 해야된다네요
-
-		// 테스트용 몬스터
-
-		renderer.drawMonster(monster);
-		renderer.drawMonsterHp(monster);
-	}
-	
-	init();
-	int i = 0;
-	score = 0;
-	combo = 0;
-	comboTimer = 0;
-	if (monster.stage == 5) {
-		renderer.show_game_stat(score);
-	}
-
-	
-	while (true) {
-		while (_kbhit()) _getch();
-		while (checkState()) {
-			checkState();
-			input();
-			if (i % (30 - 12 * menu.getDifficulty()) == 0) {
-				update();
-			}
-			i++;
-			Sleep(15);
-			gotoxy(77, 23);
+	// retry를 선택한다면 다시 여기부터.
+	while (true) {	
+		// Story모드로 실행 했을 때
+		if (monster.stage == -1) {
+			vector<string> prolog = { "<프롤로그>",
+				" 이 이야기는 그린시러와 그린조아의 다툼으로 벌어집니다.",
+				" 테트로니아는 블록들로 이루어진 세계로, 평소엔 조화롭게 돌아가지만,",
+				"그린시러의 영향으로 특정 블록들이 자의식을 얻어 제멋대로 움직이며 세계의 균형을 위협하기 시작합니","다.",
+				"  이 블록들을 통제할 수 있는 유일한 사람은 전설의 \"테트리스 마스터\"뿐!" };
+			renderer.printLineProlog(1, 10, prolog);
+			system("cls");
+			monster.stage = 0;
+			monster.setMonsterShape(0);
 		}
-		//system("cls");
-		if (monster.stage != 4) {
-			int select = menu.retrySelect();
-			if (select == 0) {
-				play();
-				::system("cls");												// 왜 인지 모르겠는데 :: 추가 해야된다네요
+
+		// 무한모드가 아니라면
+		if (monster.stage != 5) {
+			renderer.drawMonsterTalk(monster);
+
+			vector<string> lines = monster.getScriptLine(monster.stage);
+			renderer.printLineAt(1, 15, lines);
+			system("cls");
+
+			renderer.drawMonster(monster);
+			renderer.drawMonsterHp(monster);
+		}
+		else {	// 무한모드일때 score 그리기
+			renderer.show_game_stat(score);
+		}
+
+		init();	// 게임 시작 전 초기화 구문
+		int i = 0;
+		while (true) {
+			while (_kbhit()) _getch();
+			while (checkState()) {
+				input();
+				if (i % (30 - 12 * menu.getDifficulty()) == 0) {
+					update();
+				}
+				i++;
+				Sleep(15);
+				gotoxy(77, 23);
 			}
-			else if(select == 1){
+			if (monster.stage == 4) {
+				system("cls");
+				monster.stage = -1;
 				return;
 			}
-		}
-		else if (monster.stage == 4) {
-			::system("cls");												// 왜 인지 모르겠는데 :: 추가 해야된다네요
-			monster.stage = -1;
-			return;
+
+			int select = menu.retrySelect();
+			if (select == 0) {	// retry는 처음 부터 반복
+				system("cls");
+				break;
+			}
+			else {				// 메뉴로
+				return;
+			}
 		}
 	}
 }
@@ -161,6 +156,12 @@ void GameManager::play()
 
 void GameManager::init()
 {
+	// 게임에 필요한 멤버 초기화
+	score = 0;
+	combo = 0;
+	comboTimer = 0;
+
+	// 게임 틀 렌더
 	board.resetBoard();			// 보드 초기화
 	renderer.drawBoard(board);
 	renderer.nextBlockFrame();
@@ -229,7 +230,6 @@ void GameManager::input()
 
 void GameManager::update()
 {
-	//renderer.drawBoard(board);
 	renderer.eraseBlock(current_block);
 	isGameState = board.move_block(current_block);
 
@@ -252,13 +252,6 @@ void GameManager::update()
 void GameManager::moveRotate()
 {
 	renderer.eraseBlock(current_block);
-	/*if (monster.stage == 2) {
-		int x = current_block.getPosX();
-		int y = current_block.getPosY();
-		randType = static_cast<Tetromino>(rand() % 7);
-		current_block.setBlock(randType);
-		current_block.setPos(x, y);
-	}*/
 	if(board.rotate_shift(current_block)) // rotate할 때 strike_check 여부를 확인하고 rotate 가능한 좌표로 변환해주는 rotate_shift
 		sm.playEffect("SoundEffects/block_rotate.wav");
 	shadowBlock(false);
@@ -377,7 +370,7 @@ bool GameManager::checkState()
 
 					if (monster.stage == 4) {
 						//  여기서 바로 에필로그 보여주고 종료
-						::system("cls");												// 왜 인지 모르겠는데 :: 추가 해야된다네요
+						system("cls");
 
 						vector<string> epilog = {
 							"<에필로그>",
@@ -394,11 +387,11 @@ bool GameManager::checkState()
 						return false;
 					}
 
-					::system("cls");												// 왜 인지 모르겠는데 :: 추가 해야된다네요
+					system("cls");												
 					renderer.drawMonsterTalk(monster);
 					vector<string> lines = monster.getScriptLine(monster.stage);
 					renderer.printLineAt(1, 15, lines);
-					::system("cls");												// 왜 인지 모르겠는데 :: 추가 해야된다네요
+					system("cls");
 					renderer.drawBoard(board);
 					renderer.eraseMonster(monster);
 					renderer.drawMonster(monster);
@@ -443,10 +436,13 @@ void GameManager::makeNewBlock()
 	current_block = next_block;
 	current_block.setPos(5, 0);
 	randType = static_cast<Tetromino>(rand() % 8);
+
 	if(monster.stage == 0 && rand() % 3 == 0) randType = static_cast<Tetromino>(1);                            // 네모만 나오게 함
 	else if (monster.stage == 0) randType = static_cast<Tetromino>(rand() % 7);
+
 	if (monster.stage == 3) next_block.setGreenhateBlock(randType, monster.stage);
 	else next_block.setBlock(randType, monster.stage);
+
 	renderer.drawBlock(next_block, false);
 	shadowBlock(true);
 	renderer.drawBlock(current_block, false);
