@@ -176,6 +176,7 @@ void Menu::stageSelect()
 
 int Menu::retrySelect()
 {
+	system("cls");
 	int selector = 0;
 	renderer->drawGameOverFrame();
 	renderer->drawGameOver(selector);

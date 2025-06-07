@@ -76,6 +76,7 @@ void GameManager::mainMenu()
 			return;
 
 		}
+	
 	}
 	else if (menuSelector == 1) {
 		menu.option();
@@ -142,7 +143,7 @@ void GameManager::play()
 				play();
 				::system("cls");												// 왜 인지 모르겠는데 :: 추가 해야된다네요
 			}
-			else {
+			else if(select == 1){
 				return;
 			}
 		}
