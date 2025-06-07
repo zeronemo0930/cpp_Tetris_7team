@@ -233,9 +233,6 @@ void GameManager::update()
 	renderer.eraseBlock(current_block);
 	isGameState = board.move_block(current_block);
 
-	gotoxy(70, 25);
-	cout << current_block.limit << endl;
-
 	renderer.drawBlock(current_block, false);
 	checkState();
 
@@ -303,10 +300,7 @@ void GameManager::hold()
 {
 	if (isNowHold) return;
 	if (!isHold) {
-		Tetromino temp = current_block.getType();
-		
-		hold_block.setBlock(temp, monster.stage);
-		if (monster.stage == 3) hold_block.setGreenhateBlock(temp, monster.stage);
+		hold_block = current_block;
 		makeNewBlock();
 		isHold = true;
 		
@@ -314,12 +308,12 @@ void GameManager::hold()
 	else{
 		renderer.eraseBlock(hold_block);
 		renderer.eraseBlock(current_block);
-		Tetromino temp;
-		temp = current_block.getType();
+		Block temp_block;
+		temp_block = current_block;
 		current_block = hold_block;
+		hold_block = temp_block;
 		current_block.setPos(5, 0);
 
-		hold_block.setBlock(temp, monster.stage);
 
 
 		renderer.drawBlock(current_block, false);
