@@ -339,7 +339,7 @@ void Renderer::drawGameOver(short selector)
 void Renderer::drawBlock(Block& block, bool isShadow)
 {
 	cout << endl;
-	setBlockColor(block.getType());
+	setBlockColor(block);
 	SetColor(color);
 	short x = block.getX();
 	short y = block.getY();
@@ -356,7 +356,7 @@ void Renderer::drawBlock(Block& block, bool isShadow)
 		}
 	}
 
-	SetColor(Color::BLACK);
+	SetColor(Color::WHITE);
 	gotoxy(77, 23);
 }
 
@@ -416,40 +416,28 @@ void Renderer::holdBlockFrame()
 		}
 	}
 }
-
-
-
-void Renderer::setBlockColor(Tetromino t)
-{
-	switch (t)
-	{
-	case Tetromino::I:
-		color = Color::GREEN;
-		break;
-	case Tetromino::O:
-		color = Color::YELLOW;
-		break;
-	case Tetromino::T:
-		color = Color::VOILET;
-		break;
-	case Tetromino::J:
-		color = Color::BLUE;
-		break;
-	case Tetromino::L:
-		color = Color::DARK_YELLOW;
-		break;
-	case Tetromino::S:
-		color = Color::SKY_BLUE;
-		break;
-	case Tetromino::Z:
-		color = Color::RED;
-		break;
-	default:
-		color = Color::GRAY;
-		break;
-
+void Renderer::setBlockColor(Block& block) {
+	if (block.getType() == Tetromino::B) {
+		color = static_cast<Color>(block.getShape()[0][0]);
+	}
+	else {
+		color = getColorFromType(block.getType());
 	}
 	SetColor(color);
+}
+
+Color Renderer::getColorFromType(Tetromino type) {
+	switch (type)
+	{
+	case Tetromino::I: return Color::GREEN;
+	case Tetromino::O: return Color::YELLOW;
+	case Tetromino::T: return Color::VOILET;
+	case Tetromino::J: return Color::BLUE;
+	case Tetromino::L: return Color::DARK_YELLOW;
+	case Tetromino::S: return Color::SKY_BLUE;
+	case Tetromino::Z: return Color::RED;
+	default: return Color::GRAY;
+	}
 }
 
 void Renderer::drawBoard(Board& board)
@@ -464,8 +452,7 @@ void Renderer::drawBoard(Board& board)
 				cout << ((i < 3) ? "□" : "■");
 			}
 			else if (board.board[i][j] != 0) {
-				setBlockColor(static_cast<Tetromino>(board.board[i][j] - 1));
-				SetColor(color);
+				SetColor(getColorFromType(static_cast<Tetromino>(board.board[i][j] - 1)));
 				cout << "■";
 			}
 			else
@@ -562,8 +549,6 @@ void Renderer::printLineAt(int x, int y, const vector<string> lines) {
 	}
 }
 
-#include <chrono>
-#include <thread>  // 시간 지연을 위한 헤더
 
 void Renderer::printLineProlog(int x, int y, const vector<string> lines) {
 	// 윗테두리 출력

@@ -14,15 +14,15 @@ enum class Color{
 	DARK_SKY_BLUE, 
 	DARK_RED, 
 	DARK_VOILET, 
-	DARK_YELLOW,		// Tetris L Block
+	DARK_YELLOW,		// Tetris L Block	6
 	GRAY,    
 	DARK_GRAY,			
-	BLUE,				// Tetris J Block
-	GREEN,				// Tetris S Block
-	SKY_BLUE,			// Tetris I Block
-	RED,				// Tetris Z Block
-	VOILET,				// Tetris T Block
-	YELLOW,				// Tetris O Block
+	BLUE,				// Tetris J Block	9
+	GREEN,				// Tetris S Block	10
+	SKY_BLUE,			// Tetris I Block	11	
+	RED,				// Tetris Z Block	12
+	VOILET,				// Tetris T Block	13
+	YELLOW,				// Tetris O Block	14
 	WHITE,  
 };
 
@@ -36,7 +36,7 @@ public:
 	void show_menu(short menu);
 	void drawOption(short optionSelector, float volume, int difficulty);
 	void drawStageSelect(short stageSelector);
-	void drawGameClear();
+
 	void drawGameOverFrame();
 	void drawGameOver(short selector);
 	
@@ -44,6 +44,8 @@ public:
 	// Block ฐüทร Renderer
 	void drawBlock(Block& block, bool isShadow);
 	void eraseBlock(Block& block);
+	Color getColorFromType(Tetromino type);
+	void setBlockColor(Block& block);
 	void setBlockColor(Tetromino t);
 	void nextBlockFrame();
 	void holdBlockFrame();
