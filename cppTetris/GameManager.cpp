@@ -70,6 +70,7 @@ void GameManager::mainMenu()
 			break;
 		case 5:		// 무한모드
 			monster.stage = 5;
+			current_block.limit = 3;
 			play();
 			break;
 		case 6:		// back
