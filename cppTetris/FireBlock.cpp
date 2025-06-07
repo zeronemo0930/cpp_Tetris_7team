@@ -14,20 +14,20 @@ void FireBlock::specialFunc(Board& board)
             int z = baseY - dy;
 
             // 보드 범위 안일 때만 삭제, 삭제 범위 확장
-            if (x >= 0 && x < Board::width &&
-                y >= 0 && y < Board::height) {
+            if (x > 0 && x < Board::width - 1 &&
+                y >= 0 && y < Board::height - 1) {
                 board.clear_cell(y, x);
             }
-            if (w >= 0 && w < Board::width &&
-                z >= 0 && z < Board::height) {
+            if (w > 0 && w < Board::width - 1 &&
+                z >= 0 && z < Board::height - 1) {
                 board.clear_cell(z, w);
             }
-            if (w >= 0 && w < Board::width &&
-                y >= 0 && y < Board::height) {
+            if (w > 0 && w < Board::width - 1 &&
+                y >= 0 && y < Board::height - 1) {
                 board.clear_cell(y, w);
             }
-            if (x >= 0 && x < Board::width &&
-                z >= 0 && z < Board::height) {
+            if (x > 0 && x < Board::width - 1 &&
+                z >= 0 && z < Board::height - 1) {
                 board.clear_cell(z, x);
             }
         }
