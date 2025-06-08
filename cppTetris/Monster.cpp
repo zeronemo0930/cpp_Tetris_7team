@@ -56,7 +56,7 @@ void Monster::SetMonster(MonsterName name) // 임시 보스 설정
     case MonsterName::Water:
         speed = 20;
         stick_rate = 15;
-        MaxHp = 1;
+        MaxHp = 2;
         monsterShape.clear();
         monsterShape = {
     "   ~~~~~~~~   ",
@@ -70,7 +70,7 @@ void Monster::SetMonster(MonsterName name) // 임시 보스 설정
     case MonsterName::Castle:
         speed = 4;
         stick_rate = 10;
-        MaxHp = 1;
+        MaxHp = 3;
         monsterShape.clear();
         monsterShape = {
     " |^^^^^^^| ",
@@ -85,7 +85,7 @@ void Monster::SetMonster(MonsterName name) // 임시 보스 설정
     case MonsterName::greenhate:
         speed = 4;
         stick_rate = 10;
-        MaxHp = 1;
+        MaxHp = 10;
         monsterShape.clear();
         monsterShape = {
     "   /~~~~~~~\\  ",

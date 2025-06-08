@@ -82,6 +82,7 @@ void GameManager::stage()
 		break;
 	case 5:		// 무한모드
 		monster.stage = 5;
+		current_block.limit = 3;
 		play();
 		break;
 	case 6:		// back
@@ -177,8 +178,8 @@ void GameManager::init()
 	randType = static_cast<Tetromino>(rand() % 8);
 	if (monster.stage == 0 && rand() % 3 == 0) randType = static_cast<Tetromino>(1);                            // 네모만 나오게 함
 	else if (monster.stage == 0) randType = static_cast<Tetromino>(rand() % 7);
-	if (monster.stage == 3) next_block.setGreenhateBlock(randType, monster.stage);
-	else next_block.setBlock(randType, monster.stage);
+	if (monster.stage == 3) current_block.setGreenhateBlock(randType, monster.stage);
+	else current_block.setBlock(randType, monster.stage);
 
 	current_block.setPos(5, 0);
 	randType = static_cast<Tetromino>(rand() % 8);
