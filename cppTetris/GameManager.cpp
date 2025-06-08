@@ -379,6 +379,8 @@ bool GameManager::checkState()
 
 						renderer.printLineProlog(1, 10, epilog);
 
+						
+
 					
 						isGameState = 0;
 						return false;
